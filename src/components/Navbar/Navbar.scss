@@ -1,0 +1,94 @@
+@import "../../styles/variables";
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: $nav-height;
+  background: rgba(253, 251, 249, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $light-gray;
+  transition: box-shadow $transition-base;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__logo {
+    font-family: $font-headline;
+    font-size: 26px;
+    color: $warm-charcoal;
+    font-weight: $weight-semi;
+    letter-spacing: 0.5px;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $sage-dark;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: $space-xl;
+    list-style: none;
+  }
+
+  &__link {
+    font-size: 15px;
+    font-weight: $weight-regular;
+    color: $soft-gray;
+    transition: color $transition-fast;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background-color: $dusty-blush;
+      transition: width $transition-base;
+    }
+
+    &:hover {
+      color: $warm-charcoal;
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &--active {
+      color: $warm-charcoal;
+      font-weight: $weight-medium;
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  &__cta {
+    background-color: $warm-charcoal;
+    color: $warm-white;
+    padding: 10px 22px;
+    border-radius: $border-radius;
+    font-size: 14px;
+    font-weight: $weight-medium;
+    transition: all $transition-base;
+
+    &:hover {
+      background-color: $dusty-blush;
+      color: $warm-charcoal;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(232, 213, 208, 0.4);
+    }
+  }
+}
