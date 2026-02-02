@@ -1,0 +1,46 @@
+// --- COLORS ---
+$warm-white: #fdfbf9; //Page backgrounds
+$dusty-blush: #e8d5d0; //Primary accent
+$blush-dark: #d4b5ae; //Blush hover
+$sage-green: #a3b18a; //Secondary accent
+$sage-dark: #8a9a72; //Sage hover state
+$champagne: #c9b896; //Luxury highlights
+$warm-charcoal: #3d3532; //Primary text
+$soft-gray: #8a7e7a; //Secondary text
+$light-gray: #f0ebe8; //Subtle backgrounds, borders
+
+// --- TYPOGRAPHY ---
+$font-headline: "Cormorant Garamond", Georgia;
+$font-body: "Inter", -apple-system, sans-serif;
+
+// ---FONT SIZES ---
+$size-xs: 12px; //fine print, badges
+$size-sm: 14px; //Captions, labels
+$size-base: 16px; // Body text(default)
+$size-md: 18px; //Large body/ lead paragraphs
+$size-lg: 24px; //Sub-headings
+$size-xl: 36px; //Section headings
+$size-2xl: 48px; //Page titles
+$size-3xl: 64px; //Hero titles
+
+// --- SPACING SCALE ---
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+$space-2xl: 48px;
+$space-3xl: 64px;
+$space-4xl: 80px;
+$space-5xl: 120px;
+
+// --- LAYOUTS ---
+$max-width: 1200px;
+$nav-height: 72px;
+$border-radius: 8px;
+$border-radius-lg: 16px;
+
+// --- TRANSITIONS ---
+$transition-fast: 0.15s ease;
+$transition-base: 0.25s ease;
+$transition-slow: 0.4s ease;
