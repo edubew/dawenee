@@ -4,6 +4,11 @@
   padding: $space-5xl 0;
   background: $warm-white;
 
+  //Mobile padding
+  @media (max-width: 768px) {
+    padding: $space-3xl $space-lg;
+  }
+
   &__title {
     font-family: $font-headline;
     font-size: $size-2xl;
@@ -11,6 +16,12 @@
     color: $warm-charcoal;
     text-align: center;
     margin: 0 0 $space-3xl 0;
+
+    //Mobile title size
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+      margin-bottom: $space-2xl;
+    }
   }
 
   &__grid {
@@ -19,6 +30,7 @@
     gap: $space-xl;
     max-width: $max-width;
     margin: 0 auto;
+    padding: 0 $space-xl;
 
     .project-card:nth-child(1) {
       grid-column: span 1;
@@ -49,9 +61,23 @@
       grid-column: span 1;
       grid-row: span 1;
     }
-    .project-card:nth-child(7) {
-      grid-column: span 2;
-      grid-row: span 1;
+
+    //Tablet
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $space-lg;
+      padding: 0 $space-lg;
+
+      .project-card:nth-child(1) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+    // MOBILE: 1 column
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: $space-md;
+      padding: 0 $space-md;
     }
   }
 }
