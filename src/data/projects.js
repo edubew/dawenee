@@ -1,9 +1,16 @@
+import dinnerPartyImg from "../assets/images/projects/dinner-party.jpg";
+import engagementImg from "../assets/images/projects/engagement.jpg";
+import graduationImg from "../assets/images/projects/graduation.jpg";
+import picnicImg from "../assets/images/projects/picnic.jpg";
+import kidsBirthdayImg from "../assets/images/projects/kids-birthday.jpg";
+import babyShowerImg from "../assets/images/projects/baby-shower.jpg";
+
 const projects = [
   {
     id: 1,
     title: "Elegant Candlelit Dinner Party",
     category: "Birthday",
-    image: "/images/projects/dinner-party.jpg",
+    image: dinnerPartyImg,
     size: "large",
     categoryColor: "blush",
   },
@@ -11,7 +18,7 @@ const projects = [
     id: 2,
     title: "She Said Yes Soirée",
     category: "Engagement",
-    image: "/images/projects/engagement.jpg",
+    image: engagementImg,
     size: "medium",
     categoryColor: "champagne",
   },
@@ -19,7 +26,7 @@ const projects = [
     id: 3,
     title: "Future Begins Here Grad Party",
     category: "Graduation",
-    image: "/images/projects/graduation.jpg",
+    image: graduationImg,
     size: "medium",
     categoryColor: "sage",
   },
@@ -27,23 +34,31 @@ const projects = [
     id: 4,
     title: "Dreamy Outdoor Brunch",
     category: "Picnic",
-    image: "/images/projects/picnic.jpg",
+    image: picnicImg,
     size: "medium",
     categoryColor: "sage",
   },
   {
-    id: 1,
+    id: 5,
     title: "Carnival Dreams Come True",
     category: "Kid's Birthday",
-    image: "/images/projects/kids-birthday.jpg",
+    image: kidsBirthdayImg,
     size: "medium",
     categoryColor: "blush",
   },
   {
-    id: 1,
+    id: 6,
     title: "Blooms & Baby Bliss",
     category: "Baby Shower",
-    image: "/images/projects/baby-shower.jpg",
+    image: babyShowerImg,
+    size: "large",
+    categoryColor: "blush",
+  },
+  {
+    id: 7,
+    title: "Elegant Candlelit Dinner Party",
+    category: "Birthday",
+    image: dinnerPartyImg,
     size: "large",
     categoryColor: "blush",
   },

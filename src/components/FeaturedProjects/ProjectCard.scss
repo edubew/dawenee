@@ -1,6 +1,8 @@
 @import "../../styles/variables";
 
 .project-card {
+  break-inside: avoid;
+  margin-bottom: $space-xl;
   position: relative;
   border-radius: $border-radius-lg;
   overflow: hidden;
@@ -16,29 +18,22 @@
 
   &__image {
     width: 100%;
+    // height: 100%;
     aspect-ratio: 4/3;
     position: relative;
     overflow: hidden;
-  }
+    background: $light-gray;
 
-  &__placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, $light-gray 0%, $dusty-blush 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform $transition-slow;
-
-    &-text {
-      font-family: $font-headline;
-      font-size: $size-lg;
-      color: $warm-charcoal;
-      opacity: 0.4;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform $transition-slow;
     }
   }
 
-  &:hover &__placeholder {
+  &:hover &__image img {
     transform: scale(1.08);
   }
 
