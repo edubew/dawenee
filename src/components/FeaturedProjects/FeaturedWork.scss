@@ -9,6 +9,10 @@
     padding: $space-3xl $space-lg;
   }
 
+  @media (max-width: 480px) {
+    padding: $space-2xl $space-md;
+  }
+
   &__title {
     font-family: $font-headline;
     font-size: $size-2xl;
@@ -22,61 +26,31 @@
       font-size: $size-xl;
       margin-bottom: $space-2xl;
     }
+
+    @media (max-width: 480px) {
+      font-size: $size-lg;
+      margin-bottom: $space-xl;
+    }
   }
 
+  //Pinterest Column Masonry
   &__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $space-xl;
+    column-count: 3;
+    column-gap: $space-xl;
     max-width: $max-width;
     margin: 0 auto;
     padding: 0 $space-xl;
 
-    .project-card:nth-child(1) {
-      grid-column: span 1;
-      grid-row: span 2;
-    }
-
-    .project-card:nth-child(2) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    .project-card:nth-child(3) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    .project-card:nth-child(4) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    .project-card:nth-child(5) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    .project-card:nth-child(6) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    //Tablet
-    @media (max-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: $space-lg;
+    @media (max-width: 968px) {
+      column-count: 2;
+      column-gap: $space-lg;
       padding: 0 $space-lg;
-
-      .project-card:nth-child(1) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
     }
-    // MOBILE: 1 column
+
+    // Mobile: 1 column
     @media (max-width: 480px) {
-      grid-template-columns: 1fr;
-      gap: $space-md;
+      column-count: 1;
+      column-gap: 0;
       padding: 0 $space-md;
     }
   }
