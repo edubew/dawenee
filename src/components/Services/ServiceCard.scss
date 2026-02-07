@@ -1,0 +1,65 @@
+@import "../../styles/variables";
+
+.service-card {
+  position: relative;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  background: $warm-white;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba($warm-charcoal, 0.08);
+  transition: all $transition-base;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba($warm-charcoal, 0.15);
+  }
+
+  &__image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto $space-lg;
+    border-radius: 50%;
+    border: 3px solid $dusty-blush;
+    overflow: hidden;
+    background: $light-gray;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform $transition-base;
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: $space-md;
+    }
+  }
+
+  &:hover &__image img {
+    transform: scale(1.1);
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 $space-sm 0;
+
+    @media (max-width: 480px) {
+      font-size: $size-md;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    line-height: 1.6;
+    margin: 0;
+    padding: $space-sm;
+  }
+}
