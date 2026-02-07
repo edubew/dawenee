@@ -68,7 +68,7 @@ function Hero() {
             {heroSlides.map((slide, index) => (
               <div
                 key={slide.id}
-                className={`hero__carousel-slides ${index === currentSlide ? "hero__carousel-slide--active" : ""}`}
+                className={`hero__carousel-slide ${index === currentSlide ? "hero__carousel-slide--active" : ""}`}
               >
                 <img src={slide.image} alt={slide.alt} />
               </div>
