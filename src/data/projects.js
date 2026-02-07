@@ -54,14 +54,6 @@ const projects = [
     size: "large",
     categoryColor: "blush",
   },
-  // {
-  //   id: 7,
-  //   title: "Elegant Candlelit Dinner Party",
-  //   category: "Birthday",
-  //   image: dinnerPartyImg,
-  //   size: "large",
-  //   categoryColor: "blush",
-  // },
 ];
 
 export default projects;
