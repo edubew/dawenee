@@ -75,7 +75,7 @@ function Footer() {
           </Link>
           <span className="footer__nav-divider">.</span>
           <Link to="/booking" className="footer__nav-link">
-            Book
+            Book Us
           </Link>
         </nav>
 
