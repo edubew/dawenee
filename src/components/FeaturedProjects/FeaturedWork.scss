@@ -1,0 +1,57 @@
+@import "../../styles/variables";
+
+.featured-work {
+  padding: $space-5xl 0;
+  background: $warm-white;
+
+  //Mobile padding
+  @media (max-width: 768px) {
+    padding: $space-3xl $space-lg;
+  }
+
+  @media (max-width: 480px) {
+    padding: $space-2xl $space-md;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    text-align: center;
+    margin: 0 0 $space-3xl 0;
+
+    //Mobile title size
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+      margin-bottom: $space-2xl;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-lg;
+      margin-bottom: $space-xl;
+    }
+  }
+
+  //Pinterest Column Masonry
+  &__grid {
+    column-count: 3;
+    column-gap: $space-xl;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 0 $space-xl;
+
+    @media (max-width: 968px) {
+      column-count: 2;
+      column-gap: $space-lg;
+      padding: 0 $space-lg;
+    }
+
+    // Mobile: 1 column
+    @media (max-width: 480px) {
+      column-count: 1;
+      column-gap: 0;
+      padding: 0 $space-md;
+    }
+  }
+}
