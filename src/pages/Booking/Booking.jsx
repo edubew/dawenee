@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Booking.scss";
@@ -6,6 +6,8 @@ import "./Booking.scss";
 function Booking() {
   return (
     <div className="booking-page">
+      const [formData, setFormData] = useState({
+        username: "", email: "", phone: "", eventDate: "", eventType: "", message: ""});
       <Navbar />
 
       <main className="booking">
@@ -25,8 +27,8 @@ function Booking() {
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="username"
+                name="username"
                 className="booking__input"
                 placeholder="e.g Sarah Kimani"
                 required
