@@ -4,10 +4,28 @@ import Footer from "../../components/Footer/Footer";
 import "./Booking.scss";
 
 function Booking() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    eventDate: "",
+    eventType: "",
+    message: "",
+  });
+
+  {
+    /* Handle input changes */
+  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="booking-page">
-      const [formData, setFormData] = useState({
-        username: "", email: "", phone: "", eventDate: "", eventType: "", message: ""});
       <Navbar />
 
       <main className="booking">
@@ -27,8 +45,8 @@ function Booking() {
               </label>
               <input
                 type="text"
-                id="username"
-                name="username"
+                id="name"
+                name="name"
                 className="booking__input"
                 placeholder="e.g Sarah Kimani"
                 required
