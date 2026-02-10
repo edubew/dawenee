@@ -49,6 +49,8 @@ function Booking() {
                 name="name"
                 className="booking__input"
                 placeholder="e.g Sarah Kimani"
+                value={formData.name}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -63,6 +65,8 @@ function Booking() {
                 name="email"
                 className="booking__input"
                 placeholder="e.g., kimani@example.com"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -77,6 +81,8 @@ function Booking() {
                 name="phone"
                 className="booking__input"
                 placeholder="e.g., 0701 234 567"
+                value={formData.phone}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -90,6 +96,8 @@ function Booking() {
                 id="eventDate"
                 name="eventDate"
                 className="booking__input"
+                value={formData.eventDate}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -102,6 +110,8 @@ function Booking() {
                 id="eventType"
                 name="eventType"
                 className="booking__input booking__select"
+                value={formData.eventType}
+                onChange={handleChange}
                 required
               >
                 <option value="">Select event type</option>
@@ -128,6 +138,8 @@ function Booking() {
                 className="booking__input booking__textarea"
                 placeholder="Share your vision, theme colors, number of guests, budget, or any special requests..."
                 rows="5"
+                value={formData.message}
+                onChange={handleChange}
                 required
               />
             </div>
