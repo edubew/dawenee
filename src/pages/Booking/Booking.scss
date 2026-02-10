@@ -1,0 +1,175 @@
+@import "../../styles/variables";
+
+.booking-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking {
+  flex: 1;
+  padding: $space-5xl 0;
+  background: $light-gray;
+
+  &__inner {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 $space-xl;
+
+    @media (max-width: 768px) {
+      padding: 0 $space-lg;
+    }
+
+    @media (max-width: 480px) {
+      padding: 0 $space-md;
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-3xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-2xl;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-lg;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-headline;
+    font-size: $size-base;
+    color: $soft-gray;
+    line-height: 1.6;
+    margin: 0;
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__form {
+    background: $warm-white;
+    padding: $space-2xl;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 4px 16px rgba($warm-charcoal, 0.08);
+
+    @media (max-width: 768px) {
+      padding: $space-xl;
+    }
+
+    @media (max-width: 480px) {
+      padding: $space-lg;
+    }
+  }
+
+  &__field {
+    margin-bottom: $space-xl;
+
+    @media (max-width: 480px) {
+      margin-bottom: $space-lg;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin-bottom: $space-xs;
+  }
+
+  &__input {
+    width: 100%;
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    background: $warm-white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius;
+    padding: $space-sm;
+    transition: all $transition-base;
+
+    &:focus {
+      outline: none;
+      border-color: $dusty-blush;
+      box-shadow: 0 0 0 3px rgba($dusty-blush, 0.1);
+    }
+
+    &__placeholder {
+      color: $soft-gray;
+      opacity: 0.2;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+      padding: $space-sm;
+    }
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233d3532' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $space-md center;
+    padding-right: $space-2xl;
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  &__submit {
+    width: 100%;
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-white;
+    background: $warm-charcoal;
+    border: none;
+    border-radius: $border-radius;
+    padding: $space-md $space-xl;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+      background: $blush-dark;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba($dusty-blush, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      background: $light-gray;
+      color: $soft-gray;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+     @media (max-width: 480px) {
+      font-size: $size-sm;
+      padding: $space-sm $space-lg;
+    }
+  }
+}

@@ -47,7 +47,7 @@ function Booking() {
               />
             </div>
 
-            <div className="booling__field">
+            <div className="booking__field">
               <label htmlFor="phone" className="booking__label">
                 Phone Number *
               </label>
