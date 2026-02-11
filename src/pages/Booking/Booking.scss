@@ -105,6 +105,16 @@
     padding: $space-sm;
     transition: all $transition-base;
 
+    &--error {
+      border-color: #5a1710;
+      background-color: #fef5f5;
+
+      &:focus {
+        border-color: #c0392b;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+      }
+    }
+
     &:focus {
       outline: none;
       border-color: $dusty-blush;
@@ -120,6 +130,14 @@
       font-size: $size-sm;
       padding: $space-sm;
     }
+  }
+
+  &__error {
+    display: block;
+    margin-top: $space-xs;
+    font-size: $size-xs;
+    color: #c0392b;
+    font-weight: $weight-medium;
   }
 
   &__select {
