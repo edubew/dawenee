@@ -13,14 +13,94 @@ function Booking() {
     message: "",
   });
 
-  {
-    /* Handle input changes */
-  }
+  // Track errors for each field
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    eventDate: "",
+    eventType: "",
+    message: "",
+  });
+
+  // Validation logic for each field
+  const validateField = (name, value) => {
+    switch (name) {
+      case "name":
+        if (!value.trim()) {
+          return "Name is required";
+        }
+        if (value.trim().length < 4) {
+          return "Name must be atleast 4 characters";
+        }
+        return "";
+
+      case "email":
+        if (!value.trim()) {
+          return "Email is required";
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          return "Please enter a valid email address";
+        }
+        return "";
+
+      case "phone":
+        if (!value.trim()) {
+          return "Phone number is required";
+        }
+        const phoneRegex = /^(\+254|0)[17]\d{8}$/;
+        // Remove spaces for validation
+        const cleanPhone = value.replace(/\s/g, "");
+        if (!phoneRegex.test(cleanPhone)) {
+          return "Please enter a valid Kenyan phone number (e.g., 0701 234 567)";
+        }
+        return "";
+
+      case "eventDate":
+        if (!value) {
+          return "Event date is required";
+        }
+        const selectedDate = new Date(value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate < today) {
+          return "Event date cannot be in the past";
+        }
+        return "";
+
+      case "eventType":
+        if (!value) {
+          return "Please select an event type";
+        }
+        return "";
+
+      case "message":
+        if (!value.trim()) {
+          return "Please tell us about your event";
+        }
+        if (value.trim().length < 10) {
+          return "Please provide at least 10 characters";
+        }
+        return "";
+
+      default:
+        return "";
+    }
+  };
+
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+
+    const errorMessage = validateField(name, value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMessage,
     }));
   };
 
