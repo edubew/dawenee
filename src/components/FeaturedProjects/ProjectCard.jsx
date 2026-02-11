@@ -2,7 +2,7 @@ import React from "react";
 import "./ProjectCard.scss";
 
 function ProjectCard({ project }) {
-  const { id, title, category, image, size, categoryColor } = project;
+  const { title, category, image, size, categoryColor } = project;
 
   return (
     <div className={`project-card project-card--${size}`}>
