@@ -23,6 +23,11 @@ function Booking() {
     message: "",
   });
 
+  // State for submission
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitMessage, setSubmitMessage] = useState("");
+
   // Validation logic for each field
   const validateField = (name, value) => {
     switch (name) {
@@ -95,6 +100,73 @@ function Booking() {
     }
   };
 
+  // Validate all fields at once
+  const validateAllFields = () => {
+    const newErrors = {
+      name: validateField("name", formData.name),
+      email: validateField("email", formData.email),
+      phone: validateField("phone", formData.phone),
+      eventDate: validateField("eventDate", formData.eventDate),
+      eventType: validateField("eventType", formData.eventType),
+      message: validateField("message", formData.message),
+    };
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some((error) => error !== "");
+
+    return !hasErrors;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const isValid = validateAllFields();
+
+    if (!isValid) {
+      setSubmitStatus("error");
+      setSubmitMessage("Please fix the errors above before submitting.");
+      return;
+    }
+    // Start submission process
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    setSubmitMessage("");
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      setSubmitStatus("success");
+      setSubmitMessage("Thank you! We will get back to you within 24 hours.");
+
+      // Reset form after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        eventDate: "",
+        eventType: "",
+        message: "",
+      });
+
+      // Clear errors
+      setErrors({
+        name: "",
+        email: "",
+        phone: "",
+        eventDate: "",
+        eventType: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitStatus("error");
+      setSubmitMessage("Oops! Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,7 +196,7 @@ function Booking() {
             </p>
           </div>
 
-          <form className="booking__form">
+          <form className="booking__form" onSubmit={handleSubmit}>
             <div className="booking__field">
               <label htmlFor="name" className="booking__label">
                 Your Name *
@@ -248,10 +320,52 @@ function Booking() {
               )}
             </div>
 
-            <button type="submit" className="booking__submit">
-              Send Request
+            <button
+              type="submit"
+              className="booking__submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send Request"}
             </button>
           </form>
+
+          {submitStatus === "success" && (
+            <div className="booking__message booking__message--success">
+              <svg
+                className="booking__message-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <p>{submitMessage}</p>
+            </div>
+          )}
+
+          {submitStatus === "error" && (
+            <div className="booking__message booking__message--error">
+              <svg
+                className="booking__message-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              <p>{submitMessage}</p>
+            </div>
+          )}
         </div>
       </main>
 
