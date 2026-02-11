@@ -180,9 +180,15 @@
     &:disabled {
       background: $light-gray;
       color: $soft-gray;
+      opacity: 0.6;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+
+      &:hover {
+        background-color: $light-gray;
+        transform: none;
+      }
     }
 
      @media (max-width: 480px) {
@@ -190,4 +196,48 @@
       padding: $space-sm $space-lg;
     }
   }
+
+  &__message {
+    margin-top: $space-md;
+    padding: $space-md;
+    border-radius: $space-sm;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    animation: slideIn 0.3s ease-out;
+
+    p {
+      margin: 0;
+      font-size: $size-md;
+      font-weight: $weight-medium;
+    }
+
+    &--success {
+      border: 1px solid $warm-charcoal;
+      background: $warm-white;
+    }
+
+    &--error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  }
+
+  &__message-icon {
+    width: $size-xl;
+    height: $size-xl;
+    flex-shrink: 0;
+
+  }
+
+  @keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 }
