@@ -42,21 +42,22 @@
   }
 
   &__projects {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $space-lg;
+    column-count: 3;
+    column-gap: $space-lg;
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
+      column-count: 2;
     }
 
     @media (max-width: 480px) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: $space-md;
+      column-count: 2;
+      column-gap: $space-md;
     }
   }
 
   &__card {
+    break-inside: avoid;
+    margin-bottom: $space-lg;
     background-color: white;
     border-radius: $border-radius;
     overflow: hidden;
@@ -66,6 +67,10 @@
     &:hover {
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       transform: translateY(-4px);
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: $space-md;
     }
   }
 
