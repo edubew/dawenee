@@ -230,7 +230,39 @@
     font-family: $font-body;
     font-size: $size-sm;
     color: $soft-gray;
-    margin: 0;
+    margin: 0 0 $space-md 0;
     text-transform: capitalize;
+  }
+
+  &__card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-xs;
+  }
+
+  &__card-tag {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $warm-charcoal;
+    background-color: $light-gray;
+    padding: 4px $space-sm;
+    border-radius: 4px;
+    text-transform: capitalize;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: $dusty-blush;
+      color: white;
+    }
+
+    &--more {
+      background-color: $champagne;
+      color: white;
+      font-weight: $weight-medium;
+
+      &:hover {
+        background-color: darken($champagne, 10%);
+      }
+    }
   }
 }

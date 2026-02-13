@@ -91,8 +91,21 @@ function Portfolio() {
                     <div className="portfolio__card-content">
                       <h3 className="portfolio__card-title">{project.title}</h3>
                       <p className="portfolio__card-event-type">
-                        {project.eventType}
+                        {categories.find(cat => cat.id ===project.category) ?.label || project.eventType}
                       </p>
+
+                      <div className="portfolio__card-tags">
+                        {project.tags.slice(0, 3).map((tag, index) => (
+                          <span key={index} className="portfolio__card-tag">
+                            {tag.replace(/-/g, '')}
+                          </span>
+                        ))}
+                        {project.tags.length > 3 && (
+                          <span className="portfolio__card-tag portfolio__card-tag--more">
+                            +{project.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </article>
                 ))}
