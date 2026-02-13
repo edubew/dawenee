@@ -78,6 +78,16 @@ function Portfolio() {
                       />
                     </div>
 
+                    <div className="portfolio__card-overlay">
+                      <div className="portfolio__card-overlay-content">
+                        <span className="portfolio__card-guest-count">
+                          {project.guestCount}{" "}
+                          {project.guestCount === 1 ? "Guest" : "Guests"}
+                        </span>
+                        <p className="portfolio__card-description">{project.description}</p>
+                      </div>
+                    </div>
+
                     <div className="portfolio__card-content">
                       <h3 className="portfolio__card-title">{project.title}</h3>
                       <p className="portfolio__card-event-type">

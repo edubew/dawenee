@@ -143,6 +143,66 @@
     width: 100%;
     height: auto;
     display: block;
+
+    // .portfolio__card:hover & {
+    //   transform: scale(1.05);
+    // }
+  }
+
+  &__card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1) 0%
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    opacity: 0;
+    transition: opacity $transition-base;
+    display: flex;
+    align-items: center;
+    padding: $space-lg;
+
+    .portfolio__card:hover & {
+      opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      padding: $space-sm;
+    }
+  }
+
+  &__card-overlay-content {
+    color: white;
+    width: 100%;
+  }
+
+  &__card-guest-count {
+    display: inline;
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: $space-xs $space-sm;
+    border-radius: 4px;
+    margin-bottom: $space-sm;
+  }
+
+  &__card-description {
+    font-family: $font-body;
+    font-size: $size-sm;
+    line-height: 1.5;
+    margin: 0;
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+    }
   }
 
   &__card-content {
