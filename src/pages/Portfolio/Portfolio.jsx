@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import { portfolioProjects } from "../../data/portfolioData";
+import { categories, portfolioProjects } from "../../data/portfolioData";
 import "./Portfolio.scss";
 
 function Portfolio() {
+  // Track active filter category
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  // Filter projects based on selected category
+  const filteredProjects =
+    activeCategory === "all"
+      ? portfolioProjects
+      : portfolioProjects.filter(
+          (project) => project.category === activeCategory,
+        );
+
+  // Handle category filter click
+  const handleCategoryClick = (categoryId) => {
+    setActiveCategory(categoryId);
+  };
+
   return (
     <div className="portfolio-page">
       <Navbar />
@@ -20,28 +36,58 @@ function Portfolio() {
           </div>
         </section>
 
-        <section className="portfolio__grid">
+        <section className="portfolio__filters">
           <div className="container">
-            <div className="portfolio__projects">
-              {portfolioProjects.map((project) => (
-                <article key={project.id} className="portfolio__card">
-                  <div className="portfolio__card-image-wrapper">
-                    <img
-                      src={project.media}
-                      alt={project.title}
-                      className="portfolio__card-image"
-                    />
-                  </div>
-
-                  <div className="portfolio__card-content">
-                    <h3 className="portfolio__card-title">{project.title}</h3>
-                    <p className="portfolio__card-event-type">
-                      {project.eventType}
-                    </p>
-                  </div>
-                </article>
+            <div className="portfolio__filter-buttons">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  className={`portfolio__filter-btn ${
+                    activeCategory === category.id
+                      ? "portfoli__filter-btn--active"
+                      : ""
+                  }`}
+                  onClick={() => handleCategoryClick(category.id)}
+                >
+                  {category.label}
+                  <span className="portfolio__filter-count">
+                    ({category.count})
+                  </span>
+                </button>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="portfolio__grid">
+          <div className="container">
+            {/* Show filtered projects */}
+            {filteredProjects.length === 0 ? (
+              <p className="portfolio__empty">
+                No projects found in this category.
+              </p>
+            ) : (
+              <div className="portfolio__projects">
+                {filteredProjects.map((project) => (
+                  <article key={project.id} className="portfolio__card">
+                    <div className="portfolio__card-image-wrapper">
+                      <img
+                        src={project.media}
+                        alt={project.title}
+                        className="portfolio__card-image"
+                      />
+                    </div>
+
+                    <div className="portfolio__card-content">
+                      <h3 className="portfolio__card-title">{project.title}</h3>
+                      <p className="portfolio__card-event-type">
+                        {project.eventType}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>
