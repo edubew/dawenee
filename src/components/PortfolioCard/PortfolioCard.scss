@@ -9,77 +9,79 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: all $transition-base;
 
+  @media (max-width: 480px) {
+    margin-bottom: $space-md;
+  }
+
   &:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     transform: translateY(-4px);
+  }
+
+  &__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: $light-gray;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform $transition-slow;
+
+    .portfolio-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.7) 100%
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: $space-lg;
+    transition-delay: 0.15s;
+
+    .portfolio-card:hover & {
+      opacity: 1;
+      transition-delay: 0s;
+    }
 
     @media (max-width: 480px) {
-      margin-bottom: $space-md;
+      padding: $space-sm;
     }
+  }
 
-    &__image-wrapper {
-      position: relative;
-      overflow: hidden;
-      background-color: $light-gray;
-    }
+  &__overlay-content {
+    color: white;
+    width: 100%;
+  }
 
-    &__image {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform $transition-slow;
-
-      .portfolio-card:hover & {
-        transform: scale(1.05);
-      }
-    }
-
-    &__overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.1) 0% rgba(0, 0, 0, 0.7) 100%
-      );
-      opacity: 0;
-      transition: opacity $transition-base;
-      display: flex;
-      align-items: center;
-      padding: $space-lg;
-
-      .portfolio-card:hover & {
-        opacity: 1;
-      }
-
-      @media (max-width: 480px) {
-        padding: $space-sm;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-    }
-
-    &__overlay-content {
-      color: white;
-      width: 100%;
-    }
-
-    &__guest-count {
-      display: inline;
-      font-family: $font-body;
-      font-size: $size-xs;
-      font-weight: $weight-medium;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background-color: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      padding: $space-xs $space-sm;
-      border-radius: 4px;
-      margin-bottom: $space-sm;
-    }
+  &__guest-count {
+    display: inline-block;
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: $space-xs $space-sm;
+    border-radius: 4px;
+    margin-bottom: $space-sm;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   &__description {
@@ -87,9 +89,16 @@
     font-size: $size-sm;
     line-height: 1.5;
     margin: 0;
+    margin-top: $space-sm;
+    color: $warm-white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 
     @media (max-width: 480px) {
       font-size: $size-xs;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
 
