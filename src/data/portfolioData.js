@@ -18,6 +18,7 @@ export const portfolioProjects = [
     description:
       'The bride wanted "English garden meets African sunset." We created flowing table runners with proteas and roses, mixed gold and copper accents, and hung 47 glass terrariums from tree branches. The venue said it was the most photographed setup they\'d ever hosted.',
     category: "wedding",
+    broadCategory: "celebrations",
     guestCount: 120,
     tags: [
       "outdoor-theme",
@@ -36,6 +37,7 @@ export const portfolioProjects = [
     description:
       'Client gave us complete creative freedom with just one request: "Make it drip luxury." Delivered with a champagne tower centerpiece, gold sequin linens, acrylic ghost chairs, and a balloon installation that took 6 hours to build. She cried when she walked in.',
     category: "birthday",
+    broadCategory: "celebrations",
     guestCount: 45,
     tags: ["luxury", "balloons", "metallics", "milestone", "creative-freedom"],
   },
@@ -48,6 +50,7 @@ export const portfolioProjects = [
     description:
       "Mom-to-be was tired of pink and blue. We designed a neutral palette with dried pampas grass, macramé wall hangings, and a low picnic-style seating area. The polaroid guest book station where guests wrote wishes became the most cherished keepsake.",
     category: "baby-shower",
+    broadCategory: "celebrations",
     guestCount: 30,
     tags: [
       "boho",
@@ -66,6 +69,7 @@ export const portfolioProjects = [
     description:
       "Newly engaged couple wanted an intimate dinner party to announce to family. We transformed their Lavington terrace with string lights, a floral table runner made from 200+ stems, and custom menus at each place setting. Golden hour timing was perfection.",
     category: "engagement",
+    broadCategory: "intimate",
     guestCount: 22,
     tags: ["intimate", "outdoor", "florals", "lighting", "custom-details"],
   },
@@ -78,6 +82,7 @@ export const portfolioProjects = [
     description:
       "Anniversary picnic at Lake Naivasha for a couple who met there. Low Moroccan seating, layered rugs and cushions, a custom charcuterie spread, and fresh flowers in vintage bottles. The wind tested us - everything was double-anchored and we still loved the candid, breezy photos.",
     category: "picnic",
+    broadCategory: "intimate",
     guestCount: 2,
     tags: ["intimate", "outdoor", "luxury", "anniversary", "boho", "lakeside"],
   },
@@ -90,6 +95,7 @@ export const portfolioProjects = [
     description:
       "Architect couple wanted clean lines and negative space - a challenge for a decor company! We used structural white orchids, geometric candle holders, and a monochrome palette. Less truly was more. The ceremony arch was just three calla lilies and steel rods, but it was striking.",
     category: "wedding",
+    broadCategory: "celebrations",
     guestCount: 80,
     tags: ["minimalist", "modern", "monochrome", "structural", "unique-vision"],
   },
@@ -102,6 +108,7 @@ export const portfolioProjects = [
     description:
       '5-year-old\'s dream party in her own backyard. Parents were skeptical we could make a Runda garden look like a castle. Delivered with a fabric canopy "ballroom," rose gold balloon garlands, a dress-up station with 12 costumes, and a throne for the birthday girl. Pure magic.',
     category: "kids-party",
+    broadCategory: "celebrations",
     guestCount: 35,
     tags: [
       "backyard-transformation",
@@ -120,6 +127,7 @@ export const portfolioProjects = [
     description:
       "Medical school graduate wanted sophisticated, not silly. We incorporated her university colors (burgundy and gold) into elegant table settings, created a photo timeline of her journey, and built a champagne wall that doubled as decor. Her parents were speechless.",
     category: "graduation",
+    broadCategory: "celebrations",
     guestCount: 50,
     tags: [
       "sophisticated",
@@ -138,6 +146,7 @@ export const portfolioProjects = [
     description:
       'He called us Wednesday for a Friday proposal. Race against time! We created an intimate setup on his apartment rooftop - circular rose petal pathway, 87 pillar candles (battery-operated for safety), and a marquee "Marry Me?" sign. She said yes before he finished asking.',
     category: "proposal",
+    broadCategory: "intimate",
     guestCount: 2,
     tags: ["intimate", "quick-turnaround", "rooftop", "romantic", "lighting"],
   },
@@ -150,6 +159,7 @@ export const portfolioProjects = [
     description:
       "Corporate client needed brand integration that didn't feel corporate. We used their blue and silver palette in elegant ways - ombre napkins, custom centerpieces with their logo subtly incorporated, and LED uplighting. 200 guests, zero complaints. They're now annual clients.",
     category: "cooperate",
+    broadCategory: "corporate",
     guestCount: 200,
     tags: [
       "corporate",
@@ -168,6 +178,7 @@ export const portfolioProjects = [
     description:
       'Client showed us a screenshot from Bali and said "this, but here, next Saturday." Challenge accepted. Sourced monstera leaves from 4 different suppliers, rented rattan furniture, commissioned a custom neon "Tropicool" sign, and created a tiki bar backdrop. Instagram went crazy.',
     category: "birthday",
+    broadCategory: "celebrations",
     guestCount: 60,
     tags: [
       "tropical",
@@ -186,6 +197,7 @@ export const portfolioProjects = [
     description:
       'Traditional baby shower with a twist. Mom wanted soft and sweet but not babyish. We suspended cloud installations from the ceiling, created a teddy bear "family" tablescape, and designed a dessert table in gentle pastels. The "wishes for baby" station had every guest in tears.',
     category: "baby-shower",
+    broadCategory: "celebrations",
     guestCount: 40,
     tags: [
       "non-traditional",
@@ -199,16 +211,24 @@ export const portfolioProjects = [
 
 // Category list for main filtering
 export const categories = [
-  { id: 'all', label: 'All Events', count: 12 },
-  { id: 'wedding', label: 'Weddings', count: 2 },
-  { id: 'birthday', label: 'Birthdays', count: 2 },
-  { id: 'baby-shower', label: 'Baby Showers', count: 2 },
-  { id: 'engagement', label: 'Engagements', count: 1 },
-  { id: 'picnic', label: 'Picnics', count: 1 },
-  { id: 'kids-party', label: 'Kids Parties', count: 1 },
-  { id: 'graduation', label: 'Graduations', count: 1 },
-  { id: 'proposal', label: 'Proposals', count: 1 },
-  { id: 'cooperate', label: 'Corporate', count: 1 }
+  { id: "all", label: "All Events", count: 12 },
+  { id: "wedding", label: "Weddings", count: 2 },
+  { id: "birthday", label: "Birthdays", count: 2 },
+  { id: "baby-shower", label: "Baby Showers", count: 2 },
+  { id: "engagement", label: "Engagements", count: 1 },
+  { id: "picnic", label: "Picnics", count: 1 },
+  { id: "kids-party", label: "Kids Parties", count: 1 },
+  { id: "graduation", label: "Graduations", count: 1 },
+  { id: "proposal", label: "Proposals", count: 1 },
+  { id: "cooperate", label: "Corporate", count: 1 },
+];
+
+// Simplified broad categories
+export const broadCategories = [
+  { id: "all", label: "All Events", count: 12 },
+  { id: "celebrations", label: "Celebrations", count: 6 },
+  { id: "intimate", label: "Intimate Gatherings", count: 3 },
+  { id: "corporate", label: "Corporate", count: 1 },
 ];
 
 // Tags for advanced filtering

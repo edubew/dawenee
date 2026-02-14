@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import { categories, portfolioProjects } from "../../data/portfolioData";
+import PortfolioCard from "../../components/PortfolioCard/PortfolioCard";
+import { broadCategories, portfolioProjects } from "../../data/portfolioData";
 import "./Portfolio.scss";
 
 function Portfolio() {
@@ -13,7 +14,7 @@ function Portfolio() {
     activeCategory === "all"
       ? portfolioProjects
       : portfolioProjects.filter(
-          (project) => project.category === activeCategory,
+          (project) => project.broadCategory === activeCategory,
         );
 
   // Handle category filter click
@@ -39,7 +40,7 @@ function Portfolio() {
         <section className="portfolio__filters">
           <div className="container">
             <div className="portfolio__filter-buttons">
-              {categories.map((category) => (
+              {broadCategories.map((category) => (
                 <button
                   key={category.id}
                   className={`portfolio__filter-btn ${
@@ -69,45 +70,7 @@ function Portfolio() {
             ) : (
               <div className="portfolio__projects">
                 {filteredProjects.map((project) => (
-                  <article key={project.id} className="portfolio__card">
-                    <div className="portfolio__card-image-wrapper">
-                      <img
-                        src={project.media}
-                        alt={project.title}
-                        className="portfolio__card-image"
-                      />
-                    </div>
-
-                    <div className="portfolio__card-overlay">
-                      <div className="portfolio__card-overlay-content">
-                        <span className="portfolio__card-guest-count">
-                          {project.guestCount}{" "}
-                          {project.guestCount === 1 ? "Guest" : "Guests"}
-                        </span>
-                        <p className="portfolio__card-description">{project.description}</p>
-                      </div>
-                    </div>
-
-                    <div className="portfolio__card-content">
-                      <h3 className="portfolio__card-title">{project.title}</h3>
-                      <p className="portfolio__card-event-type">
-                        {categories.find(cat => cat.id ===project.category) ?.label || project.eventType}
-                      </p>
-
-                      <div className="portfolio__card-tags">
-                        {project.tags.slice(0, 3).map((tag, index) => (
-                          <span key={index} className="portfolio__card-tag">
-                            {tag.replace(/-/g, '')}
-                          </span>
-                        ))}
-                        {project.tags.length > 3 && (
-                          <span className="portfolio__card-tag portfolio__card-tag--more">
-                            +{project.tags.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </article>
+                  <PortfolioCard key={project.id} project={project} />
                 ))}
               </div>
             )}
