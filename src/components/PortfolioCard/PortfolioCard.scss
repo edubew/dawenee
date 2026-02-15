@@ -1,5 +1,17 @@
 @import "../../styles/variables";
 
+// Keyframe animation
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .portfolio-card {
   break-inside: avoid;
   margin-bottom: $space-lg;
@@ -8,6 +20,14 @@
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: all $transition-base;
+  animation: fadeInUp 0.4s ease-out forwards;
+
+  // Stagger effect where each card delays slightly
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0, 05}s;
+    }
+  }
 
   @media (max-width: 480px) {
     margin-bottom: $space-md;
@@ -43,7 +63,8 @@
     bottom: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.85) 100%
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.85) 100%
     );
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
