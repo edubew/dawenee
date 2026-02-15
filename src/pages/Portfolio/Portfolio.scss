@@ -1,0 +1,116 @@
+@import "../../styles/variables";
+
+.portfolio-page {
+  min-height: 100vh;
+  background-color: $warm-white;
+}
+
+.portfolio {
+  &__hero {
+    padding: $space-5xl $space-lg $space-4xl;
+    text-align: center;
+    background: linear-gradient(135deg, $light-gray 0%, $warm-white 100%);
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-3xl;
+    font-weight: $weight-light;
+    color: $warm-charcoal;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-2xl;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $size-md;
+    color: $soft-gray;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__filters {
+    padding: $space-3xl 0;
+    background-color: $warm-white;
+    border-bottom: 1px solid$light-gray;
+    position: sticky;
+    top: $nav-height;
+    z-index: 10;
+  }
+
+  &__filter-buttons {
+    display: flex;
+    gap: $space-sm;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__filter-btn {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-medium;
+    color: $warm-charcoal;
+    background-color: transparent;
+    border: 2px solid$light-gray;
+    padding: $space-sm $space-lg;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all $transition-base;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: $dusty-blush;
+      background-color: rgba($dusty-blush, 0.1);
+    }
+
+    &--active {
+      background-color: $dusty-blush;
+      border-color: $dusty-blush;
+      color: white;
+
+      .portfolio__filter-count {
+        color: white;
+      }
+    }
+  }
+
+  &__filter-count {
+    margin-left: $space-xs;
+    color: $soft-gray;
+    font-size: $size-xs;
+  }
+
+  &__empty {
+    text-align: center;
+    font-family: $font-body;
+    font-size: $size-md;
+    color: $soft-gray;
+    padding: $space-5xl;
+  }
+
+  &__grid {
+    padding: $space-4xl 0;
+  }
+
+  &__projects {
+    column-count: 3;
+    column-gap: $space-lg;
+
+    @media (max-width: 768px) {
+      column-count: 2;
+    }
+
+    @media (max-width: 480px) {
+      column-count: 2;
+      column-gap: $space-md;
+    }
+  }
+}
