@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Services.scss";
+import ServicePage from "../../components/ServicePage/ServicePage";
 
 function Services() {
   return (
@@ -18,6 +19,10 @@ function Services() {
               matters, and every event tells a story.
             </p>
           </div>
+        </section>
+
+        <section className="srvices__grid">
+          <ServicePage />
         </section>
       </main>
       <Footer />
