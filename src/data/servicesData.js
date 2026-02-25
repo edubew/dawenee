@@ -15,7 +15,6 @@ export const services = [
     fullDescription:
       "Transform any space with our custom balloon backdrops. From organic balloon arches to geometric installations, we create show-stopping focal points that guests can't stop photographing. Perfect for birthdays, weddings, corporate events, or any celebration that deserves the wow factor.",
     image: balloonBackdrop,
-    icon: "🎈",
     features: [
       "Organic balloon garlands",
       "Geometric balloon walls",
@@ -37,7 +36,6 @@ export const services = [
     fullDescription:
       "Every detail matters when it comes to table settings. We design and style tablescapes that elevate your event, from intimate dinners to grand celebrations. Linens, centerpieces, place settings, and finishing touches all curated to match your vision perfectly.",
     image: tableSetup,
-    icon: "🍽️",
     features: [
       "Custom tablescapes and centerpieces",
       "Premium linens and runners",
@@ -64,7 +62,6 @@ export const services = [
     fullDescription:
       "We bring children's imaginations to life with fully themed party setups. From princess castles to superhero headquarters, pirate ships to unicorn wonderlands - we handle every detail so parents can enjoy the celebration. Age-appropriate decor, activities, and entertainment all coordinated perfectly.",
     image: kidsParty,
-    icon: "🎉",
     features: [
       "Fully themed decorations",
       "Age-appropriate activities",
@@ -86,7 +83,6 @@ export const services = [
     fullDescription:
       "Whether it's a sweet sixteen, dirty thirty, or golden fifty, we make birthdays extraordinary. Sophisticated decor for adult celebrations or playful themes for kids - every birthday deserves to be celebrated in style. We customize every element to reflect the personality of the guest of honor.",
     image: balloonBackdrop,
-    icon: "🎂",
     features: [
       "Age-appropriate theme design",
       "Personalized decor elements",
@@ -112,7 +108,6 @@ export const services = [
     fullDescription:
       "Academic milestones deserve recognition in style. We create sophisticated graduation setups that honor the achievement while celebrating the future. School colors, personalized elements, photo displays, and elegant table settings all come together to make graduates feel truly special.",
     image: tentFurniture,
-    icon: "🎓",
     features: [
       "School color coordination",
       "Photo timeline displays",
@@ -138,7 +133,6 @@ export const services = [
     fullDescription:
       "Transform any outdoor space into an elegant event venue. We provide and set up tents, tables, chairs, and furniture to create comfortable, stylish gathering spaces. From intimate garden parties to large outdoor weddings, we have the inventory and expertise to bring your vision to life.",
     image: tentFurniture,
-    icon: "⛺",
     features: [
       "Tent rentals and installation",
       "Premium furniture selection",
@@ -165,7 +159,6 @@ export const services = [
     fullDescription:
       "Experience the magic of outdoor dining with our curated picnic setups. Low seating arrangements, Moroccan rugs, scattered cushions, fresh flowers, and gourmet spreads - all perfectly styled for intimate gatherings or larger outdoor celebrations. We handle everything from setup to cleanup.",
     image: picnic,
-    icon: "🧺",
     features: [
       "Low Moroccan seating",
       "Layered rugs and cushions",
@@ -193,7 +186,6 @@ export const services = [
     fullDescription:
       "Have a specific vision that doesn't fit traditional categories? We love a creative challenge! From themed proposals to surprise celebrations, brand activations to unconventional gatherings - we work with you to design and execute truly one-of-a-kind events. No idea is too ambitious.",
     image: floralDesigns,
-    icon: "✨",
     features: [
       "Personalized consultation",
       "Custom theme development",
