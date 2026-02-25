@@ -66,9 +66,9 @@ function Navbar() {
           </li>
           <li>
             <Link
-              to="/portfolio"
+              to="/services"
               className={
-                isActive("/portfolio")
+                isActive("/services")
                   ? "navbar__link navbar__link--active"
                   : "navbar__link"
               }
