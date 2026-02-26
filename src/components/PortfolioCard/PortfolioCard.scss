@@ -177,10 +177,6 @@
       background-color: $champagne;
       color: white;
       font-weight: $weight-medium;
-
-      &:hover {
-        background-color: darken($champagne, 10%);
-      }
     }
   }
 }

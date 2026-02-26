@@ -43,7 +43,7 @@
     font-size: $size-md;
     color: $soft-gray;
     margin: 0;
-    
+
     @media (max-width: 768px) {
       font-size: $size-base;
     }
@@ -94,6 +94,5 @@
       color: $terracotta;
       transform: translateX(4px);
     }
-
   }
 }
