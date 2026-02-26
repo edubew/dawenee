@@ -88,13 +88,13 @@ function Hero() {
             </button>
           </div>
 
-          <div className="hero__testimonial">
+          {/* <div className="hero__testimonial">
             <div className="hero__stars">⭐⭐⭐⭐⭐</div>
             <p className="hero__testimonial-text">
               "Best decor in Nairobi! Made our day perfect."
             </p>
             <span className="hero__testimonial-author">- Sarah M.</span>
-          </div>
+          </div> */}
         </div>
 
         {/* Image carousel */}

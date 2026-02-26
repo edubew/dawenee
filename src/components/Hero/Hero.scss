@@ -51,10 +51,12 @@
     letter-spacing: 1.5px;
     color: $sage-green;
     margin-bottom: $space-md;
+    margin-top: $space-sm;
     display: inline-block;
 
     @media (max-width: 480px) {
       font-size: $size-xs;
+      margin-top: 0;
     }
   }
 
