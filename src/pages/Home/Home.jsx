@@ -4,6 +4,7 @@ import Hero from "../../components/Hero/Hero";
 import FeaturedWork from "../../components/FeaturedProjects/FeaturedWork";
 import Services from "../../components/Services/Services";
 import Cta from "../../components/Cta/Cta";
+import Testimonials from "../../components/Testimonials/Testimonials";
 import Footer from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
 import "./Home.scss";
@@ -107,6 +108,7 @@ const Home = () => {
 
       <FeaturedWork />
       <Services />
+      <Testimonials />
       <Cta />
       <Footer />
     </div>
