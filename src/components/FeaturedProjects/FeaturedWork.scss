@@ -4,7 +4,6 @@
   padding: $space-5xl 0;
   background: $warm-white;
 
-  //Mobile padding
   @media (max-width: 768px) {
     padding: $space-3xl $space-lg;
   }
@@ -13,30 +12,47 @@
     padding: $space-2xl $space-md;
   }
 
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-3xl;
+    }
+  }
+
   &__title {
     font-family: $font-headline;
     font-size: $size-2xl;
-    font-weight: $weight-semi;
+    font-weight: $weight-light;
     color: $warm-charcoal;
     text-align: center;
-    margin: 0 0 $space-3xl 0;
+    margin: $space-md;
 
-    //Mobile title size
     @media (max-width: 768px) {
       font-size: $size-xl;
-      margin-bottom: $space-2xl;
     }
 
     @media (max-width: 480px) {
       font-size: $size-lg;
-      margin-bottom: $space-xl;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $size-md;
+    color: $soft-gray;
+    margin: 0;
+    
+    @media (max-width: 768px) {
+      font-size: $size-base;
     }
   }
 
   //Pinterest Column Masonry
   &__grid {
     column-count: 3;
-    column-gap: $space-xl;
+    column-gap: $space-lg;
     max-width: $max-width;
     margin: 0 auto;
     padding: 0 $space-xl;
@@ -47,11 +63,37 @@
       padding: 0 $space-lg;
     }
 
-    // Mobile: 1 column
     @media (max-width: 480px) {
       column-count: 1;
       column-gap: 0;
       padding: 0 $space-md;
     }
+  }
+
+  &__cta {
+    text-align: center;
+    margin-top: $space-3xl;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-medium;
+    color: $warm-charcoal;
+    text-decoration: none;
+    padding: $space-md $space-xl;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius-lg;
+    transition: all $transition-base;
+
+    &:hover {
+      border-color: $terracotta;
+      color: $terracotta;
+      transform: translateX(4px);
+    }
+
   }
 }
