@@ -12,6 +12,7 @@ function App() {
       <Route path="/booking" element={<Booking />} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/quote" element={<Home />} />
     </Routes>
   );
 }

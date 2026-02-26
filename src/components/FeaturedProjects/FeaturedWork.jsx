@@ -5,7 +5,7 @@ import "./FeaturedWork.scss";
 
 function FeaturedWork() {
   return (
-    <section className="featured-work">
+    <section className="featured-work" id="featured-work">
       <div className="container">
         <h2 className="featured-work__title">Featured Projects</h2>
 
