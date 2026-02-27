@@ -1,6 +1,6 @@
 @import "../../styles/variables";
 
-.services {
+.services-preview {
   padding: $space-5xl;
   background: $light-gray;
 
@@ -12,12 +12,20 @@
     padding: $space-2xl $space-md;
   }
 
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-3xl;
+    }
+  }
+
   &__title {
     font-family: $font-headline;
     font-size: $size-2xl;
-    font-weight: $weight-semi;
+    font-weight: $weight-light;
     color: $warm-charcoal;
-    text-align: center;
     margin: 0 0 $space-md 0;
 
     @media (max-width: 768px) {
@@ -33,20 +41,10 @@
     font-family: $font-body;
     font-size: $size-md;
     color: $soft-gray;
-    text-align: center;
-    margin: 0 auto $space-3xl auto;
-    max-width: 600px;
+    margin: 0;
 
     @media (max-width: 768px) {
       font-size: $size-base;
-      margin-bottom: $space-2xl;
-      padding: 0 $space-lg;
-    }
-
-    @media (max-width: 480px) {
-      font-size: $size-sm;
-      margin-bottom: $space-xl;
-      padding: 0 $space-md;
     }
   }
 
@@ -54,20 +52,57 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: $space-xl;
-    max-width: $max-width;
-    margin: 0 auto;
-    padding: 0 $space-xl;
+    margin-bottom: $space-4xl;
 
-    @media (max-width: 968px) {
+    @media (max-width: 1024px) {
       grid-template-columns: repeat(2, 1fr);
       gap: $space-lg;
-      padding: 0 $space-lg;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       grid-template-columns: 1fr;
       gap: $space-lg;
-      padding: 0 $space-md;
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__cta {
+    text-align: center;
+  }
+
+  &__button {
+    display: inline-block;
+    align-items: center;
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: white;
+    background-color: $terracotta;
+    text-decoration: none;
+    padding: $space-md $space-xl;
+    border-radius: $border-radius-lg;
+    transition: all $transition-base;
+    box-shadow: 0 4px 12px rgba($terracotta, 0.25);
+
+    &:hover {
+      background-color: $terracotta-dark;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba($terracotta, 0.35);
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__note {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    margin-top: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
     }
   }
 }

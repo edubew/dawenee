@@ -50,7 +50,7 @@ const services = [
     id: 6,
     title: "Picnics & Outdoor Events",
     description:
-      "Dreamy al fresco setups for intimate gatherings. Boho picnics, garden brunches, and outdoor celebrations that feel effortless.",
+      "Cute setups for intimate gatherings. Boho picnics, garden brunches, and outdoor celebrations that feel effortless.",
     image: picnicsImg,
     icon: "🧺",
   },

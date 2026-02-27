@@ -7,6 +7,13 @@ function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   //Auto advance slides every 6 seconds
   useEffect(() => {
     if (isPaused) return;
@@ -53,9 +60,41 @@ function Hero() {
             that feels good too
           </p>
 
-          <Link to="/portfolio" className="hero__cta">
-            Explore Our Work
-          </Link>
+          <div className="hero__trust-signals">
+            <div className="hero__trust-item">
+              <span className="hero__trust-icon">✓</span>
+              <span className="hero__trust-text">30+ Events Styled</span>
+            </div>
+            <div className="hero__trust-item">
+              <span className="hero__trust-icon">✓</span>
+              <span className="hero__trust-text">Same-Day Quotes</span>
+            </div>
+            <div className="hero__trust-item">
+              <span className="hero__trust-icon">✓</span>
+              <span className="hero__trust-text">From as low as Kes 8,000</span>
+            </div>
+          </div>
+
+          <div className="hero__ctas">
+            <Link to="/quote" className="hero__cta hero__cta--primary">
+              Get Instant Quote
+            </Link>
+
+            <button
+              onClick={() => scrollToSection("featured-work")}
+              className="hero__cta hero__cta--secondary"
+            >
+              View Our Work
+            </button>
+          </div>
+
+          {/* <div className="hero__testimonial">
+            <div className="hero__stars">⭐⭐⭐⭐⭐</div>
+            <p className="hero__testimonial-text">
+              "Best decor in Nairobi! Made our day perfect."
+            </p>
+            <span className="hero__testimonial-author">- Sarah M.</span>
+          </div> */}
         </div>
 
         {/* Image carousel */}

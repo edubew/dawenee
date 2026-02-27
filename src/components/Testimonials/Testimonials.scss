@@ -1,0 +1,124 @@
+@import "../../styles/variables";
+
+.testimonials {
+  padding: $space-5xl 0;
+  background-color: white;
+
+  @media (max-width: 768px) {
+    padding: $space-4xl 0;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-light;
+    color: $warm-charcoal;
+    text-align: center;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+    margin-bottom: $space-3xl;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: $space-lg;
+    }
+  }
+
+  &__rating {
+    text-align: center;
+    padding: $space-xl;
+    background: linear-gradient(135deg, $light-gray 0%, $warm-white 100%);
+    border-radius: $border-radius-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-md;
+    flex-wrap: wrap;
+  }
+
+  &__rating-number {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-semi;
+    color: $terracotta;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+  }
+
+  &__rating-text {
+    font-family: $font-body;
+    font-size: $size-md;
+    color: $soft-gray;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+}
+
+.testimonial-card {
+  padding: $space-2xl;
+  background-color: $light-gray;
+  border-radius: $border-radius-lg;
+  border-left: 4px solid $sage-green;
+  transition: all $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba($warm-charcoal, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+  }
+
+  &__stars {
+    font-size: $size-sm;
+    margin-bottom: $space-md;
+    letter-spacing: 2px;
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    font-style: italic;
+    line-height: 1.7;
+    margin: 0 0 $space-lg 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__author {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+
+    strong {
+      font-family: $font-body;
+      font-size: $size-sm;
+      font-weight: $weight-semi;
+      color: $warm-charcoal;
+    }
+
+    span {
+      font-family: $font-body;
+      font-size: $size-xs;
+      color: $soft-gray;
+    }
+  }
+}
