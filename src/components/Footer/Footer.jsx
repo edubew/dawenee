@@ -80,7 +80,17 @@ function Footer() {
               <Link to="/quote" className="footer__link">
                 Get Quote
               </Link>
-              <a href="#featured-work" className="footer__link">
+              <a
+                href="#featured-work"
+                className="footer__link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById("featured-work");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
                 Our Work
               </a>
               <a href="tel:+254715784287" className="footer__link">
@@ -92,7 +102,6 @@ function Footer() {
           <div className="footer__column--primary">
             <h4 className="footer__column-title">Get in Touch</h4>
             <div className="footer__contact">
-
               <div className="footer__contact-item">
                 <span className="footer__contact-icon">📍</span>
                 <div>

@@ -18,6 +18,14 @@ function Navbar() {
     setmobileMenuOpen(false);
   };
 
+   const scrollToSection = (sectionId) => {
+     handleLinkClick();
+     const element = document.getElementById(sectionId);
+     if (element) {
+       element.scrollIntoView({ behavior: "smooth", block: "start" });
+     }
+   };
+
   return (
     <nav className="navbar">
       <div className="container navbar__inner">
@@ -51,52 +59,37 @@ function Navbar() {
               Home
             </Link>
           </li>
+
+          <li>
+            <button
+              onClick={() => scrollToSection("featured-work")}
+              className="navbar__link--button"
+            >
+              Our Work
+            </button>
+          </li>
+
           <li>
             <Link
-              to="/portfolio"
+              to="/quote"
               className={
-                isActive("/portfolio")
+                isActive("/quote")
                   ? "navbar__link navbar__link--active"
                   : "navbar__link"
               }
               onClick={handleLinkClick}
             >
-              Portfolio
+              Get Quote
             </Link>
           </li>
-          <li>
-            <Link
-              to="/services"
-              className={
-                isActive("/services")
-                  ? "navbar__link navbar__link--active"
-                  : "navbar__link"
-              }
-              onClick={handleLinkClick}
-            >
-              Services
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/about"
-              className={
-                isActive("/about")
-                  ? "navbar__link navbar__link--active"
-                  : "navbar__link"
-              }
-              onClick={handleLinkClick}
-            >
-              About
-            </Link>
-          </li>
+
           <li>
             <Link
               to="/booking"
               className="navbar__cta"
               onClick={handleLinkClick}
             >
-              Book a Consultation
+              Book Now
             </Link>
           </li>
         </ul>

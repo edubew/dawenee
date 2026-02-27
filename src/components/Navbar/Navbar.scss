@@ -31,7 +31,7 @@
     transition: color $transition-fast;
 
     &:hover {
-      color: $sage-dark;
+      color: $terracotta-dark;
     }
   }
 
@@ -104,7 +104,7 @@
   &__link {
     font-size: 15px;
     font-weight: $weight-regular;
-    color: $soft-gray;
+    color: $warm-charcoal;
     transition: color $transition-fast;
     position: relative;
 
@@ -115,7 +115,7 @@
       left: 0;
       width: 0;
       height: 1.5px;
-      background-color: $dusty-blush;
+      background-color: $terracotta;
       transition: width $transition-base;
     }
 
@@ -127,8 +127,21 @@
       }
     }
 
+    &--button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      padding: 0;
+
+      &:hover {
+        color: $soft-gray;
+      }
+    }
+
     &--active {
-      color: $warm-charcoal;
+      color: $soft-gray;
       font-weight: $weight-medium;
 
       &::after {
