@@ -1,0 +1,271 @@
+@import "../../styles/variables";
+
+.quote-page {
+  background-color: $warm-white;
+  min-height: 100vh;
+}
+
+.quote {
+  padding: $space-5xl 0;
+
+  @media (max-width: 768px) {
+    padding: $space-4xl 0;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-light;
+    color: $warm-charcoal;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-lg;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $size-md;
+    color: $soft-gray;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__progress {
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: $light-gray;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: $space-lg;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $terracotta 0%, $terracotta-dark 100%);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+  }
+
+  &__progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $space-md;
+  }
+
+  &__progress-step {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $light-gray;
+    color: $soft-gray;
+    border: 2px solid $light-gray;
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &--active {
+      background-color: $terracotta;
+      color: white;
+      border-color: $terracotta;
+      transform: scale(1.15);
+    }
+
+    &--completed {
+      background-color: $sage-green;
+      color: white;
+      border-color: $sage-green;
+    }
+
+    @media (max-width: 768px) {
+      width: 36px;
+      height: 36px;
+      font-size: $size-xs;
+    }
+  }
+
+  &__progress-text {
+    text-align: center;
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    margin: 0;
+  }
+
+  &__content {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    padding: $space-3xl;
+    box-shadow: 0 4px 20px rgba($warm-charcoal, 0.08);
+    min-height: 400px;
+
+    @media (max-width: 768px) {
+      padding: $space-xl;
+      min-height: 300px;
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $space-2xl;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: $space-md;
+    }
+  }
+
+  &__nav-button {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    padding: $space-sm $space-lg;
+    border-radius: $border-radius-lg;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    @media (max-width: 640px) {
+      width: 100%;
+    }
+
+    &--back {
+      background-color: transparent;
+      color: $warm-charcoal;
+      border: 2px solid $light-gray;
+
+      &:hover {
+        border-color: $terracotta;
+        color: $terracotta;
+      }
+    }
+
+    &--next {
+      background-color: $terracotta;
+      color: white;
+      box-shadow: 0 4px 12px rgba($terracotta, 0.25);
+      margin-left: auto;
+
+      &:hover {
+        background-color: $terracotta-dark;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba($terracotta, 0.35);
+      }
+
+      @media (max-width: 640px) {
+        margin-left: 0;
+      }
+    }
+
+    &--submit {
+      background-color: $sage-green;
+      color: white;
+      box-shadow: 0 4px 12px rgba($sage-green, 0.25);
+      margin-left: auto;
+
+      &:hover {
+        background-color: $sage-dark;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba($sage-green, 0.35);
+      }
+
+      @media (max-width: 640px) {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: $space-3xl;
+  }
+
+  &__back-link {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $terracotta;
+    }
+  }
+}
+
+.step {
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-md;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $soft-gray;
+    margin-bottom: $space-2xl;
+    line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+      margin-bottom: $space-xl;
+    }
+  }
+
+  &__placeholder {
+    padding: $space-3xl;
+    background-color: $light-gray;
+    border-radius: $border-radius;
+    text-align: center;
+
+    p {
+      font-family: $font-body;
+      font-size: $size-sm;
+      color: $soft-gray;
+      margin: 0;
+      font-style: italic;
+    }
+  }
+}

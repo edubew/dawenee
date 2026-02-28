@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Quote.scss";
+import { Link } from "react-router-dom";
 
 function Quote() {
   // Track the steps
@@ -128,9 +129,40 @@ function Quote() {
                 </div>
               )}
             </div>
+
+            <div className="quote__navigation">
+              {currentStep > 1 && (
+                <button
+                  onClick={prevStep}
+                  className="quote__nav-button quote__nav-button--back"
+                >
+                  ← Back
+                </button>
+              )}
+
+              {currentStep < totalSteps ? (
+                <button
+                  onClick={nextStep}
+                  className="quote__nav-button quote__nav-button--next"
+                >
+                  Next Step →
+                </button>
+              ) : (
+                <button className="quote__nav-button quote__nav-button--submit">
+                  Review Quote
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="quote__footer">
+            <Link to="/" className="quote__back-link">
+              ← Back to Homepage
+            </Link>
           </div>
         </div>
       </main>
+      
       <Footer />
     </div>
   );
