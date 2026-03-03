@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Quote.scss";
 import { Link } from "react-router-dom";
+import { getMatchingVenues } from "../../data/venuesData";
 
 function Quote() {
   // Track the steps
@@ -42,7 +43,12 @@ function Quote() {
     specialRequests: "",
   });
 
+  const [venueFilter, setVenueFilter] = useState("all");
+
   const tablesNeeded = Math.ceil(formData.guestCount / 7);
+
+  const allMatchingVenues = getMatchingVenues(formData.location, venueFilter);
+  const suggestedVenues = allMatchingVenues.slice(0, 6);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -177,25 +183,6 @@ function Quote() {
                     </div>
 
                     <div className="form__group">
-                      <label htmlFor="venueName" className="form__label">
-                        Venue Name <span className="form__required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="venueName"
-                        name="venueName"
-                        value={formData.venueName}
-                        onChange={handleChange}
-                        placeholder="e.g., Marula Manor, Karen Country Club"
-                        className="form__input"
-                        required
-                      />
-                      <span className="form__hint">
-                        Where will your event take place?
-                      </span>
-                    </div>
-
-                    <div className="form__group">
                       <label className="form__label">
                         Location <span className="form__required">*</span>
                       </label>
@@ -229,13 +216,111 @@ function Quote() {
                         </label>
                       </div>
                     </div>
+
+                    <div className="form__group">
+                      <label htmlFor="venueName" className="form__label">
+                        Venue Name <span className="form__required">*</span>
+                      </label>
+                      <div className="form__venue-filter">
+                        <button
+                          type="button"
+                          onClick={() => setVenueFilter("all")}
+                          className={`form__filter-btn ${venueFilter === "all" ? "form__filter-btn--active" : ""}`}
+                        >
+                          All Venues
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setVenueFilter("outdoor")}
+                          className={`form__filter-btn ${venueFilter === "outdoor" ? "form__filter-btn--active" : ""}`}
+                        >
+                          Outdoor
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setVenueFilter("indoor")}
+                          className={`form__filter-btn ${venueFilter === "indoor" ? "form__filter-btn--active" : ""}`}
+                        >
+                          Indoor
+                        </button>
+                      </div>
+
+                      {suggestedVenues.length > 0 && (
+                        <div className="form__venue-suggestions">
+                          <p className="form__venue-suggestions-title">
+                            💡{" "}
+                            {venueFilter === "all"
+                              ? "All"
+                              : venueFilter === "outdoor"
+                                ? "Outdoor"
+                                : "Indoor"}{" "}
+                            venues in{" "}
+                            {formData.location === "nairobi"
+                              ? "Nairobi"
+                              : "outside Nairobi"}
+                            :
+                          </p>
+                          <div className="form__venue-cards">
+                            {suggestedVenues.map((venue) => (
+                              <button
+                                key={venue.id}
+                                type="button"
+                                onClick={() =>
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    venueName: venue.name,
+                                  }))
+                                }
+                                className={`form__venue-card ${formData.venueName === venue.name ? "form__venue-card--selected" : ""}`}
+                              >
+                                <div className="form__venue-card-header">
+                                  <span className="form__venue-card-type">
+                                    {venue.type === "outdoor"
+                                      ? "🌳"
+                                      : venue.type === "indoor"
+                                        ? "🏛️"
+                                        : "🌳🏛️"}
+                                  </span>
+                                  <span className="form__venue-card-category">
+                                    {venue.category}
+                                  </span>
+                                </div>
+                                <div className="form__venue-card-name">
+                                  {venue.name}
+                                </div>
+                                <div className="form__venue-card-area">
+                                  {venue.area}
+                                </div>
+                                <div className="form__venue-card-contact">
+                                  {venue.contact}
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                          {allMatchingVenues.length > 6 && (
+                            <p className="form__venue-suggestions-more">
+                              +{allMatchingVenues.length - 6} more venues
+                              available
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      <input
+                        type="text"
+                        id="venueName"
+                        name="venueName"
+                        value={formData.venueName}
+                        onChange={handleChange}
+                        placeholder="e.g., Marula Manor, Karen Country Club"
+                        className="form__input"
+                        required
+                      />
+                      <span className="form__hint">
+                        Filter by venue type, select from suggestions, or enter
+                        your own
+                      </span>
+                    </div>
                   </div>
-                  {/* <div className="step__placeholder">
-                    <p>
-                      Event date, guest count, venue, location form fields
-                      coming next...
-                    </p>
-                  </div> */}
                 </div>
               )}
 

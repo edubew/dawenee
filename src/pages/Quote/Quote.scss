@@ -243,7 +243,7 @@
 
   &__description {
     font-family: $font-body;
-    font-size: $size-base;
+    font-size: $size-sm;
     color: $soft-gray;
     margin-bottom: $space-2xl;
     line-height: 1.6;
@@ -253,26 +253,11 @@
       margin-bottom: $space-xl;
     }
   }
-
-  &__placeholder {
-    padding: $space-3xl;
-    background-color: $light-gray;
-    border-radius: $border-radius;
-    text-align: center;
-
-    p {
-      font-family: $font-body;
-      font-size: $size-sm;
-      color: $soft-gray;
-      margin: 0;
-      font-style: italic;
-    }
-  }
 }
 
 .form {
   &__group {
-    margin-bottom: $space-2xl;
+    margin-bottom: $space-xl;
 
     &:last-child {
       margin-bottom: 0;
@@ -295,13 +280,17 @@
   &__input {
     width: 100%;
     font-family: $font-body;
-    font-size: $size-base;
+    font-size: $size-sm;
     color: $warm-charcoal;
     background-color: white;
     border: 2px solid $light-gray;
     border-radius: $border-radius;
     padding: $space-md;
     transition: all $transition-fast;
+
+    @media (max-width: 768px) {
+      padding: $size-sm;
+    }
 
     &:focus {
       outline: none;
@@ -386,13 +375,13 @@
 
   &__slider-number {
     font-family: $font-headline;
-    font-size: $size-2xl;
+    font-size: $size-xl;
     font-weight: $weight-semi;
     color: $terracotta;
     line-height: 1;
 
     @media (max-width: 768px) {
-      font-size: $size-xl;
+      font-size: $size-lg;
     }
   }
 
@@ -413,17 +402,30 @@
     border-radius: $border-radius;
     border-left: 4px solid $sage-green;
     margin-top: $space-md;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
   }
 
   &__calculation-icon {
     font-size: $size-lg;
     flex-shrink: 0;
+
+     @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__calculation-text {
     font-family: $font-body;
     font-size: $size-sm;
     color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      margin-top: $size-lg;
+      font-size: $size-xs;
+    }
 
     strong {
       color: $sage-green;
@@ -441,7 +443,7 @@
     display: flex;
     align-items: flex-start;
     gap: $space-md;
-    padding: $space-lg;
+    padding: $space-md;
     background-color: white;
     border: 2px solid $light-gray;
     border-radius: $border-radius;
@@ -487,5 +489,152 @@
       font-size: $size-xs;
       color: $soft-gray;
     }
+  }
+
+  &__venue-filter {
+    display: flex;
+    gap: $space-sm;
+    margin-bottom: $space-lg;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
+  }
+
+  &__filter-btn {
+    flex: 1;
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-medium;
+    color: $soft-gray;
+    background-color: white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius;
+    padding: $space-sm $space-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $sage-green;
+      color: $warm-charcoal;
+    }
+
+    &--active {
+      background-color: $sage-green;
+      color: white;
+      border-color: $sage-green;
+    }
+
+    @media (max-width: 640px) {
+      flex: none;
+    }
+  }
+
+   &__venue-suggestions {
+    background-color: rgba($sage-green, 0.05);
+    border: 1px solid rgba($sage-green, 0.2);
+    border-radius: $border-radius;
+    padding: $space-lg;
+    margin-bottom: $space-lg;
+  }
+
+  &__venue-suggestions-title {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+  }
+
+  &__venue-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-md;
+    margin-bottom: $space-sm;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__venue-card {
+    background-color: white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius;
+    padding: $space-md;
+    text-align: left;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $sage-green;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($sage-green, 0.15);
+    }
+
+    &--selected {
+      border-color: $sage-green;
+      background-color: rgba($sage-green, 0.1);
+      
+      .form__venue-card-name {
+        color: $sage-green;
+      }
+    }
+  }
+
+  &__venue-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $space-xs;
+  }
+
+  &__venue-card-type {
+    font-size: $size-md;
+  }
+
+  &__venue-card-category {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: white;
+    background-color: $terracotta;
+    padding: 2px $space-xs;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__venue-card-name {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin-bottom: 4px;
+  }
+
+  &__venue-card-area {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+    margin-bottom: 4px;
+  }
+
+  &__venue-card-contact {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+  }
+
+  &__venue-suggestions-more {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+    text-align: center;
+    margin: $space-sm 0 0 0;
+    font-style: italic;
   }
 }
