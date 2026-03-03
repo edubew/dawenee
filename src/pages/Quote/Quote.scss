@@ -253,6 +253,45 @@
       margin-bottom: $space-xl;
     }
   }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-xl;
+    background: linear-gradient(135deg, $light-gray 0%, $warm-white 100%);
+    border-radius: $border-radius-lg;
+    margin-top: $space-2xl;
+    border-top: 3px solid $terracotta;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: $space-sm;
+      text-align: center;
+    }
+  }
+
+  &__total-label {
+    font-family: $font-body;
+    font-size: $size-md;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__total-amount {
+    font-family: $font-headline;
+    font-size: $size-md;
+    font-weight: $weight-semi;
+    color: $terracotta;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
 }
 
 .form {
@@ -412,7 +451,7 @@
     font-size: $size-lg;
     flex-shrink: 0;
 
-     @media (max-width: 768px) {
+    @media (max-width: 768px) {
       display: none;
     }
   }
@@ -530,7 +569,7 @@
     }
   }
 
-   &__venue-suggestions {
+  &__venue-suggestions {
     background-color: rgba($sage-green, 0.05);
     border: 1px solid rgba($sage-green, 0.2);
     border-radius: $border-radius;
@@ -579,7 +618,7 @@
     &--selected {
       border-color: $sage-green;
       background-color: rgba($sage-green, 0.1);
-      
+
       .form__venue-card-name {
         color: $sage-green;
       }
@@ -636,5 +675,164 @@
     text-align: center;
     margin: $space-sm 0 0 0;
     font-style: italic;
+  }
+
+  &__info-box {
+    background: linear-gradient(
+      135deg,
+      rgba($sage-green, 0.1) 0%,
+      rgba($sage-green, 0.05) 100%
+    );
+    border: 2px solid rgba($sage-green, 0.3);
+    border-radius: $border-radius-lg;
+    padding: $space-xl;
+
+    @media (max-width: 768px) {
+      padding: $space-lg;
+    }
+  }
+
+  &__info-box-header {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-bottom: $space-md;
+  }
+
+  &__info-box-title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-md;
+    }
+  }
+
+  &__info-box-text {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    line-height: 1.6;
+    margin: 0 0 $space-md 0;
+
+    strong {
+      color: $sage-green;
+      font-weight: $weight-semi;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+}
+
+.chair-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-lg;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chair-card {
+  position: relative;
+  background-color: white;
+  border: 2px solid $light-gray;
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+  text-align: center;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $terracotta;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba($terracotta, 0.15);
+  }
+
+  &--selected {
+    border-color: $terracotta;
+    background-color: rgba($terracotta, 0.05);
+
+    .chair-card__name {
+      color: $terracotta;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: $space-md;
+    right: $space-md;
+    background-color: $sage-green;
+    color: white;
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-semi;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px $space-sm;
+    border-radius: 4px;
+  }
+
+  &__image {
+    font-size: 64px;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: 48px;
+    }
+  }
+
+  &__name {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin-bottom: $space-sm;
+
+    @media (max-width: 768px) {
+      font-size: $size-md;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    line-height: 1.5;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__price {
+    font-family: $font-headline;
+    font-size: $size-xl;
+    font-weight: $weight-semi;
+    color: $terracotta;
+
+    span {
+      font-family: $font-body;
+      font-size: $size-xs;
+      color: $soft-gray;
+      font-weight: $weight-regular;
+      display: block;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-lg;
+    }
   }
 }
