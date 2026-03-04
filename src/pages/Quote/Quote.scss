@@ -9,7 +9,11 @@
   padding: $space-5xl 0;
 
   @media (max-width: 768px) {
-    padding: $space-4xl 0;
+    padding: $space-3xl 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: $space-2xl 0;
   }
 
   &__header {
@@ -18,6 +22,11 @@
 
     @media (max-width: 768px) {
       margin-bottom: $space-3xl;
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: $space-2xl;
+      padding: 0 $space-md;
     }
   }
 
@@ -46,6 +55,10 @@
     @media (max-width: 768px) {
       font-size: $size-base;
     }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+    }
   }
 
   &__progress {
@@ -53,6 +66,11 @@
 
     @media (max-width: 768px) {
       margin-bottom: $space-3xl;
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: $space-2xl;
+      padding: 0 $space-md;
     }
   }
 
@@ -63,6 +81,11 @@
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: $space-lg;
+
+    @media (max-width: 480px) {
+      height: 4px;
+      margin-bottom: $space-md;
+    }
   }
 
   &__progress-fill {
@@ -76,6 +99,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: $space-md;
+    padding: 0 $space-xs;
+
+    @media (max-width: 480px) {
+      padding: 0;
+    }
   }
 
   &__progress-step {
@@ -116,6 +144,11 @@
       height: 36px;
       font-size: $size-xs;
     }
+
+    @media (max-width: 480px) {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   &__progress-text {
@@ -124,6 +157,10 @@
     font-size: $size-sm;
     color: $soft-gray;
     margin: 0;
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+    }
   }
 
   &__content {
@@ -252,6 +289,11 @@
       font-size: $size-sm;
       margin-bottom: $space-xl;
     }
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+      margin-bottom: $space-lg;
+    }
   }
 
   &__total {
@@ -264,10 +306,15 @@
     margin-top: $space-2xl;
     border-top: 3px solid $terracotta;
 
+    @media (max-width: 768px) {
+      padding: $space-lg;
+    }
+
     @media (max-width: 640px) {
       flex-direction: column;
       gap: $space-sm;
       text-align: center;
+      padding: $space-md;
     }
   }
 
@@ -278,6 +325,10 @@
     color: $warm-charcoal;
 
     @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+
+    @media (max-width: 480px) {
       font-size: $size-sm;
     }
   }

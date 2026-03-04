@@ -7,6 +7,10 @@
     &:last-child {
       margin-bottom: 0;
     }
+
+    @media (max-width: 480px) {
+      margin-bottom: $space-lg;
+    }
   }
 
   &__label {
@@ -16,6 +20,10 @@
     font-weight: $weight-semi;
     color: $warm-charcoal;
     margin-bottom: $space-sm;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
   }
 
   &__required {
@@ -46,6 +54,10 @@
     &::placeholder {
       color: $soft-gray;
     }
+
+    @media (max-width: 768px) {
+      padding: $space-sm;
+    }
   }
 
   &__hint {
@@ -55,6 +67,10 @@
     color: $soft-gray;
     margin-top: $space-xs;
     font-style: italic;
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
   }
 
   &__slider-container {
@@ -149,7 +165,8 @@
     margin-top: $space-md;
 
     @media (max-width: 768px) {
-      flex-direction: column;
+      padding: $space-sm;
+      gap: $space-xs;
     }
   }
 
@@ -167,14 +184,17 @@
     font-size: $size-sm;
     color: $warm-charcoal;
 
-    @media (max-width: 768px) {
-      margin-top: $size-lg;
-      font-size: $size-xs;
-    }
-
     strong {
       color: $sage-green;
       font-weight: $weight-semi;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 11px;
     }
   }
 
@@ -396,6 +416,11 @@
     @media (max-width: 768px) {
       padding: $space-lg;
     }
+
+    @media (max-width: 480px) {
+      padding: $space-md;
+      border-radius: $border-radius;
+    }
   }
 
   &__info-box-header {
@@ -403,6 +428,11 @@
     align-items: center;
     gap: $space-sm;
     margin-bottom: $space-md;
+
+    @media (max-width: 480px) {
+      gap: $space-xs;
+      margin-bottom: $space-sm;
+    }
   }
 
   &__info-box-title {
@@ -414,6 +444,10 @@
 
     @media (max-width: 768px) {
       font-size: $size-md;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
     }
   }
 
