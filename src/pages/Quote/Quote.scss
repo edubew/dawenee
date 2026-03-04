@@ -743,96 +743,108 @@
   }
 }
 
-.chair-card {
-  position: relative;
-  background-color: white;
-  border: 2px solid $light-gray;
-  border-radius: $border-radius-lg;
-  padding: $space-xl;
-  text-align: center;
-  cursor: pointer;
-  transition: all $transition-base;
+// .chair-card {
+//   position: relative;
+//   background-color: white;
+//   border: 2px solid $light-gray;
+//   border-radius: $border-radius-lg;
+//   padding: $space-xl;
+//   text-align: center;
+//   cursor: pointer;
+//   transition: all $transition-base;
 
-  &:hover {
-    border-color: $terracotta;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba($terracotta, 0.15);
-  }
+//   &:hover {
+//     border-color: $terracotta;
+//     transform: translateY(-4px);
+//     box-shadow: 0 8px 24px rgba($terracotta, 0.15);
+//   }
 
-  &--selected {
-    border-color: $terracotta;
-    background-color: rgba($terracotta, 0.05);
+//   &--selected {
+//     border-color: $terracotta;
+//     background-color: rgba($terracotta, 0.05);
 
-    .chair-card__name {
-      color: $terracotta;
-    }
-  }
+//     .chair-card__name {
+//       color: $terracotta;
+//     }
+//   }
 
-  &__badge {
-    position: absolute;
-    top: $space-md;
-    right: $space-md;
-    background-color: $sage-green;
-    color: white;
-    font-family: $font-body;
-    font-size: $size-xs;
-    font-weight: $weight-semi;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 4px $space-sm;
-    border-radius: 4px;
-  }
+//   &__badge {
+//     position: absolute;
+//     top: $space-md;
+//     right: $space-md;
+//     background-color: $sage-green;
+//     color: white;
+//     font-family: $font-body;
+//     font-size: $size-xs;
+//     font-weight: $weight-semi;
+//     text-transform: uppercase;
+//     letter-spacing: 0.5px;
+//     padding: 4px $space-sm;
+//     border-radius: 4px;
+//   }
 
-  &__image {
-    font-size: 64px;
-    margin-bottom: $space-md;
+//   &__image {
+//     width: 80px;
+//     height: 80px;
+//     margin-bottom: $space-md;
+//     overflow: hidden;
+//     border-radius: $border-radius;
+//     background-color: $light-gray;
 
-    @media (max-width: 768px) {
-      font-size: 48px;
-    }
-  }
+//     img {
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       transition: transform $transition-slow;
+//     }
 
-  &__name {
-    font-family: $font-headline;
-    font-size: $size-lg;
-    font-weight: $weight-regular;
-    color: $warm-charcoal;
-    margin-bottom: $space-sm;
+//     @media (max-width: 768px) {
+//       width: 80px;
+//       height: 80px;
+//     }
+//   }
 
-    @media (max-width: 768px) {
-      font-size: $size-md;
-    }
-  }
+//   &__name {
+//     font-family: $font-headline;
+//     font-size: $size-lg;
+//     font-weight: $weight-regular;
+//     color: $warm-charcoal;
+//     margin-bottom: $space-sm;
 
-  &__description {
-    font-family: $font-body;
-    font-size: $size-sm;
-    color: $soft-gray;
-    line-height: 1.5;
-    margin-bottom: $space-md;
+//     @media (max-width: 768px) {
+//       font-size: $size-md;
+//     }
+//   }
 
-    @media (max-width: 768px) {
-      font-size: $size-xs;
-    }
-  }
+//   &__description {
+//     font-family: $font-body;
+//     font-size: $size-sm;
+//     color: $soft-gray;
+//     line-height: 1.5;
+//     margin-bottom: $space-md;
 
-  &__price {
-    font-family: $font-headline;
-    font-size: $size-xl;
-    font-weight: $weight-semi;
-    color: $terracotta;
+//     @media (max-width: 768px) {
+//       font-size: $size-xs;
+//     }
+//   }
 
-    span {
-      font-family: $font-body;
-      font-size: $size-xs;
-      color: $soft-gray;
-      font-weight: $weight-regular;
-      display: block;
-      margin-top: 4px;
-    }
+//   &__price {
+//     font-family: $font-headline;
+//     font-size: $size-md;
+//     font-weight: $weight-semi;
+//     color: $terracotta;
 
-    @media (max-width: 768px) {
-      font-size: $size-lg;
-    }
-  }
-}
+//     span {
+//       font-family: $font-body;
+//       font-size: $size-xs;
+//       color: $soft-gray;
+//       font-weight: $weight-regular;
+//       display: block;
+//       margin-top: 4px;
+//     }
+
+//     @media (max-width: 768px) {
+//       font-size: $size-md;
+//     }
+//   }
+// }
