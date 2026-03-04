@@ -5,6 +5,7 @@ import "./Quote.scss";
 import { Link } from "react-router-dom";
 import StepOne from "../../components/QuoteSteps/StepOne";
 import StepTwo from "../../components/QuoteSteps/StepTwo";
+import StepThree from "../../components/QuoteSteps/StepThree";
 
 function Quote() {
   // Track the steps
@@ -120,15 +121,7 @@ function Quote() {
               )}
 
               {currentStep === 3 && (
-                <div className="step">
-                  <h2 className="step__title">Step 3: Backdrops & Signage</h2>
-                  <p className="step__description">
-                    Select your backdrop and welcome signs
-                  </p>
-                  <div className="step__placeholder">
-                    <p>Backdrop selection coming next...</p>
-                  </div>
-                </div>
+                <StepThree formData={formData} setFormData={setFormData} />
               )}
 
               {currentStep === 4 && (
