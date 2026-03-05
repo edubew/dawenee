@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import StepOne from "../../components/QuoteSteps/StepOne";
 import StepTwo from "../../components/QuoteSteps/StepTwo";
 import StepThree from "../../components/QuoteSteps/StepThree";
+import StepFour from "../../components/QuoteSteps/StepFour";
 
 function Quote() {
   // Track the steps
@@ -125,17 +126,11 @@ function Quote() {
               )}
 
               {currentStep === 4 && (
-                <div className="step">
-                  <h2 className="step__title">Step 4: Centerpieces & Extras</h2>
-                  <p className="step__description">
-                    Add finishing touches to your event
-                  </p>
-                  <div className="step__placeholder">
-                    <p>
-                      Centerpieces, dessert table, lighting, etc. coming next...
-                    </p>
-                  </div>
-                </div>
+                <StepFour
+                  formData={formData}
+                  setFormData={setFormData}
+                  tablesNeeded={tablesNeeded}
+                />
               )}
 
               {currentStep === 5 && (
