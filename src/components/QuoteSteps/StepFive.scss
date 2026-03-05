@@ -1,0 +1,110 @@
+@import "../../styles/variables.scss";
+
+.next-steps {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+
+  @media (max-width: 480px) {
+    gap: $space-md;
+  }
+}
+
+.next-step {
+  display: flex;
+  gap: $space-md;
+  align-items: flex-start;
+
+  @media (max-width: 480px) {
+    gap: $space-sm;
+  }
+
+  &__number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $terracotta 0%, $terracotta-dark 100%);
+    color: white;
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-semi;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba($terracotta, 0.3);
+
+    @media (max-width: 768px) {
+      width: 32px;
+      height: 32px;
+      font-size: $size-base;
+    }
+
+    @media (max-width: 480px) {
+      width: 28px;
+      height: 28px;
+      font-size: $size-sm;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 4px 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    line-height: 1.5;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
+  }
+}
+
+.privacy-notice {
+  background-color: rgba($sage-green, 0.05);
+  border-left: 4px solid $sage-green;
+  border-radius: $border-radius;
+  padding: $space-md;
+  margin-top: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-sm;
+    margin-top: $space-lg;
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $warm-charcoal;
+    line-height: 1.6;
+    margin: 0;
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
+  }
+}

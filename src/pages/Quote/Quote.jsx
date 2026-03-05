@@ -7,6 +7,7 @@ import StepOne from "../../components/QuoteSteps/StepOne";
 import StepTwo from "../../components/QuoteSteps/StepTwo";
 import StepThree from "../../components/QuoteSteps/StepThree";
 import StepFour from "../../components/QuoteSteps/StepFour";
+import StepFive from "../../components/QuoteSteps/StepFive";
 
 function Quote() {
   // Track the steps
@@ -134,15 +135,7 @@ function Quote() {
               )}
 
               {currentStep === 5 && (
-                <div className="step">
-                  <h2 className="step__title">Step 5: Your Details</h2>
-                  <p className="step__description">
-                    Almost done! We just need your contact information
-                  </p>
-                  <div className="step__placeholder">
-                    <p>Name, phone, email, special requests coming next...</p>
-                  </div>
-                </div>
+                <StepFive formData={formData} setFormData={setFormData} />
               )}
             </div>
 

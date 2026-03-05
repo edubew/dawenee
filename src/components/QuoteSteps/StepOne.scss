@@ -467,4 +467,33 @@
       font-size: $size-sm;
     }
   }
+
+  &__textarea {
+    width: 100%;
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    background-color: white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius;
+    padding: $space-md;
+    transition: all $transition-fast;
+    resize: vertical;
+    line-height: 1.6;
+
+    &:focus {
+      outline: none;
+      border-color: $terracotta;
+      box-shadow: 0 0 0 3px rgba($terracotta, 0.1);
+    }
+
+    &::placeholder {
+      color: $soft-gray;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+      padding: $space-sm;
+    }
+  }
 }
