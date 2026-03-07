@@ -343,4 +343,35 @@
       font-size: $size-sm;
     }
   }
+  
+  &__step-with-summary {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: $space-2xl;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr 350px;
+      gap: $space-xl;
+    }
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  &__step-main {
+    @media (max-width: 1024px) {
+      margin-bottom: $space-xl;
+    }
+  }
+
+  &__summary-sidebar {
+    @media (max-width: 1024px) {
+      order: -1;
+      margin-bottom: $space-xl;
+    }
+  }
 }

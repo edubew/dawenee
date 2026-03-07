@@ -8,6 +8,7 @@ import StepTwo from "../../components/QuoteSteps/StepTwo";
 import StepThree from "../../components/QuoteSteps/StepThree";
 import StepFour from "../../components/QuoteSteps/StepFour";
 import StepFive from "../../components/QuoteSteps/StepFive";
+import QuoteSummary from "../../components/QuoteSteps/QuoteSummary";
 
 function Quote() {
   // Track the steps
@@ -105,7 +106,53 @@ function Quote() {
           </div>
 
           <div className="quote__content">
-            <div className="quote__step">
+            {currentStep === 5 ? (
+              <div className="quote__step-with-summary">
+                <div className="quote__step-main">
+                  <div className="quote__step">
+                    <StepFive formData={formData} setFormData={setFormData} />
+                  </div>
+                </div>
+                <div className="quote__summary-sidebar">
+                  <QuoteSummary
+                    formData={formData}
+                    tablesNeeded={tablesNeeded}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="quote__step">
+                {currentStep === 1 && (
+                  <StepOne
+                    formData={formData}
+                    setFormData={setFormData}
+                    tablesNeeded={tablesNeeded}
+                  />
+                )}
+
+                {currentStep === 2 && (
+                  <StepTwo
+                    formData={formData}
+                    setFormData={setFormData}
+                    tablesNeeded={tablesNeeded}
+                  />
+                )}
+
+                {currentStep === 3 && (
+                  <StepThree formData={formData} setFormData={setFormData} />
+                )}
+
+                {currentStep === 4 && (
+                  <StepFour
+                    formData={formData}
+                    setFormData={setFormData}
+                    tablesNeeded={tablesNeeded}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* <div className="quote__step">
               {currentStep === 1 && (
                 <StepOne
                   formData={formData}
@@ -135,9 +182,21 @@ function Quote() {
               )}
 
               {currentStep === 5 && (
-                <StepFive formData={formData} setFormData={setFormData} />
+                <>
+                  <div className="quote__step-with-summary">
+                    <div className="quote__step-content">
+                      <StepFive formData={formData} setFormData={setFormData} />
+                    </div>
+                    <div className="quote__summary-sidebar">
+                      <QuoteSummary
+                        formData={formData}
+                        tablesNeeded={tablesNeeded}
+                      />
+                    </div>
+                  </div>
+                </>
               )}
-            </div>
+            </div> */}
 
             <div className="quote__navigation">
               {currentStep > 1 && (

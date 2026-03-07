@@ -14,7 +14,7 @@ export const PRICING = {
     napkinsAndRings: 60,
     wineGlasses: 80,
     chargerPlates: 80,
-    tableMats: 40,
+    tableMats: 50,
   },
 
   // TABLE SETTINGS (per table)
@@ -65,18 +65,23 @@ export const PRICING = {
       withoutFurniture: 3000,
       withFurniture: 4000,
     },
+    backdropOnly: 1000,
   },
 
   // LABOUR (based on guest count and setup type)
   labour: {
     lessThan50: 3000,
     fiftyPlus: 4500,
-    backdropOnly: 500, // If only backdrop, no tables/chairs
+    backdropOnly: 0, // If only backdrop, no tables/chairs
   },
 };
 
 // Helper function to calculate transport cost
-export const calculateTransport = (location, hasFurniture) => {
+export const calculateTransport = (location, hasFurniture, isBackdropOnly) => {
+  if (isBackdropOnly) {
+    return PRICING.transport.backdropOnly;
+  }
+
   if (location === "nairobi") {
     return hasFurniture
       ? PRICING.transport.nairobi.withFurniture
@@ -89,9 +94,10 @@ export const calculateTransport = (location, hasFurniture) => {
 };
 
 // Helper function to calculate labour cost
-export const calculateLabour = (guestCount, hasTableSetup, hasBackdropOnly) => {
-  if (hasBackdropOnly && !hasTableSetup) {
-    return PRICING.labour.backdropOnly;
+export const calculateLabour = (guestCount, hasTableSetup, isBackdropOnly) => {
+  if (isBackdropOnly) {
+    return PRICING.labour.backdropOnly; // Returns 0
   }
+  
   return guestCount < 50 ? PRICING.labour.lessThan50 : PRICING.labour.fiftyPlus;
 };
