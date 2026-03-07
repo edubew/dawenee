@@ -10,9 +10,13 @@ function QuoteSummary({ formData, tablesNeeded }) {
     : 0;
 
   // Tables
-  const tableCost = formData.chairType
-    ? tablesNeeded * PRICING.tables.dressed
-    : 0;
+  const hasTableSettings =
+    formData.tableSettings &&
+    Object.values(formData.tableSettings).some((val) => val === true);
+  const tableCost =
+    formData.chairType || hasTableSettings
+      ? tablesNeeded * PRICING.tables.dressed
+      : 0;
 
   // Table Settings
   const calculateTableSettingsCost = () => {
@@ -92,6 +96,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
 
   //Check if this is a backdrop-only order
   const hasChairs = formData.chairType ? true : false;
+  const tableSettingsCost = calculateTableSettingsCost();
   const hasCenterpieces = formData.centerpieceTier ? true : false;
   const hasExtras =
     formData.extras &&
@@ -102,9 +107,6 @@ function QuoteSummary({ formData, tablesNeeded }) {
 
   const isBackdropOnly =
     hasBackdropsOrSigns && !hasChairs && !hasCenterpieces && !hasExtras;
-  // Transport
-  // const hasFurniture = formData.chairType ? true : false;
-  // const transportCost = calculateTransport(formData.location, hasFurniture);
 
   const hasFurniture = hasChairs;
   const transportCost = calculateTransport(
@@ -113,15 +115,6 @@ function QuoteSummary({ formData, tablesNeeded }) {
     isBackdropOnly,
   );
 
-  // Labour
-  // const hasTableSetup = formData.chairType ? true : false;
-  // const hasBackdropOnly =
-  //   !hasTableSetup && (formData.backdrops?.length > 0 || formData.welcomeSign);
-  // const labourCost = calculateLabour(
-  //   formData.guestCount,
-  //   hasTableSetup,
-  //   hasBackdropOnly,
-  // );
   const hasTableSetup = hasChairs;
   const labourCost = calculateLabour(
     formData.guestCount,
@@ -133,7 +126,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
   const subtotal =
     chairCost +
     tableCost +
-    calculateTableSettingsCost() +
+    tableSettingsCost +
     backdropCost +
     welcomeSignCost +
     centerpieceCost +
@@ -141,7 +134,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
     transportCost +
     labourCost;
 
-  // Deposit (50%)
+  //Deposit (50%)
   const deposit = Math.round(subtotal * 0.5);
 
   return (
@@ -178,38 +171,137 @@ function QuoteSummary({ formData, tablesNeeded }) {
         </div>
 
         {/* Seating and tables */}
-        {formData.chairType && (
+        {(chairCost > 0 || tableCost > 0 || tableSettingsCost > 0) && (
           <div className="summary-section">
             <h4 className="summary-section__title">Seating & Tables</h4>
-            <div className="summary-item">
-              <span className="summary-item__label">
-                {formData.chairQuantity}×{" "}
-                {formData.chairType === "dressedPlastic"
-                  ? "Dressed Plastic"
-                  : formData.chairType === "chiavari"
-                    ? "Chiavari"
-                    : "Luxe"}{" "}
-                Chairs
-              </span>
-              <span className="summary-item__value">
-                KES {chairCost.toLocaleString()}
-              </span>
-            </div>
-            <div className="summary-item">
-              <span className="summary-item__label">
-                {tablesNeeded}× Dressed Tables
-              </span>
-              <span className="summary-item__value">
-                KES {tableCost.toLocaleString()}
-              </span>
-            </div>
-            {calculateTableSettingsCost() > 0 && (
+
+            {formData.chairType && formData.chairQuantity > 0 && (
               <div className="summary-item">
-                <span className="summary-item__label">Table Settings</span>
+                <span className="summary-item__label">
+                  {formData.chairQuantity}×{" "}
+                  {formData.chairType === "dressedPlastic"
+                    ? "Dressed Plastic"
+                    : formData.chairType === "chiavari"
+                      ? "Chiavari"
+                      : formData.chairType === "luxe"
+                        ? "Luxe"
+                        : formData.chairType}{" "}
+                  Chairs
+                </span>
                 <span className="summary-item__value">
-                  KES {calculateTableSettingsCost().toLocaleString()}
+                  KES {chairCost.toLocaleString()}
                 </span>
               </div>
+            )}
+
+            {tableCost > 0 && (
+              <div className="summary-item">
+                <span className="summary-item__label">
+                  {tablesNeeded}× Dressed Tables
+                </span>
+                <span className="summary-item__value">
+                  KES {tableCost.toLocaleString()}
+                </span>
+              </div>
+            )}
+
+            {tableSettingsCost > 0 && (
+              <>
+                <div className="summary-item summary-item--subsection">
+                  <span className="summary-item__label">Table Settings:</span>
+                  <span className="summary-item__value"></span>
+                </div>
+
+                {/* per guest item */}
+                {formData.tableSettings.napkins && (
+                  <div className="summary-item summary-item--indent">
+                    <span className="summary-item__label">
+                      • Napkins + Rings ({formData.guestCount} guests)
+                    </span>
+                    <span className="summary-item__value">
+                      KES{" "}
+                      {(
+                        PRICING.tableSettings.napkinsAndRings *
+                        formData.guestCount
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+
+                {formData.tableSettings.wineGlasses && (
+                  <div className="summary-item summary-item--indent">
+                    <span className="summary-item__label">
+                      • Wine Glasses ({formData.guestCount} guests)
+                    </span>
+                    <span className="summary-item__value">
+                      KES{" "}
+                      {(
+                        PRICING.tableSettings.wineGlasses * formData.guestCount
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+
+                {formData.tableSettings.chargerPlates && (
+                  <div className="summary-item summary-item--indent">
+                    <span className="summary-item__label">
+                      • Charger Plates ({formData.guestCount} guests)
+                    </span>
+                    <span className="summary-item__value">
+                      KES{" "}
+                      {(
+                        PRICING.tableSettings.chargerPlates *
+                        formData.guestCount
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+
+                {formData.tableSettings.tableMats && (
+                  <div className="summary-item summary-item--indent">
+                    <span className="summary-item__label">
+                      • Table Mats ({formData.guestCount} guests)
+                    </span>
+                    <span className="summary-item__value">
+                      KES{" "}
+                      {(
+                        PRICING.tableSettings.tableMats * formData.guestCount
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+
+                {/* Per Table Items */}
+                {formData.tableSettings.tableRunners && (
+                  <div className="summary-item summary-item--indent">
+                    <span className="summary-item__label">
+                      • Table Runners ({tablesNeeded} tables)
+                    </span>
+                    <span className="summary-item__value">
+                      KES{" "}
+                      {(
+                        PRICING.tableSettingsPerTable.tableRunners *
+                        tablesNeeded
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+
+                {formData.tableSettings.candles && (
+                  <div className="summary-item summary-item--indent">
+                    <span className="summary-item__label">
+                      • Candles + Holders ({tablesNeeded} tables)
+                    </span>
+                    <span className="summary-item__value">
+                      KES{" "}
+                      {(
+                        PRICING.tableSettingsPerTable.candlesAndHolders *
+                        tablesNeeded
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}

@@ -2,10 +2,13 @@ import React from 'react';
 import "./ChairCard.scss";
 
 function ChairCard({ chair, isSelected, onSelect }) {
+  const handleClick = () => {
+    onSelect(chair.id);
+  };
   return (
     <button
       type="button"
-      onClick={() => onSelect(chair.id)}
+      onClick={handleClick}
       className={`chair-card ${isSelected ? "chair-card--selected" : ""}`}
     >
       {chair.popular && <span className="chair-card__badge">Most Popular</span>}

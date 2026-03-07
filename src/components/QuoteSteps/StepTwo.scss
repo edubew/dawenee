@@ -319,3 +319,28 @@
     }
   }
 }
+
+.deselect-button {
+  width: 100%;
+  font-family: $font-body;
+  font-size: $size-sm;
+  font-weight: $weight-medium;
+  color: $soft-gray;
+  background-color: transparent;
+  border: 2px dashed $light-gray;
+  border-radius: $border-radius;
+  padding: $space-sm;
+  margin-top: $space-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $terracotta;
+    border-color: $terracotta;
+    background-color: rgba($terracotta, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    font-size: $size-xs;
+  }
+}

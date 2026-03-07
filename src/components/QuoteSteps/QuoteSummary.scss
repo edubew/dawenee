@@ -129,6 +129,37 @@
       font-size: 11px;
     }
   }
+
+  &--included {
+    color: $sage-green;
+  }
+
+  &--subsection {
+    margin-top: $space-sm;
+    padding-top: $space-sm;
+    border-top: 1px solid rgba($light-gray, 0.5);
+
+    .summary-item__label {
+      font-weight: $weight-semi;
+    }
+  }
+
+  &--indent {
+    padding-left: $space-md;
+
+    .summary-item__label {
+      font-size: 11px;
+      color: $soft-gray;
+    }
+
+    .summary-item__value {
+      font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+      padding-left: $space-sm;
+    }
+  }
 }
 
 .summary-total {
