@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Quote.scss";
-import { Link } from "react-router-dom";
 import StepOne from "../../components/QuoteSteps/StepOne";
 import StepTwo from "../../components/QuoteSteps/StepTwo";
 import StepThree from "../../components/QuoteSteps/StepThree";
@@ -11,13 +12,11 @@ import StepFive from "../../components/QuoteSteps/StepFive";
 import QuoteSummary from "../../components/QuoteSteps/QuoteSummary";
 
 function Quote() {
-  // Track the steps
-  const [currentStep, setCurrentStep] = useState(1);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const totalSteps = 5;
-
-  // Form data state
-  const [formData, setFormData] = useState({
+  // Check if we're coming from review page
+  const initialFormData = location.state?.formData || {
     eventDate: "",
     guestCount: 10,
     venueName: "",
@@ -46,7 +45,17 @@ function Quote() {
     email: "",
     themeColors: "",
     specialRequests: "",
-  });
+  };
+
+  const initialStep = location.state?.currentStep || 1;
+
+  // Track the steps
+  const [currentStep, setCurrentStep] = useState(initialStep);
+
+  const totalSteps = 5;
+
+  // Form data state
+  const [formData, setFormData] = useState(initialFormData);
 
   const tablesNeeded = Math.ceil(formData.guestCount / 7);
 
@@ -152,52 +161,6 @@ function Quote() {
               </div>
             )}
 
-            {/* <div className="quote__step">
-              {currentStep === 1 && (
-                <StepOne
-                  formData={formData}
-                  setFormData={setFormData}
-                  tablesNeeded={tablesNeeded}
-                />
-              )}
-
-              {currentStep === 2 && (
-                <StepTwo
-                  formData={formData}
-                  setFormData={setFormData}
-                  tablesNeeded={tablesNeeded}
-                />
-              )}
-
-              {currentStep === 3 && (
-                <StepThree formData={formData} setFormData={setFormData} />
-              )}
-
-              {currentStep === 4 && (
-                <StepFour
-                  formData={formData}
-                  setFormData={setFormData}
-                  tablesNeeded={tablesNeeded}
-                />
-              )}
-
-              {currentStep === 5 && (
-                <>
-                  <div className="quote__step-with-summary">
-                    <div className="quote__step-content">
-                      <StepFive formData={formData} setFormData={setFormData} />
-                    </div>
-                    <div className="quote__summary-sidebar">
-                      <QuoteSummary
-                        formData={formData}
-                        tablesNeeded={tablesNeeded}
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-            </div> */}
-
             <div className="quote__navigation">
               {currentStep > 1 && (
                 <button
@@ -216,8 +179,13 @@ function Quote() {
                   Next Step →
                 </button>
               ) : (
-                <button className="quote__nav-button quote__nav-button--submit">
-                  Review Quote
+                <button
+                  onClick={() =>
+                    navigate("/quote/review", { state: { formData } })
+                  }
+                  className="quote__nav-button quote__nav-button--submit"
+                >
+                  Review Quote →
                 </button>
               )}
             </div>
