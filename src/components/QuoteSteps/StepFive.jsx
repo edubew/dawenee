@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./StepFive.scss";
 import { useNavigate } from "react-router-dom";
 
 function StepFive({ formData, setFormData }) {
   const navigate = useNavigate();
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,14 +15,52 @@ function StepFive({ formData, setFormData }) {
     }));
   };
 
-  // Validate required fields
-  const isFormValid = () => {
-    return formData.name && formData.phone && formData.email && termsAccepted;
+  //Form validations
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
   };
 
+  const validatePhone = (phone) => {
+    const cleaned = phone.replace(/\s/g, "");
+    const re = /^(\+?254|0)?[17]\d{8}$/;
+    return re.test(cleaned);
+  };
+
+  const isFormValid = useMemo(() => {
+    const errors = {};
+
+    if (!formData.name || formData.name.trim().length < 2) {
+      errors.name = "Please enter your full name";
+    }
+
+    if (!formData.phone) {
+      errors.phone = "Phone number is required";
+    } else if (!validatePhone(formData.phone)) {
+      errors.phone = "Please enter a valid Kenyan phone number";
+    }
+
+    if (!formData.email) {
+      errors.email = "Email address is required";
+    } else if (!validateEmail(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+
+    if (!termsAccepted) {
+      errors.terms = "You must accept the terms and conditions";
+    }
+
+    return { errors, isValid: Object.keys(errors).length === 0 };
+  }, [formData.name, formData.phone, formData.email, termsAccepted]);
+
+  useEffect(() => {
+    setValidationErrors(isFormValid.errors);
+  }, [isFormValid]);
+
   const handleSubmit = () => {
-    if (!isFormValid()) {
-      alert("Please fill in all required fields and accept the terms.");
+    if (!isFormValid.isValid) {
+      // Scroll to first error
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -49,9 +88,12 @@ function StepFive({ formData, setFormData }) {
             value={formData.name}
             onChange={handleChange}
             placeholder="e.g., Dawenee Decor"
-            className="form__input"
+            className={`form__input ${validationErrors.name ? "form__input--error" : ""}`}
             required
           />
+          {validationErrors.name && (
+            <span className="form__error">{validationErrors.name}</span>
+          )}
         </div>
 
         <div className="form__group">
@@ -65,12 +107,15 @@ function StepFive({ formData, setFormData }) {
             value={formData.phone}
             onChange={handleChange}
             placeholder="e.g., 0712 345 678"
-            className="form__input"
+            className={`form__input ${validationErrors.phone ? "form__input--error" : ""}`}
             required
           />
           <span className="form__hint">
             We'll call to confirm details and arrange a consultation
           </span>
+          {validationErrors.phone && (
+            <span className="form__error">{validationErrors.phone}</span>
+          )}
         </div>
 
         <div className="form__group">
@@ -84,12 +129,15 @@ function StepFive({ formData, setFormData }) {
             value={formData.email}
             onChange={handleChange}
             placeholder="e.g., jane@example.com"
-            className="form__input"
+            className={`form__input ${validationErrors.email ? "form__input--error" : ""}`}
             required
           />
           <span className="form__hint">
             We'll send your detailed quote and invoice here
           </span>
+          {validationErrors.email && (
+            <span className="form__error">{validationErrors.email}</span>
+          )}
         </div>
 
         <div className="form__group">
@@ -154,7 +202,7 @@ function StepFive({ formData, setFormData }) {
               </span>
             </label>
 
-            <div id="terms-conteent" className="terms-content">
+            <div id="terms-content" className="terms-content">
               <h3>Terms & Conditions</h3>
               <ul>
                 <li>50% deposit required to confirm booking</li>
@@ -178,14 +226,14 @@ function StepFive({ formData, setFormData }) {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={!isFormValid()}
+            disabled={!isFormValid.isValid}
             className="submit-quote-button"
           >
-            {isFormValid()
+            {isFormValid.isValid
               ? "✓ Submit Quote Request →"
               : "⚠ Please fill required fields"}
           </button>
-          {!isFormValid() && (
+          {!isFormValid.isValid && (
             <p
               className="form__hint"
               style={{

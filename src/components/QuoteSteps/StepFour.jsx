@@ -176,7 +176,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               />
               <div className="extra-item__content">
                 <div className="extra-item__header">
-                  <span className="extra-item__icon">🎴</span>
                   <div className="extra-item__details">
                     <span className="extra-item__name">Individual Cards</span>
                     <span className="extra-item__description">
@@ -226,7 +225,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               />
               <div className="extra-item__content">
                 <div className="extra-item__header">
-                  <span className="extra-item__icon">🍰</span>
                   <div className="extra-item__details">
                     <span className="extra-item__name">Cake Stand</span>
                     <span className="extra-item__description">
@@ -249,7 +247,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               />
               <div className="extra-item__content">
                 <div className="extra-item__header">
-                  <span className="extra-item__icon">🔴</span>
                   <div className="extra-item__details">
                     <span className="extra-item__name">
                       Red Carpet (10 meters)
@@ -274,7 +271,7 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               />
               <div className="extra-item__content">
                 <div className="extra-item__header">
-                  <span className="extra-item__icon">🎂</span>
+  
                   <div className="extra-item__details">
                     <span className="extra-item__name">
                       Dessert Table Setup
@@ -299,7 +296,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               />
               <div className="extra-item__content">
                 <div className="extra-item__header">
-                  <span className="extra-item__icon">✨</span>
                   <div className="extra-item__details">
                     <span className="extra-item__name">Lighting Package</span>
                     <span className="extra-item__description">

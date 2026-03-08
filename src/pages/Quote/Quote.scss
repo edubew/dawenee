@@ -343,7 +343,7 @@
       font-size: $size-sm;
     }
   }
-  
+
   &__step-with-summary {
     display: grid;
     grid-template-columns: 1fr 400px;
@@ -482,5 +482,82 @@
         color: $terracotta;
       }
     }
+  }
+}
+
+.validation-errors {
+  background-color: rgba($terracotta, 0.1);
+  border: 2px solid rgba($terracotta, 0.3);
+  border-radius: $border-radius;
+  padding: $space-lg;
+  margin-top: $space-xl;
+  display: flex;
+  gap: $space-md;
+
+  @media (max-width: 768px) {
+    padding: $space-md;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__icon {
+    font-size: $size-2xl;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: $space-lg;
+    flex: 1;
+
+    @media (max-width: 768px) {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    li {
+      font-family: $font-body;
+      font-size: $size-sm;
+      color: $terracotta-dark;
+      line-height: 1.6;
+      margin-bottom: $space-xs;
+
+      @media (max-width: 768px) {
+        font-size: $size-xs;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// Input Error State
+.form__input--error,
+.form__textarea--error {
+  border-color: $terracotta !important;
+  background-color: rgba($terracotta, 0.05) !important;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba($terracotta, 0.2) !important;
+  }
+}
+
+.form__error {
+  display: block;
+  font-family: $font-body;
+  font-size: $size-xs;
+  color: $terracotta;
+  margin-top: $space-xs;
+  font-weight: $weight-medium;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
   }
 }

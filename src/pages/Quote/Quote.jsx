@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
@@ -19,61 +19,134 @@ import {
 function Quote() {
   const location = useLocation();
 
-  // Check for saved quote on mount
-  const [showResumePrompt, setShowResumePrompt] = useState(false);
-  const [savedQuoteData, setSavedQuoteData] = useState(null);
+  const initializeQuoteState = () => {
+    if (location.state?.formData) {
+      return {
+        showPrompt: false,
+        savedData: null,
+        formData: location.state.formData,
+        currentStep: location.state.currentStep || 1,
+      };
+    }
 
-  // Check location state first then localStorage
-  const initialFormData = location.state?.formData || {
-    eventDate: "",
-    guestCount: 5,
-    venueName: "",
-    location: "Nairobi",
-    chairTpye: "",
-    // Seating & Tables
-    chairQuantity: 0,
-    tableSettings: {
-      fullPackage: false,
-      napkins: false,
-      wineGlasses: false,
-      chargerPlates: false,
-      tableMats: false,
-      tableRunners: false,
-      candles: false,
-    },
-    // Backdrops & Signage
-    backdrops: [],
-    welcomeSign: "",
-    // Centerpieces and extras
-    centerpieceTier: "",
-    extras: {},
-    // Contact details
-    name: "",
-    phone: "",
-    email: "",
-    themeColors: "",
-    specialRequests: "",
+    // Otherwise, check localStorage
+    const saved = getCurrentQuote();
+    if (saved && saved.formData) {
+      return {
+        showPrompt: true,
+        savedData: saved,
+        formData: saved.formData,
+        currentStep: saved.currentStep,
+      };
+    }
+
+    return {
+      showPrompt: false,
+      savedData: null,
+      formData: {
+        eventDate: "",
+        guestCount: 50,
+        venueName: "",
+        location: "nairobi",
+        chairType: "",
+        chairQuantity: 0,
+        tableSettings: {
+          fullPackage: false,
+          napkins: false,
+          wineGlasses: false,
+          chargerPlates: false,
+          tableMats: false,
+          tableRunners: false,
+          candles: false,
+        },
+        backdrops: [],
+        welcomeSign: "",
+        centerpieceTier: "",
+        extras: {
+          cakeStand: false,
+          dessertTable: false,
+          redCarpet: false,
+          cardBox: false,
+          individualCards: false,
+          cardQuantity: 0,
+          lightingPackage: false,
+        },
+        name: "",
+        phone: "",
+        email: "",
+        themeColors: "",
+        specialRequests: "",
+      },
+      currentStep: 1,
+    };
   };
 
-  const initialStep = location.state?.currentStep || 1;
+  const [initialState] = useState(initializeQuoteState);
+  const [showResumePrompt, setShowResumePrompt] = useState(
+    initialState.showPrompt,
+  );
+  const [savedQuoteData] = useState(initialState.savedData);
+  const [currentStep, setCurrentStep] = useState(initialState.currentStep);
+  const [formData, setFormData] = useState(initialState.formData);
+
   const totalSteps = 5;
-
-  // Track the steps
-  const [currentStep, setCurrentStep] = useState(initialStep);
-  const [formData, setFormData] = useState(initialFormData);
-
   const tablesNeeded = Math.ceil(formData.guestCount / 7);
 
-  //check for saved quote on component mount
+  const stepValidation = {
+    1: false,
+    2: true,
+    3: true,
+    4: true,
+    5: false,
+  };
+
+  // Validate step 1
+  const validateStepOne = useCallback(() => {
+    if (!formData.eventDate) return false;
+
+    const selectedDate = new Date(formData.eventDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) return false;
+    if (formData.guestCount < 10) return false;
+    if (!formData.location) return false;
+
+    return true;
+  }, [formData]);
+
+  // Validate step 5
+  const validateStepFive = useCallback(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^(\+?254|0)?[17]\d{8}$/;
+
+    if (!formData.name || formData.name.trim().length < 2) return false;
+    if (!formData.phone || !phoneRegex.test(formData.phone.replace(/\s/g, "")))
+      return false;
+    if (!formData.email || !emailRegex.test(formData.email)) return false;
+
+    return true;
+  }, [formData]);
+
   useEffect(() => {
-    if (!location.state?.formData) {
-      const saved = getCurrentQuote();
-      if (saved && saved.formData) {
-        setSavedQuoteData(saved);
-        setShowResumePrompt(true);
+    if (!showResumePrompt) {
+      const hasStartedForm =
+        formData.name ||
+        formData.email ||
+        formData.phone ||
+        formData.chairType ||
+        formData.backdrops.length > 0;
+
+      if (hasStartedForm) {
+        const timeoutId = setTimeout(() => {
+          saveCurrentQuote(formData, currentStep);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
       }
     }
-  }, [location.state]);
+  }, [formData, currentStep, showResumePrompt]);
+
 
   // Auto-save progress as user fills the form
   useEffect(() => {
@@ -105,10 +178,51 @@ function Quote() {
 
   const handleStartFresh = () => {
     clearCurrentQuote();
+    setFormData({
+      eventDate: '',
+      guestCount: 50,
+      venueName: '',
+      location: 'nairobi',
+      chairType: '',
+      chairQuantity: 0,
+      tableSettings: {
+        fullPackage: false,
+        napkins: false,
+        wineGlasses: false,
+        chargerPlates: false,
+        tableMats: false,
+        tableRunners: false,
+        candles: false,
+      },
+      backdrops: [],
+      welcomeSign: '',
+      centerpieceTier: '',
+      extras: {
+        cakeStand: false,
+        dessertTable: false,
+        redCarpet: false,
+        cardBox: false,
+        individualCards: false,
+        cardQuantity: 0,
+        lightingPackage: false,
+      },
+      name: '',
+      phone: '',
+      email: '',
+      themeColors: '',
+      specialRequests: '',
+    });
+    setCurrentStep(1);
     setShowResumePrompt(false);
   };
 
   const nextStep = () => {
+    const isCurrentStepValid = currentStep === 1 ? validateStepOne() : currentStep === 5 ? validateStepFive() : stepValidation[currentStep];
+    if (!isCurrentStepValid) {
+      alert("Please fill in all required fields before proceeding.");
+      return;
+    }
+
     if (currentStep < totalSteps) {
       setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -244,6 +358,15 @@ function Quote() {
                     tablesNeeded={tablesNeeded}
                   />
                 )}
+              </div>
+            )}
+            
+            {!stepValidation[currentStep] && currentStep !== 5 && (
+              <div className="step-validation-warning">
+                <span className="step-validation-warning__icon">⚠️</span>
+                <span className="step-validation-warning__text">
+                  Please complete all required fields to proceed
+                </span>
               </div>
             )}
 

@@ -1,9 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { getMatchingVenues } from "../../data/venuesData";
 import "./StepOne.scss";
 import "../../pages/Quote/Quote.scss";
 
-function StepOne({ formData, setFormData, tablesNeeded }) {
+function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
+  const validateStepOne = (formData) => {
+    const errors = [];
+
+    if (!formData.eventDate) {
+      errors.push("Please select an event date");
+    } else {
+      const selectedDate = new Date(formData.eventDate);
+      const today = new Date();
+      today.setHours(0, 0, 0);
+
+      if (selectedDate < today) {
+        errors.push("Event date must be in the future");
+      }
+    }
+
+    if (!formData.location) {
+      errors.push("Please select a location");
+    }
+
+    return errors;
+  };
+
+  const errors = useMemo(() => {
+    return validateStepOne(formData);
+  }, [formData]);
+
+  // Notify parent of validation status
+  useEffect(() => {
+    if (onValidate) {
+      onValidate(errors.length === 0);
+    }
+  }, [errors, onValidate]);
+
   const [venueFilter, setVenueFilter] = useState("all");
 
   const allMatchingVenues = getMatchingVenues(formData.location, venueFilter);
@@ -214,6 +247,17 @@ function StepOne({ formData, setFormData, tablesNeeded }) {
           </span>
         </div>
       </div>
+
+      {errors.length > 0 && (
+        <div className="validation-errors">
+          <div className="validation-errors__icon">⚠️</div>
+          <ul className="validation-errors__list">
+            {errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
