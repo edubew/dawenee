@@ -375,3 +375,112 @@
     }
   }
 }
+
+.resume-prompt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($warm-charcoal, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $space-lg;
+}
+
+.resume-prompt {
+  background: white;
+  border-radius: $border-radius-lg;
+  padding: $space-3xl;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba($warm-charcoal, 0.3);
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: $space-2xl;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    margin: 0 0 $space-sm 0;
+    line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__subtext {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    margin: 0 0 $space-2xl 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+      margin-bottom: $space-xl;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__btn {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    padding: $space-md $space-xl;
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+      padding: $space-sm $space-lg;
+    }
+
+    &--primary {
+      color: white;
+      background: linear-gradient(135deg, $sage-green 0%, $sage-dark 100%);
+      border: none;
+      box-shadow: 0 4px 16px rgba($sage-green, 0.3);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba($sage-green, 0.4);
+      }
+    }
+
+    &--secondary {
+      color: $warm-charcoal;
+      background-color: white;
+      border: 2px solid $light-gray;
+
+      &:hover {
+        border-color: $terracotta;
+        color: $terracotta;
+      }
+    }
+  }
+}

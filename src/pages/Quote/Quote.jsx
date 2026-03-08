@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
@@ -10,14 +10,23 @@ import StepThree from "../../components/QuoteSteps/StepThree";
 import StepFour from "../../components/QuoteSteps/StepFour";
 import StepFive from "../../components/QuoteSteps/StepFive";
 import QuoteSummary from "../../components/QuoteSteps/QuoteSummary";
+import {
+  saveCurrentQuote,
+  getCurrentQuote,
+  clearCurrentQuote,
+} from "../../utils/localStorage";
 
 function Quote() {
   const location = useLocation();
 
-  // Check if we're coming from review page
+  // Check for saved quote on mount
+  const [showResumePrompt, setShowResumePrompt] = useState(false);
+  const [savedQuoteData, setSavedQuoteData] = useState(null);
+
+  // Check location state first then localStorage
   const initialFormData = location.state?.formData || {
     eventDate: "",
-    guestCount: 10,
+    guestCount: 5,
     venueName: "",
     location: "Nairobi",
     chairTpye: "",
@@ -47,39 +56,117 @@ function Quote() {
   };
 
   const initialStep = location.state?.currentStep || 1;
+  const totalSteps = 5;
 
   // Track the steps
   const [currentStep, setCurrentStep] = useState(initialStep);
-
-  const totalSteps = 5;
-
-  // Form data state
   const [formData, setFormData] = useState(initialFormData);
 
   const tablesNeeded = Math.ceil(formData.guestCount / 7);
 
+  //check for saved quote on component mount
+  useEffect(() => {
+    if (!location.state?.formData) {
+      const saved = getCurrentQuote();
+      if (saved && saved.formData) {
+        setSavedQuoteData(saved);
+        setShowResumePrompt(true);
+      }
+    }
+  }, [location.state]);
+
+  // Auto-save progress as user fills the form
+  useEffect(() => {
+    if (!showResumePrompt) {
+      const hasStartedForm =
+        formData.name ||
+        formData.email ||
+        formData.phone ||
+        formData.chairType ||
+        formData.backdrops.length > 0;
+
+      if (hasStartedForm) {
+        const timeoutId = setTimeout(() => {
+          saveCurrentQuote(formData, currentStep);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, [formData, currentStep, showResumePrompt]);
+
+  const handleResumeQuote = () => {
+    if (savedQuoteData) {
+      setFormData(savedQuoteData.formData);
+      setCurrentStep(savedQuoteData.currentStep);
+      setShowResumePrompt(false);
+    }
+  };
+
+  const handleStartFresh = () => {
+    clearCurrentQuote();
+    setShowResumePrompt(false);
+  };
+
   const nextStep = () => {
     if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      setCurrentStep((prev) => prev - 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const goToStep = (step) => {
-    setCurrentStep(step);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (step >= 1 && step <= totalSteps) {
+      setCurrentStep(step);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
     <div className="quote-page">
       <Navbar />
+
+      {/* resume quote prompt */}
+      {showResumePrompt && (
+        <div className="resume-prompt-overlay">
+          <div className="resume-prompt">
+            <h2 className="resume-prompt__title">Welcome Back!</h2>
+            <p className="resume-prompt__text">
+              We found a quote you started on{" "}
+              {new Date(savedQuoteData.savedAt).toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </p>
+            <p className="resume-prompt__subtext">
+              You were on Step {savedQuoteData.currentStep} of {totalSteps}
+            </p>
+            <div className="resume-prompt__buttons">
+              <button
+                onClick={handleResumeQuote}
+                className="resume-prompt__btn resume-prompt__btn--primary"
+              >
+                ✓ Resume Quote
+              </button>
+              <button
+                onClick={handleStartFresh}
+                className="resume-prompt__btn resume-prompt__btn--secondary"
+              >
+                Start Fresh Quote
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="quote">
         <div className="container">
