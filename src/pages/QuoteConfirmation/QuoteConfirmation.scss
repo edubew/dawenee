@@ -122,50 +122,6 @@
       margin-bottom: $space-xl;
     }
   }
-
-  // &__next-steps {
-  //   margin-bottom: $space-5xl;
-
-  //   @media (max-width: 768px) {
-  //     margin-bottom: $space-3xl;
-  //   }
-  // }
-
-  // &__summary {
-  //   margin-bottom: $space-5xl;
-
-  //   @media (max-width: 768px) {
-  //     margin-bottom: $space-3xl;
-  //   }
-  // }
-
-  // &__actions {
-  //   margin-bottom: $space-5xl;
-
-  //   @media (max-width: 768px) {
-  //     margin-bottom: $space-3xl;
-  //   }
-  // }
-
-  // &__info {
-  //   margin-bottom: $space-4xl;
-
-  //   @media (max-width: 768px) {
-  //     margin-bottom: $space-3xl;
-  //   }
-  // }
-
-  // &__bottom-actions {
-  //   display: flex;
-  //   justify-content: center;
-  //   gap: $space-lg;
-  //   padding-top: $space-3xl;
-  //   border-top: 2px solid $light-gray;
-
-  //   @media (max-width: 640px) {
-  //     flex-direction: column;
-  //   }
-  // }
 }
 
 .booking-options {
@@ -507,136 +463,6 @@
   }
 }
 
-// .next-steps-timeline {
-//   max-width: 800px;
-//   margin: 0 auto;
-//   display: flex;
-//   flex-direction: column;
-//   gap: $space-2xl;
-
-//   @media (max-width: 768px) {
-//     gap: $space-xl;
-//   }
-// }
-
-// .timeline-step {
-//   display: flex;
-//   gap: $space-xl;
-//   position: relative;
-
-//   @media (max-width: 640px) {
-//     gap: $space-md;
-//   }
-
-//   &:not(:last-child)::after {
-//     content: "";
-//     position: absolute;
-//     left: 27px;
-//     top: 64px;
-//     width: 2px;
-//     height: calc(100% + $space-2xl);
-//     background: linear-gradient(180deg, $terracotta 0%, transparent 100%);
-
-//     @media (max-width: 768px) {
-//       left: 23px;
-//       top: 56px;
-//     }
-
-//     @media (max-width: 640px) {
-//       left: 19px;
-//     }
-//   }
-
-// &__number {
-//   width: 56px;
-//   height: 56px;
-//   border-radius: 50%;
-//   background: linear-gradient(135deg, $terracotta 0%, $terracotta-dark 100%);
-//   color: white;
-//   font-family: $font-headline;
-//   font-size: $size-xl;
-//   font-weight: $weight-semi;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   flex-shrink: 0;
-//   box-shadow: 0 4px 12px rgba($terracotta, 0.3);
-//   z-index: 1;
-
-//   @media (max-width: 768px) {
-//     width: 48px;
-//     height: 48px;
-//     font-size: $size-lg;
-//   }
-
-//   @media (max-width: 640px) {
-//     width: 40px;
-//     height: 40px;
-//     font-size: $size-base;
-//   }
-// }
-
-//   &__content {
-//     flex: 1;
-//     background-color: white;
-//     border-radius: $border-radius-lg;
-//     padding: $space-xl;
-//     box-shadow: 0 2px 12px rgba($warm-charcoal, 0.08);
-
-//     @media (max-width: 768px) {
-//       padding: $space-lg;
-//     }
-
-//     @media (max-width: 640px) {
-//       padding: $space-md;
-//     }
-//   }
-
-//   &__title {
-//     font-family: $font-body;
-//     font-size: $size-lg;
-//     font-weight: $weight-semi;
-//     color: $warm-charcoal;
-//     margin: 0 0 $space-sm 0;
-
-//     @media (max-width: 768px) {
-//       font-size: $size-base;
-//     }
-//   }
-
-//   &__description {
-//     font-family: $font-body;
-//     font-size: $size-base;
-//     color: $soft-gray;
-//     line-height: 1.6;
-//     margin: 0 0 $space-md 0;
-
-//     strong {
-//       color: $warm-charcoal;
-//       font-weight: $weight-semi;
-//     }
-
-//     @media (max-width: 768px) {
-//       font-size: $size-sm;
-//     }
-//   }
-
-//   &__time {
-//     display: inline-block;
-//     font-family: $font-body;
-//     font-size: $size-xs;
-//     font-weight: $weight-semi;
-//     color: $terracotta;
-//     background-color: rgba($terracotta, 0.1);
-//     padding: 4px $space-sm;
-//     border-radius: 4px;
-
-//     @media (max-width: 768px) {
-//       font-size: 11px;
-//     }
-//   }
-// }
-
 .summary-card {
   max-width: 800px;
   margin: 0 auto;
@@ -772,132 +598,128 @@
   }
 }
 
-.quick-contact {
-  max-width: 600px;
-  margin: $space-2xl auto $space-4xl;
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-lg;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+}
+
+.action-card {
+  background-color: white;
+  border: 2px solid $light-gray;
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
   text-align: center;
+  cursor: pointer;
+  transition: all $transition-base;
+  text-decoration: none;
+  display: block;
 
   @media (max-width: 768px) {
-    margin-bottom: $space-3xl;
+    padding: $space-lg;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba($warm-charcoal, 0.12);
+    border-color: $terracotta;
+  }
+
+  &--whatsapp:hover {
+    border-color: #25d366;
+    color: #25d366;
+
+    .action-card__icon {
+      transform: scale(1.1);
+    }
+  }
+
+  &--phone:hover {
+    border-color: $terracotta;
+  }
+
+  &--email:hover {
+    border-color: $sage-green;
+  }
+
+  &__icon {
+    font-size: 48px;
+    margin-bottom: $space-md;
+    transition: transform $transition-fast;
+
+    @media (max-width: 768px) {
+      font-size: 36px;
+      margin-bottom: $space-sm;
+    }
   }
 
   &__title {
-    font-family: $font-headline;
-    font-size: $size-lg;
-    font-weight: $weight-regular;
-    color: $warm-charcoal;
-    margin: 0 0 $space-lg 0;
-
-    @media (max-width: 768px) {
-      font-size: $size-base;
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    justify-content: center;
-    gap: $space-md;
-    flex-wrap: wrap;
-
-    @media (max-width: 640px) {
-      flex-direction: column;
-    }
-  }
-
-  &__btn {
     font-family: $font-body;
-    font-size: $size-sm;
+    font-size: $size-base;
     font-weight: $weight-semi;
     color: $warm-charcoal;
-    background-color: white;
-    border: 2px solid $light-gray;
-    border-radius: $border-radius;
-    padding: $space-sm $space-lg;
-    cursor: pointer;
-    transition: all $transition-fast;
-    text-decoration: none;
-    display: inline-block;
+    margin: 0 0 $space-xs 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    margin: 0;
+    line-height: 1.4;
 
     @media (max-width: 768px) {
       font-size: $size-xs;
-      padding: $space-xs $space-md;
-    }
-
-    @media (max-width: 640px) {
-      width: 100%;
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 2px 8px rgba($warm-charcoal, 0.1);
-    }
-
-    &--whatsapp:hover {
-      border-color: #25D366;
-      color: #25D366;
-    }
-
-    &--phone:hover {
-      border-color: $terracotta;
-      color: $terracotta;
-    }
-
-    &--email:hover {
-      border-color: $sage-green;
-      color: $sage-green;
     }
   }
 }
 
-// .info-box {
-//   max-width: 600px;
-//   margin: 0 auto;
-//   background-color: rgba($sage-green, 0.05);
-//   border: 2px solid rgba($sage-green, 0.2);
-//   border-radius: $border-radius-lg;
-//   padding: $space-xl;
-//   text-align: center;
+// Print Styles
+@media print {
+  .confirmation-page {
+    .navbar,
+    .footer,
+    .booking-options,
+    .edit-quote-section,
+    .confirmation__actions,
+    .quick-contact,
+    .confirmation__bottom-actions {
+      display: none !important;
+    }
 
-//   @media (max-width: 768px) {
-//     padding: $space-lg;
-//   }
+    .confirmation__success {
+      background: white !important;
+      color: $warm-charcoal !important;
+      box-shadow: none !important;
+      border: 2px solid $light-gray;
+    }
 
-//   &__title {
-//     font-family: $font-body;
-//     font-size: $size-lg;
-//     font-weight: $weight-semi;
-//     color: $warm-charcoal;
-//     margin: 0 0 $space-md 0;
+    .confirmation__success-icon {
+      background-color: $sage-green !important;
+      color: white !important;
+    }
 
-//     @media (max-width: 768px) {
-//       font-size: $size-base;
-//     }
-//   }
-
-//   &__text {
-//     font-family: $font-body;
-//     font-size: $size-base;
-//     color: $warm-charcoal;
-//     line-height: 1.8;
-//     margin: 0 0 $space-md 0;
-
-//     @media (max-width: 768px) {
-//       font-size: $size-sm;
-//     }
-//   }
-
-//   &__note {
-//     font-family: $font-body;
-//     font-size: $size-sm;
-//     color: $soft-gray;
-//     font-style: italic;
-//     margin: 0;
-
-//     @media (max-width: 768px) {
-//       font-size: $size-xs;
-//     }
-//   }
-// }
+    .summary-card {
+      box-shadow: none !important;
+      border: 2px solid $light-gray;
+    }
+  }
+}
 
 .bottom-action {
   font-family: $font-body;

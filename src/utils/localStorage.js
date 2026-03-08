@@ -41,7 +41,7 @@ export const clearCurrentQuote = () => {
 };
 
 // save completed quote to history
-export const SaveQuoteToHistory = (formData, quoteRef, subtotal, deposit) => {
+export const saveQuoteToHistory = (formData, quoteRef, subtotal, deposit) => {
   try {
     const savedQuotes = getSavedQuotes();
     const newQuote = {

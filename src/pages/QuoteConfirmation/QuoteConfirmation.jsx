@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -8,6 +8,7 @@ import {
   calculateLabour,
 } from "../../data/pricingData";
 import "./QuoteConfirmation.scss";
+import { saveQuoteToHistory } from "../../utils/localStorage";
 
 function QuoteConfirmation() {
   const navigate = useNavigate();
@@ -83,7 +84,6 @@ function QuoteConfirmation() {
 
   const tableSettingsCost = calculateTableSettingsCost();
 
-  // Backdrops
   const backdropCost = (formData.backdrops || []).reduce(
     (total, backdropId) => {
       return total + (PRICING.backdrops[backdropId] || 0);
@@ -91,17 +91,14 @@ function QuoteConfirmation() {
     0,
   );
 
-  // Welcome Sign
   const welcomeSignCost = formData.welcomeSign
     ? PRICING.welcomeSigns[formData.welcomeSign] || 0
     : 0;
 
-  // Centerpieces
   const centerpieceCost = formData.centerpieceTier
     ? (PRICING.centerpieces[formData.centerpieceTier] || 0) * tablesNeeded
     : 0;
 
-  // Extras
   const calculateExtrasCost = () => {
     let total = 0;
     const extras = formData.extras || {};
@@ -136,7 +133,6 @@ function QuoteConfirmation() {
     !hasCenterpieces &&
     !hasExtras;
 
-  // Transport & Labour
   const hasFurniture = hasChairs;
   const transportCost = calculateTransport(
     formData.location,
@@ -167,6 +163,12 @@ function QuoteConfirmation() {
   // Generate a simple quote reference number
   const quoteRef = `DWN-${Date.now().toString().slice(-8)}`;
 
+  useEffect(() => {
+    if (formData && quoteRef) {
+      saveQuoteToHistory(formData, quoteRef, subtotal, deposit);
+    }
+  }, [formData, quoteRef, subtotal, deposit]);
+
   // Format event date
   const formatDate = (dateString) => {
     if (!dateString) return "Not specified";
@@ -192,6 +194,102 @@ function QuoteConfirmation() {
         quoteRef,
       },
     });
+  };
+
+  const handleShareQuote = () => {
+    // Create shareable URL with quote data
+    const quoteData = {
+      ref: quoteRef,
+      eventDate: formData.eventDate,
+      guests: formData.guestCount,
+      venue: formData.venueName,
+      total: subtotal,
+      deposit: deposit,
+    };
+
+    // Encode data as URL parameter
+    const encodedData = encodeURIComponent(JSON.stringify(quoteData));
+    const shareUrl = `${window.location.origin}/quote/view?data=${encodedData}`;
+
+    // Try to use native share API if available (mobile)
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Dawenee Decor Quote",
+          text: `My event quote - ${formData.guestCount} guests on ${formData.eventDate}`,
+          url: shareUrl,
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.log("Error sharing:", error));
+    } else {
+      // fallback: coppy to clipboard
+      navigator.clipboard
+        .writeText(shareUrl)
+        .then(() => {
+          alert(
+            "Quote link copied to clipboard! You can share it with anyone.",
+          );
+        })
+        .catch(() => {
+          // If clipboard fails, show the URL
+          prompt("Copy this link to share your quote:", shareUrl);
+        });
+    }
+  };
+
+  const handleDownloadQuote = () => {
+    // Export quote data as JSON
+    const quoteExport = {
+      quoteRef,
+      submittedAt: new Date().toISOString(),
+      customer: {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+      },
+      event: {
+        date: formData.eventDate,
+        guests: formData.guestCount,
+        venue: formData.venueName,
+        location: formData.location,
+        themeColors: formData.themeColors,
+      },
+      selections: {
+        chairs: formData.chairType
+          ? {
+              type: formData.chairType,
+              quantity: formData.chairQuantity,
+            }
+          : null,
+        tables: formData.chairType || hasTableSettings ? tablesNeeded : 0,
+        tableSettings: formData.tableSettings,
+        backdrops: formData.backdrops,
+        welcomeSign: formData.welcomeSign,
+        centerpieces: formData.centerpieceTier,
+        extras: formData.extras,
+      },
+      pricing: {
+        subtotal: subtotal,
+        deposit: deposit,
+        balance: subtotal - deposit,
+      },
+      specialRequests: formData.specialRequests,
+    };
+
+    const dataStr = JSON.stringify(quoteExport, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `dawenee-quote-${quoteRef}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handlePrintQuote = () => {
+    window.print();
   };
 
   // const handlePayLater = () => {
@@ -315,68 +413,6 @@ function QuoteConfirmation() {
               </div>
             </div>
           </div>
-
-          {/* What Happens Next */}
-          {/* <div className="confirmation__next-steps">
-            <h2 className="confirmation__section-title">What Happens Next?</h2>
-
-            <div className="next-steps-timeline">
-              <div className="timeline-step">
-                <div className="timeline-step__number">1</div>
-                <div className="timeline-step__content">
-                  <h3 className="timeline-step__title">We Review Your Quote</h3>
-                  <p className="timeline-step__description">
-                    Our team will review your requirements and prepare a
-                    detailed quote within 1-2 hours during business hours.
-                  </p>
-                  <span className="timeline-step__time">Within 1-2 hours</span>
-                </div>
-              </div>
-
-              <div className="timeline-step">
-                <div className="timeline-step__number">2</div>
-                <div className="timeline-step__content">
-                  <h3 className="timeline-step__title">
-                    You'll Receive Your Quote
-                  </h3>
-                  <p className="timeline-step__description">
-                    We'll send a detailed quote and invoice to{" "}
-                    <strong>{formData.email}</strong> and call you on{" "}
-                    <strong>{formData.phone}</strong> to discuss details.
-                  </p>
-                  <span className="timeline-step__time">Same day</span>
-                </div>
-              </div>
-
-              <div className="timeline-step">
-                <div className="timeline-step__number">3</div>
-                <div className="timeline-step__content">
-                  <h3 className="timeline-step__title">
-                    Book with 50% Deposit
-                  </h3>
-                  <p className="timeline-step__description">
-                    Secure your date by paying a 50% deposit via M-Pesa. We'll
-                    send payment instructions in your quote email.
-                  </p>
-                  <span className="timeline-step__time">When ready</span>
-                </div>
-              </div>
-
-              <div className="timeline-step">
-                <div className="timeline-step__number">4</div>
-                <div className="timeline-step__content">
-                  <h3 className="timeline-step__title">
-                    We Prepare for Your Event
-                  </h3>
-                  <p className="timeline-step__description">
-                    Final payment due after your event setup is complete. We'll
-                    coordinate delivery, setup, and ensure everything is
-                    perfect!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
 
           <div className="edit-quote-section">
             <h3 className="edit-quote-section__title">Need to Make Changes?</h3>
@@ -547,58 +583,65 @@ function QuoteConfirmation() {
           </div>
 
           {/* Contact & Actions */}
-          {/* <div className="confirmation__actions">
-            <h2 className="confirmation__section-title">Need Help?</h2>
+          <div className="confirmation__actions">
+            <h2 className="confirmation__section-title">Quick Actions</h2>
 
             <div className="contact-grid">
+              <button onClick={handleShareQuote} className="action-card">
+                <div className="action-card__icon">🔗</div>
+                <h3 className="action-card__title">Share Quote</h3>
+                <p className="action-card__description">
+                  Copy link to share with family or friends
+                </p>
+              </button>
+
+              <button onClick={handleDownloadQuote} className="action-card">
+                <div className="action-card__icon">💾</div>
+                <h3 className="action-card__title">Download</h3>
+                <p className="action-card__description">
+                  Save quote data as JSON file
+                </p>
+              </button>
+
+              <button onClick={handlePrintQuote} className="action-card">
+                <div className="action-card__icon">🖨️</div>
+                <h3 className="action-card__title">Print Quote</h3>
+                <p className="action-card__description">Print or save as PDF</p>
+              </button>
+
               <button
                 onClick={handleWhatsApp}
-                className="contact-card contact-card--whatsapp"
+                className="action-card action-card--whatsapp"
               >
-                <div className="contact-card__icon">💬</div>
-                <h3 className="contact-card__title">WhatsApp Us</h3>
-                <p className="contact-card__description">
-                  Get instant support on WhatsApp
+                <div className="action-card__icon">💬</div>
+                <h3 className="action-card__title">WhatsApp</h3>
+                <p className="action-card__description">
+                  Chat with us instantly
                 </p>
-                <span className="contact-card__cta">Chat Now →</span>
               </button>
 
               <a
                 href="tel:+254715784287"
-                className="contact-card contact-card--phone"
+                className="action-card action-card--phone"
               >
-                <div className="contact-card__icon">📞</div>
-                <h3 className="contact-card__title">Call Us</h3>
-                <p className="contact-card__description">0715 784 287</p>
-                <span className="contact-card__cta">Call Now →</span>
+                <div className="action-card__icon">📞</div>
+                <h3 className="action-card__title">Call Us</h3>
+                <p className="action-card__description">0715 784 287</p>
               </a>
 
               <a
                 href="mailto:info@daweneedecor.com"
-                className="contact-card contact-card--email"
+                className="action-card action-card--email"
               >
-                <div className="contact-card__icon">✉️</div>
-                <h3 className="contact-card__title">Email Us</h3>
-                <p className="contact-card__description">
+                <div className="action-card__icon">✉️</div>
+                <h3 className="action-card__title">Email</h3>
+                <p className="action-card__description">
                   info@daweneedecor.com
                 </p>
-                <span className="contact-card__cta">Send Email →</span>
               </a>
-
-              <button
-                onClick={handlePrint}
-                className="contact-card contact-card--print"
-              >
-                <div className="contact-card__icon">🖨️</div>
-                <h3 className="contact-card__title">Print Quote</h3>
-                <p className="contact-card__description">
-                  Save this page as PDF
-                </p>
-                <span className="contact-card__cta">Print →</span>
-              </button>
             </div>
-          </div> */}
-          <div className="quick-contact">
+          </div>
+          {/* <div className="quick-contact">
             <h3 className="quick-contact__title">Need Help?</h3>
             <div className="quick-contact__buttons">
               <button
@@ -619,20 +662,6 @@ function QuoteConfirmation() {
               >
                 ✉️ Email
               </a>
-            </div>
-          </div>
-
-          {/* Business Hours */}
-          {/* <div className="confirmation__info">
-            <div className="info-box">
-              <h3 className="info-box__title">⏰ Business Hours</h3>
-              <p className="info-box__text">
-                Monday - Sunday: 8:00 AM - 7:00 PM
-              </p>
-              <p className="info-box__note">
-                Quotes submitted outside business hours will be processed the
-                next business day.
-              </p>
             </div>
           </div> */}
 
