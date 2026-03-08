@@ -1,0 +1,611 @@
+// src/pages/Payment/Payment.scss
+
+@import '../../styles/variables.scss';
+
+.payment-page {
+  background: linear-gradient(135deg, $warm-white 0%, white 100%);
+  min-height: 100vh;
+}
+
+.payment {
+  padding: $space-5xl 0;
+
+  @media (max-width: 768px) {
+    padding: $space-3xl 0;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-light;
+    color: $warm-charcoal;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $size-md;
+    color: $soft-gray;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: $space-3xl;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr 350px;
+      gap: $space-2xl;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__summary-section {
+    @media (max-width: 768px) {
+      order: -1;
+    }
+  }
+}
+
+// Payment Card
+.payment-card {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  padding: $space-2xl;
+  box-shadow: 0 4px 16px rgba($warm-charcoal, 0.08);
+  margin-bottom: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-xl;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-xl;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-xl 0;
+    padding-bottom: $space-md;
+    border-bottom: 2px solid $light-gray;
+
+    @media (max-width: 768px) {
+      font-size: $size-lg;
+      margin-bottom: $space-lg;
+    }
+  }
+}
+
+// Amount Display
+.amount-display {
+  background: linear-gradient(135deg, rgba($sage-green, 0.05) 0%, rgba($sage-green, 0.02) 100%);
+  border: 2px solid rgba($sage-green, 0.2);
+  border-radius: $border-radius;
+  padding: $space-xl;
+  margin-bottom: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+    margin-bottom: $space-lg;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-sm 0;
+
+    &--deposit {
+      margin-top: $space-md;
+      padding-top: $space-md;
+      border-top: 2px solid rgba($sage-green, 0.3);
+
+      .amount-display__label {
+        font-size: $size-base;
+        font-weight: $weight-semi;
+        color: $sage-dark;
+
+        @media (max-width: 768px) {
+          font-size: $size-sm;
+        }
+      }
+
+      .amount-display__value {
+        font-size: $size-lg;
+        font-weight: $weight-semi;
+        color: $sage-green;
+
+        @media (max-width: 768px) {
+          font-size: $size-md;
+        }
+      }
+    }
+  }
+
+  &__label {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__value {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__note {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+    margin: $space-md 0 0 0;
+    font-style: italic;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 11px;
+    }
+  }
+}
+
+// Form Group
+.form-group {
+  margin-bottom: $space-xl;
+
+  @media (max-width: 768px) {
+    margin-bottom: $space-lg;
+  }
+
+  &__label {
+    display: block;
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin-bottom: $space-sm;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    font-family: $font-body;
+    font-size: $size-lg;
+    color: $warm-charcoal;
+    background-color: white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius;
+    padding: $space-md;
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $sage-green;
+      box-shadow: 0 0 0 3px rgba($sage-green, 0.1);
+    }
+
+    &:disabled {
+      background-color: $warm-white;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+      padding: $space-sm;
+    }
+  }
+
+  &__hint {
+    display: block;
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+    margin-top: $space-xs;
+
+    @media (max-width: 768px) {
+      font-size: 11px;
+    }
+  }
+}
+
+// Payment Button
+.payment-button {
+  width: 100%;
+  font-family: $font-body;
+  font-size: $size-lg;
+  font-weight: $weight-semi;
+  color: white;
+  background: linear-gradient(135deg, $sage-green 0%, $sage-dark 100%);
+  border: none;
+  border-radius: $border-radius-lg;
+  padding: $space-lg $space-xl;
+  cursor: pointer;
+  transition: all $transition-fast;
+  box-shadow: 0 4px 16px rgba($sage-green, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba($sage-green, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    font-size: $size-base;
+    padding: $space-md $space-lg;
+  }
+
+  &__spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(white, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+
+    @media (max-width: 768px) {
+      width: 16px;
+      height: 16px;
+      border-width: 2px;
+    }
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Payment Instructions
+.payment-instructions {
+  background: linear-gradient(135deg, rgba($terracotta, 0.05) 0%, white 100%);
+  border: 2px solid rgba($terracotta, 0.2);
+  border-radius: $border-radius;
+  padding: $space-xl;
+  margin: $space-xl 0;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+    margin: $space-lg 0;
+  }
+
+  &__icon {
+    font-size: 64px;
+    margin-bottom: $space-md;
+    animation: pulse 2s ease-in-out infinite;
+
+    @media (max-width: 768px) {
+      font-size: 48px;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-xl;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-sm 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-lg;
+    }
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+
+    strong {
+      font-weight: $weight-semi;
+      color: $terracotta;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__steps {
+    text-align: left;
+    margin: 0 0 $space-lg 0;
+    padding-left: $space-xl;
+
+    li {
+      font-family: $font-body;
+      font-size: $size-sm;
+      color: $warm-charcoal;
+      line-height: 2;
+
+      @media (max-width: 768px) {
+        font-size: $size-xs;
+      }
+    }
+  }
+
+  &__note {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $terracotta;
+    font-weight: $weight-semi;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+// Cancel Button
+.cancel-button {
+  width: 100%;
+  font-family: $font-body;
+  font-size: $size-base;
+  font-weight: $weight-semi;
+  color: $soft-gray;
+  background-color: transparent;
+  border: 2px dashed $light-gray;
+  border-radius: $border-radius;
+  padding: $space-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+  margin-top: $space-lg;
+
+  &:hover:not(:disabled) {
+    color: $terracotta;
+    border-color: $terracotta;
+    background-color: rgba($terracotta, 0.05);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    font-size: $size-sm;
+    padding: $space-sm;
+  }
+}
+
+// Security Notice
+.security-notice {
+  background-color: rgba($sage-green, 0.05);
+  border-left: 4px solid $sage-green;
+  border-radius: $border-radius;
+  padding: $space-md;
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+
+  @media (max-width: 768px) {
+    padding: $space-sm;
+    gap: $space-sm;
+  }
+
+  &__icon {
+    font-size: $size-2xl;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $warm-charcoal;
+    margin: 0;
+    line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+}
+
+// Order Summary
+.order-summary {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+  box-shadow: 0 4px 16px rgba($warm-charcoal, 0.08);
+  margin-bottom: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+    padding-bottom: $space-md;
+    border-bottom: 2px solid $light-gray;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $space-md;
+    padding: $space-sm 0;
+
+    &--total {
+      margin-top: $space-md;
+      padding-top: $space-md;
+      border-top: 1px solid $light-gray;
+
+      .order-summary__label {
+        font-size: $size-base;
+        font-weight: $weight-semi;
+
+        @media (max-width: 768px) {
+          font-size: $size-sm;
+        }
+      }
+
+      .order-summary__value {
+        font-size: $size-lg;
+        font-weight: $weight-semi;
+
+        @media (max-width: 768px) {
+          font-size: $size-base;
+        }
+      }
+    }
+
+    &--deposit {
+      .order-summary__label {
+        font-weight: $weight-semi;
+        color: $sage-dark;
+      }
+
+      .order-summary__value {
+        font-size: $size-xl;
+        font-weight: $weight-semi;
+        color: $sage-green;
+
+        @media (max-width: 768px) {
+          font-size: $size-lg;
+        }
+      }
+    }
+  }
+
+  &__label {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $soft-gray;
+    flex: 1;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__value {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-medium;
+    color: $warm-charcoal;
+    text-align: right;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: $light-gray;
+    margin: $space-md 0;
+  }
+
+  &__note {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $sage-green;
+    margin: $space-md 0 0 0;
+    text-align: center;
+    font-weight: $weight-semi;
+
+    @media (max-width: 768px) {
+      font-size: 11px;
+    }
+  }
+}
+
+// After Payment Info
+.after-payment {
+  background-color: rgba($sage-green, 0.05);
+  border: 2px solid rgba($sage-green, 0.2);
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: $space-lg;
+
+    li {
+      font-family: $font-body;
+      font-size: $size-sm;
+      color: $warm-charcoal;
+      line-height: 1.8;
+      margin-bottom: $space-xs;
+
+      @media (max-width: 768px) {
+        font-size: $size-xs;
+      }
+    }
+  }
+}

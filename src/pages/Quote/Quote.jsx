@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Quote.scss";
@@ -12,7 +12,6 @@ import StepFive from "../../components/QuoteSteps/StepFive";
 import QuoteSummary from "../../components/QuoteSteps/QuoteSummary";
 
 function Quote() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   // Check if we're coming from review page
@@ -171,21 +170,12 @@ function Quote() {
                 </button>
               )}
 
-              {currentStep < totalSteps ? (
+              {currentStep < totalSteps && (
                 <button
                   onClick={nextStep}
                   className="quote__nav-button quote__nav-button--next"
                 >
                   Next Step →
-                </button>
-              ) : (
-                <button
-                  onClick={() =>
-                    navigate("/quote/review", { state: { formData } })
-                  }
-                  className="quote__nav-button quote__nav-button--submit"
-                >
-                  Review Quote →
                 </button>
               )}
             </div>

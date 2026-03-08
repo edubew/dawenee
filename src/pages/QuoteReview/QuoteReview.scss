@@ -200,10 +200,10 @@
   background-color: rgba($sage-green, 0.05);
   border: 2px solid rgba($sage-green, 0.2);
   border-radius: $border-radius-lg;
-  padding: $space-xl;
+  padding: $space-lg;
 
   @media (max-width: 768px) {
-    padding: $space-lg;
+    padding: $space-md;
   }
 }
 

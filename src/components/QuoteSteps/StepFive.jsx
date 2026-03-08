@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./StepFive.scss";
+import { useNavigate } from "react-router-dom";
 
 function StepFive({ formData, setFormData }) {
+  const navigate = useNavigate();
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+  };
+
+  // Validate required fields
+  const isFormValid = () => {
+    return formData.name && formData.phone && formData.email && termsAccepted;
+  };
+
+  const handleSubmit = () => {
+    if (!isFormValid()) {
+      alert("Please fill in all required fields and accept the terms.");
+      return;
+    }
+
+    // Navigate directly to confirmation
+    navigate("/quote/confirmation", { state: { formData } });
   };
 
   return (
@@ -109,43 +128,78 @@ function StepFive({ formData, setFormData }) {
           </span>
         </div>
 
-        {/* What happens next */}
-        <div className="form__info-box">
-          <div className="form__info-box-header">
-            <span className="form__info-box-icon">📋</span>
-            <h4 className="form__info-box-title">What Happens Next?</h4>
-          </div>
-          <div className="next-steps">
-            <div className="next-step">
-              <span className="next-step__number">1</span>
-              <div className="next-step__content">
-                <h5 className="next-step__title">Review Your Quote</h5>
-                <p className="next-step__description">
-                  See a complete breakdown of all items and pricing
-                </p>
-              </div>
-            </div>
+        {/* Terms and conditions */}
+        <div className="form__group">
+          <div className="terms-section">
+            <label className="terms-checkbox">
+              <input
+                type="checkbox"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+              />
+              <span className="terms-checkbox__text">
+                I accept the{" "}
+                <button
+                  type="button"
+                  onClick={() =>
+                    document
+                      .getElementById("terms-content")
+                      .scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="terms-link"
+                >
+                  terms and conditions
+                </button>
+                <span className="form__required"> *</span>
+              </span>
+            </label>
 
-            <div className="next-step">
-              <span className="next-step__number">2</span>
-              <div className="next-step__content">
-                <h5 className="next-step__title">We'll Contact You</h5>
-                <p className="next-step__description">
-                  Our team will call within 24 hours to discuss details
-                </p>
-              </div>
-            </div>
-
-            <div className="next-step">
-              <span className="next-step__number">3</span>
-              <div className="next-step__content">
-                <h5 className="next-step__title">Book with 50% Deposit</h5>
-                <p className="next-step__description">
-                  Secure your date with a 50% deposit via M-Pesa
-                </p>
-              </div>
+            <div id="terms-conteent" className="terms-content">
+              <h3>Terms & Conditions</h3>
+              <ul>
+                <li>50% deposit required to confirm booking</li>
+                <li>Balance payment due after the event setup is done</li>
+                <li>Cancellations made on the day of the event: No refund</li>
+                <li>
+                  Setup time: 2-4 hours before event (venue must be accessible)
+                </li>
+                <li>Setdown: The following morning after your event date</li>
+                <li>
+                  Damages to rented items will be charged at replacement cost
+                </li>
+                <li>We are not responsible for venue-related issues</li>
+                <li>Final quote may be adjusted based on site visit</li>
+              </ul>
             </div>
           </div>
+        </div>
+
+        <div className="form__group">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!isFormValid()}
+            className="submit-quote-button"
+          >
+            {isFormValid()
+              ? "✓ Submit Quote Request →"
+              : "⚠ Please fill required fields"}
+          </button>
+          {!isFormValid() && (
+            <p
+              className="form__hint"
+              style={{
+                color: "#c85a54",
+                textAlign: "center",
+                marginTop: "0.5rem",
+              }}
+            >
+              {!formData.name && "Name is required. "}
+              {!formData.phone && "Phone is required. "}
+              {!formData.email && "Email is required. "}
+              {!termsAccepted && "Please accept terms & conditions."}
+            </p>
+          )}
         </div>
 
         <div className="privacy-notice">
