@@ -721,6 +721,17 @@
   }
 }
 
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+  gap: $space-md;
+  margin-top: $space-2xl;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
 .bottom-action {
   font-family: $font-body;
   font-size: $size-base;

@@ -1,8 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  FaInstagram,
+  FaTiktok,
+  FaWhatsapp,
+  FaPhone,
+  FaFacebook,
+  FaEnvelope,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import "./Footer.scss";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer">
       <div className="container">
@@ -23,8 +34,7 @@ function Footer() {
                 className="footer__social-link"
                 aria-label="Follow us on Instagram"
               >
-                <span className="footer__social-icon">📷</span>
-                Instagram
+                <FaInstagram /> Instagram
               </a>
 
               <a
@@ -34,7 +44,7 @@ function Footer() {
                 className="footer__social-link"
                 aria-label="Follow us on TikTok"
               >
-                <span className="footer__social-icon">🎵</span>
+                <FaTiktok />
                 TikTok
               </a>
 
@@ -45,7 +55,7 @@ function Footer() {
                 className="footer__social-link"
                 aria-label="Follow us on TikTok"
               >
-                <span className="footer__social-icon">🎵</span>
+                <FaFacebook />
                 Facebook
               </a>
 
@@ -56,7 +66,7 @@ function Footer() {
                 className="footer__social-link"
                 aria-label="Chat with us on WhatsApp"
               >
-                <span className="footer__social-icon">💬</span>
+                <FaWhatsapp />
                 WhatsApp
               </a>
 
@@ -65,7 +75,7 @@ function Footer() {
                 className="footer__social-link"
                 aria-label="Call us"
               >
-                <span className="footer__social-icon">📞</span>
+                <FaPhone className="footer__icon" />
                 +254715784287
               </a>
             </div>
@@ -123,7 +133,7 @@ function Footer() {
 
         <div className="footer__bottom">
           <p className="footer__copyright">
-            © {new Date().getFullYear()} Dawenee Decor & Events. All rights
+            © {currentYear} Dawenee Decor & Events. All rights
             reserved.
           </p>
           <div className="footer__payment">

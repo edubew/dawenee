@@ -13,14 +13,14 @@ export const PRICING = {
   tableSettings: {
     napkinsAndRings: 60,
     wineGlasses: 80,
-    chargerPlates: 80,
-    tableMats: 50,
+    chargerPlates: 100,
+    tableMats: 80,
   },
 
   // TABLE SETTINGS (per table)
   tableSettingsPerTable: {
     tableRunners: 200,
-    candlesAndHolders: 60,
+    candlesAndHolders: 240,
   },
 
   // BACKDROPS
@@ -47,7 +47,7 @@ export const PRICING = {
 
   // EXTRAS
   extras: {
-    cakeStand: 1300,
+    cakeStand: 1600,
     dessertTable: 5000,
     redCarpet: 5000, // 10 meters
     cardBox: 1500,

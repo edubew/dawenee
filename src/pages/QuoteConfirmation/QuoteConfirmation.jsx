@@ -3,12 +3,22 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import {
+  FaWhatsapp,
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaShare,
+  FaDownload,
+  FaPrint,
+} from "react-icons/fa";
+import {
   PRICING,
   calculateTransport,
   calculateLabour,
 } from "../../data/pricingData";
 import "./QuoteConfirmation.scss";
 import { saveQuoteToHistory } from "../../utils/localStorage";
+import { FaShareNodes } from "react-icons/fa6";
 
 function QuoteConfirmation() {
   const navigate = useNavigate();
@@ -160,7 +170,6 @@ function QuoteConfirmation() {
 
   const deposit = Math.round(subtotal * 0.5);
 
-  // Generate a simple quote reference number
   const quoteRef = `DWN-${Date.now().toString().slice(-8)}`;
 
   useEffect(() => {
@@ -169,7 +178,6 @@ function QuoteConfirmation() {
     }
   }, [formData, quoteRef, subtotal, deposit]);
 
-  // Format event date
   const formatDate = (dateString) => {
     if (!dateString) return "Not specified";
     const date = new Date(dateString);
@@ -197,7 +205,6 @@ function QuoteConfirmation() {
   };
 
   const handleShareQuote = () => {
-    // Create shareable URL with quote data
     const quoteData = {
       ref: quoteRef,
       eventDate: formData.eventDate,
@@ -207,7 +214,6 @@ function QuoteConfirmation() {
       deposit: deposit,
     };
 
-    // Encode data as URL parameter
     const encodedData = encodeURIComponent(JSON.stringify(quoteData));
     const shareUrl = `${window.location.origin}/quote/view?data=${encodedData}`;
 
@@ -231,14 +237,12 @@ function QuoteConfirmation() {
           );
         })
         .catch(() => {
-          // If clipboard fails, show the URL
           prompt("Copy this link to share your quote:", shareUrl);
         });
     }
   };
 
   const handleDownloadQuote = () => {
-    // Export quote data as JSON
     const quoteExport = {
       quoteRef,
       submittedAt: new Date().toISOString(),
@@ -291,11 +295,6 @@ function QuoteConfirmation() {
   const handlePrintQuote = () => {
     window.print();
   };
-
-  // const handlePayLater = () => {
-  //   setShowPaymentOption(false);
-  //   // Optionally show a message that quote has been saved
-  // };
 
   const handleWhatsApp = () => {
     const message = `Hi! I just submitted a quote request on your website (Ref: ${quoteRef}). Event date: ${formData.eventDate}, Guests: ${formData.guestCount}. Looking forward to hearing from you!`;
@@ -587,33 +586,13 @@ function QuoteConfirmation() {
             <h2 className="confirmation__section-title">Quick Actions</h2>
 
             <div className="contact-grid">
-              <button onClick={handleShareQuote} className="action-card">
-                <div className="action-card__icon">🔗</div>
-                <h3 className="action-card__title">Share Quote</h3>
-                <p className="action-card__description">
-                  Copy link to share with family or friends
-                </p>
-              </button>
-
-              <button onClick={handleDownloadQuote} className="action-card">
-                <div className="action-card__icon">💾</div>
-                <h3 className="action-card__title">Download</h3>
-                <p className="action-card__description">
-                  Save quote data as JSON file
-                </p>
-              </button>
-
-              <button onClick={handlePrintQuote} className="action-card">
-                <div className="action-card__icon">🖨️</div>
-                <h3 className="action-card__title">Print Quote</h3>
-                <p className="action-card__description">Print or save as PDF</p>
-              </button>
-
               <button
                 onClick={handleWhatsApp}
                 className="action-card action-card--whatsapp"
               >
-                <div className="action-card__icon">💬</div>
+                <div className="action-card__icon">
+                  <FaWhatsapp />
+                </div>
                 <h3 className="action-card__title">WhatsApp</h3>
                 <p className="action-card__description">
                   Chat with us instantly
@@ -624,7 +603,9 @@ function QuoteConfirmation() {
                 href="tel:+254715784287"
                 className="action-card action-card--phone"
               >
-                <div className="action-card__icon">📞</div>
+                <div className="action-card__icon">
+                  <FaPhone />
+                </div>
                 <h3 className="action-card__title">Call Us</h3>
                 <p className="action-card__description">0715 784 287</p>
               </a>
@@ -633,40 +614,47 @@ function QuoteConfirmation() {
                 href="mailto:info@daweneedecor.com"
                 className="action-card action-card--email"
               >
-                <div className="action-card__icon">✉️</div>
+                <div className="action-card__icon">
+                  <FaEnvelope />
+                </div>
                 <h3 className="action-card__title">Email</h3>
                 <p className="action-card__description">
                   info@daweneedecor.com
                 </p>
               </a>
+
+              <button onClick={handleShareQuote} className="action-card">
+                <div className="action-card__icon">
+                  <FaShareNodes />
+                </div>
+                <h3 className="action-card__title">Share Quote</h3>
+                <p className="action-card__description">
+                  Copy link to share with family or friends
+                </p>
+              </button>
+
+              <button onClick={handleDownloadQuote} className="action-card">
+                <div className="action-card__icon">
+                  <FaDownload />
+                </div>
+                <h3 className="action-card__title">Download</h3>
+                <p className="action-card__description">
+                  Save quote data as JSON file
+                </p>
+              </button>
+
+              <button onClick={handlePrintQuote} className="action-card">
+                <div className="action-card__icon">
+                  <FaPrint />
+                </div>
+                <h3 className="action-card__title">Print Quote</h3>
+                <p className="action-card__description">Print or save as PDF</p>
+              </button>
             </div>
           </div>
-          {/* <div className="quick-contact">
-            <h3 className="quick-contact__title">Need Help?</h3>
-            <div className="quick-contact__buttons">
-              <button
-                onClick={handleWhatsApp}
-                className="quick-contact__btn quick-contact__btn--whatsapp"
-              >
-                💬 WhatsApp
-              </button>
-              <a
-                href="tel:+254715784287"
-                className="quick-contact__btn quick-contact__btn--phone"
-              >
-                📞 Call Us
-              </a>
-              <a
-                href="mailto:info@daweneedecor.com"
-                className="quick-contact__btn quick-contact__btn--email"
-              >
-                ✉️ Email
-              </a>
-            </div>
-          </div> */}
 
           {/* Bottom Actions */}
-          <div className="confirmation__bottom-actions">
+          <div className="bottom-actions">
             <button
               onClick={() => navigate("/")}
               className="bottom-action bottom-action--secondary"
