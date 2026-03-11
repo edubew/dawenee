@@ -6,8 +6,6 @@ import {
   FaWhatsapp,
   FaPhone,
   FaFacebook,
-  FaEnvelope,
-  FaMapMarkerAlt,
 } from "react-icons/fa";
 import "./Footer.scss";
 

@@ -19,14 +19,6 @@ function Navbar() {
     setmobileMenuOpen(false);
   };
 
-  //  const scrollToSection = (sectionId) => {
-  //    handleLinkClick();
-  //    const element = document.getElementById(sectionId);
-  //    if (element) {
-  //      element.scrollIntoView({ behavior: "smooth", block: "start" });
-  //    }
-  //  };
-
   const handleOurWorkClick = () => {
     handleLinkClick();
 
@@ -105,11 +97,11 @@ function Navbar() {
 
           <li>
             <Link
-              to="/booking"
+              to="/contact"
               className="navbar__cta"
               onClick={handleLinkClick}
             >
-              Book Now
+              Contact Us
             </Link>
           </li>
         </ul>
