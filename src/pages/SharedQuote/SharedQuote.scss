@@ -1,0 +1,400 @@
+@import '../../styles/variables.scss';
+
+.shared-quote-page {
+  background: linear-gradient(135deg, $warm-white 0%, white 100%);
+  min-height: 100vh;
+}
+
+.shared-quote {
+  padding: $space-5xl 0;
+
+  @media (max-width: 768px) {
+    padding: $space-3xl 0;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    background-color: rgba($sage-green, 0.1);
+    color: $sage-green;
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: $space-xs $space-md;
+    border-radius: 20px;
+    margin-bottom: $space-md;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-3xl;
+    font-weight: $weight-light;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-2xl;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $soft-gray;
+    margin: 0;
+
+    strong {
+      color: $terracotta;
+      font-weight: $weight-semi;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+}
+
+.quote-card {
+  max-width: 800px;
+  margin: 0 auto $space-4xl;
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 4px 20px rgba($warm-charcoal, 0.08);
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    margin-bottom: $space-3xl;
+  }
+
+  &__section {
+    padding: $space-2xl;
+    border-bottom: 2px solid $light-gray;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      padding: $space-xl;
+    }
+  }
+
+  &__section-title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__cta {
+    background: linear-gradient(135deg, rgba($sage-green, 0.05) 0%, rgba($sage-green, 0.1) 100%);
+    padding: $space-2xl;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      padding: $space-xl;
+    }
+  }
+
+  &__cta-text {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+}
+
+.quote-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-md 0;
+  border-bottom: 1px solid $light-gray;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-xs;
+  }
+
+  &--deposit {
+    background-color: rgba($sage-green, 0.05);
+    border-radius: $border-radius;
+    padding: $space-md;
+    margin-top: $space-md;
+    border: 2px solid rgba($sage-green, 0.2);
+    border-bottom: 2px solid rgba($sage-green, 0.2);
+  }
+
+  &__label {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $soft-gray;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__value {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    text-align: right;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+
+    @media (max-width: 640px) {
+      text-align: left;
+    }
+
+    &--large {
+      font-size: $size-xl;
+      font-family: $font-headline;
+
+      @media (max-width: 768px) {
+        font-size: $size-lg;
+      }
+    }
+
+    &--deposit {
+      font-size: $size-2xl;
+      font-family: $font-headline;
+      color: $sage-green;
+
+      @media (max-width: 768px) {
+        font-size: $size-xl;
+      }
+    }
+  }
+}
+
+.cta-button {
+  font-family: $font-body;
+  font-size: $size-base;
+  font-weight: $weight-semi;
+  color: white;
+  background: linear-gradient(135deg, $terracotta 0%, $terracotta-dark 100%);
+  border: none;
+  border-radius: $border-radius-lg;
+  padding: $space-md $space-2xl;
+  cursor: pointer;
+  transition: all $transition-fast;
+  box-shadow: 0 4px 16px rgba($terracotta, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba($terracotta, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    font-size: $size-sm;
+    padding: $space-sm $space-xl;
+    width: 100%;
+  }
+}
+
+.info-box {
+  max-width: 800px;
+  margin: 0 auto $space-4xl;
+  background-color: rgba($sage-green, 0.05);
+  border: 2px solid rgba($sage-green, 0.2);
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+
+  @media (max-width: 768px) {
+    margin-bottom: $space-3xl;
+    padding: $space-lg;
+  }
+
+  &__title {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 $space-sm 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $warm-charcoal;
+    line-height: 1.7;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+}
+
+.contact-cta {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-xl;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-xl 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-lg;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: $space-lg;
+    justify-content: center;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
+  }
+
+  &__btn {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    background-color: white;
+    border: 2px solid $light-gray;
+    border-radius: $border-radius-lg;
+    padding: $space-md $space-xl;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all $transition-fast;
+    display: inline-block;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($warm-charcoal, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+      padding: $space-sm $space-lg;
+    }
+
+    @media (max-width: 640px) {
+      width: 100%;
+    }
+
+    &--whatsapp:hover {
+      border-color: #25D366;
+      color: #25D366;
+    }
+
+    &--phone:hover {
+      border-color: $terracotta;
+      color: $terracotta;
+    }
+  }
+}
+
+.error-state {
+  text-align: center;
+  padding: $space-5xl 0;
+
+  &__icon {
+    font-size: 80px;
+    margin-bottom: $space-xl;
+
+    @media (max-width: 768px) {
+      font-size: 60px;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-2xl;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xl;
+    }
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $soft-gray;
+    margin: 0 0 $space-2xl 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+  }
+}
+
+.loading-state {
+  text-align: center;
+  padding: $space-5xl 0;
+
+  p {
+    font-family: $font-body;
+    font-size: $size-base;
+    color: $soft-gray;
+    margin: $space-xl 0 0 0;
+  }
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid $light-gray;
+  border-top-color: $sage-green;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: spin 1s linear infinite;
+
+  @media (max-width: 768px) {
+    width: 48px;
+    height: 48px;
+    border-width: 3px;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

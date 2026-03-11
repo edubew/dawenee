@@ -12,7 +12,7 @@ const projects = [
     eventType: "Birthday",
     image: dinnerPartyImg,
     guestCount: 15,
-    priceRange: "From Kes 18,000",
+    priceRange: "From Kes 27,670",
   },
   {
     id: 2,
@@ -20,15 +20,15 @@ const projects = [
     eventType: "Engagement",
     image: engagementImg,
     guestCount: 30,
-    priceRange: "From Kes 30,000",
+    priceRange: "From Kes 42,900",
   },
   {
     id: 3,
     title: "Elegant Graduation Party",
     eventType: "Graduation",
     image: graduationImg,
-    guestCount: 40,
-    priceRange: "From Kes 45,000",
+    guestCount: 20,
+    priceRange: "From Kes 34,900",
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const projects = [
     eventType: "Picnic",
     image: picnicImg,
     guestCount: 10,
-    priceRange: "From Kes 20,000",
+    priceRange: "From Kes 21,000",
   },
   {
     id: 5,

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 
 function Navbar() {
-  const location = useLocation(); //Gets current url path
+  const location = useLocation();
+  const navigate = useNavigate();
   const isActive = (path) => location.pathname === path;
 
   const [mobileMenuOpen, setmobileMenuOpen] = useState(false);
@@ -18,13 +19,24 @@ function Navbar() {
     setmobileMenuOpen(false);
   };
 
-   const scrollToSection = (sectionId) => {
-     handleLinkClick();
-     const element = document.getElementById(sectionId);
-     if (element) {
-       element.scrollIntoView({ behavior: "smooth", block: "start" });
-     }
-   };
+  const handleOurWorkClick = () => {
+    handleLinkClick();
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById('featured-work');
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById("featured-work");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -62,8 +74,8 @@ function Navbar() {
 
           <li>
             <button
-              onClick={() => scrollToSection("featured-work")}
-              className="navbar__link--button"
+              onClick={handleOurWorkClick}
+              className="navbar__link navbar__link--button"
             >
               Our Work
             </button>
@@ -85,11 +97,11 @@ function Navbar() {
 
           <li>
             <Link
-              to="/booking"
+              to="/contact"
               className="navbar__cta"
               onClick={handleLinkClick}
             >
-              Book Now
+              Contact Us
             </Link>
           </li>
         </ul>

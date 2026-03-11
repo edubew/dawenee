@@ -1,0 +1,346 @@
+@import "../../styles/variables";
+
+.settings-mode-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-md;
+  margin-bottom: $space-xl;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: $space-sm;
+  }
+}
+
+.settings-mode-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: $space-xl;
+  background-color: white;
+  border: 2px solid $light-gray;
+  border-radius: $border-radius-lg;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $terracotta;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($terracotta, 0.15);
+  }
+
+  &--active {
+    border-color: $terracotta;
+    background-color: rgba($terracotta, 0.05);
+
+    .settings-mode-btn__title {
+      color: $terracotta;
+    }
+
+    @media (max-width: 768px) {
+      padding: $space-lg;
+    }
+
+    @media (max-width: 480px) {
+      padding: $space-md;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: $space-sm;
+    right: $space-sm;
+    background-color: $sage-green;
+    color: white;
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-semi;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px $space-xs;
+    border-radius: 4px;
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+      padding: 2px 6px;
+    }
+  }
+
+  &__title {
+    font-family: $font-body;
+    font-size: $size-md;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin-bottom: 4px;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+    margin-bottom: $space-sm;
+  }
+
+  &__price {
+    font-family: $font-headline;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    color: $terracotta;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+    }
+  }
+}
+
+.custom-settings {
+  background-color: $light-gray;
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+  }
+
+  @media (max-width: 480px) {
+    padding: $space-md;
+    border-radius: $border-radius;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-md;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+      margin-bottom: $space-md;
+    }
+  }
+
+  &__section {
+    margin-bottom: $space-xl;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-lg;
+    }
+  }
+
+  &__section-title {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    margin: 0 0 $space-md 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+      margin-bottom: $space-sm;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+
+    @media (max-width: 480px) {
+      gap: $space-sm;
+    }
+  }
+}
+
+.custom-setting-item {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-md;
+  padding: $space-md;
+  background-color: white;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba($warm-charcoal, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: $space-sm;
+    gap: $space-sm;
+  }
+
+  input[type="checkbox"] {
+    margin-top: 4px;
+    width: 12px;
+    height: 12px;
+    accent-color: $terracotta;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__name {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
+  }
+
+  &__price {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $soft-gray;
+
+    strong {
+      color: $terracotta;
+      font-weight: $weight-semi;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+    }
+  }
+}
+
+.package-details {
+  background: linear-gradient(
+    135deg,
+    rgba($sage-green, 0.1) 0%,
+    rgba($sage-green, 0.05) 100%
+  );
+  border: 2px solid rgba($sage-green, 0.3);
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+  }
+
+  @media (max-width: 480px) {
+    padding: $space-md;
+    border-radius: $border-radius;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-lg;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-md;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+      margin-bottom: $space-md;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-md;
+    margin-bottom: $space-lg;
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+      gap: $space-sm;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+
+    @media (max-width: 480px) {
+      gap: $space-xs;
+    }
+  }
+
+  &__check {
+    color: $sage-green;
+    font-weight: $weight-semi;
+    font-size: $size-md;
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+    }
+  }
+}
+
+.deselect-button {
+  width: 100%;
+  font-family: $font-body;
+  font-size: $size-sm;
+  font-weight: $weight-medium;
+  color: $soft-gray;
+  background-color: transparent;
+  border: 2px dashed $light-gray;
+  border-radius: $border-radius;
+  padding: $space-sm;
+  margin-top: $space-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $terracotta;
+    border-color: $terracotta;
+    background-color: rgba($terracotta, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    font-size: $size-xs;
+  }
+}

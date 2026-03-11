@@ -1,0 +1,219 @@
+@import "../../styles/variables";
+
+.quote-summary {
+  background: linear-gradient(135deg, $warm-white 0%, white 100%);
+  border: 2px solid $light-gray;
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+  position: sticky;
+  top: $space-xl;
+
+  @media (max-width: 1024px) {
+    position: static;
+    margin-bottom: $space-xl;
+  }
+
+  @media (max-width: 768px) {
+    padding: $space-lg;
+  }
+
+  @media (max-width: 480px) {
+    padding: $space-md;
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: $size-xl;
+    font-weight: $weight-regular;
+    color: $warm-charcoal;
+    margin: 0 0 $space-lg 0;
+    padding-bottom: $space-md;
+    border-bottom: 2px solid $light-gray;
+
+    @media (max-width: 768px) {
+      font-size: $size-lg;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-md;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    margin-bottom: $space-xl;
+
+    @media (max-width: 768px) {
+      gap: $space-lg;
+      margin-bottom: $space-lg;
+    }
+  }
+
+  &__totals {
+    padding-top: $space-lg;
+    border-top: 2px solid $light-gray;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+
+    @media (max-width: 768px) {
+      padding-top: $space-md;
+      gap: $space-sm;
+    }
+  }
+
+  &__note {
+    margin-top: $space-md;
+    padding: $space-sm;
+    background-color: rgba($sage-green, 0.1);
+    border-radius: $border-radius;
+
+    p {
+      font-family: $font-body;
+      font-size: $size-xs;
+      color: $warm-charcoal;
+      margin: 0;
+      text-align: center;
+
+      @media (max-width: 480px) {
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+.summary-section {
+  &__title {
+    font-family: $font-body;
+    font-size: $size-sm;
+    font-weight: $weight-semi;
+    color: $terracotta;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 $space-sm 0;
+
+    @media (max-width: 768px) {
+      font-size: $size-xs;
+    }
+  }
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $space-md;
+  padding: $space-xs 0;
+
+  &__label {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $warm-charcoal;
+    flex: 1;
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
+  }
+
+  &__value {
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+    }
+  }
+
+  &--included {
+    color: $sage-green;
+  }
+
+  &--subsection {
+    margin-top: $space-sm;
+    padding-top: $space-sm;
+    border-top: 1px solid rgba($light-gray, 0.5);
+
+    .summary-item__label {
+      font-weight: $weight-semi;
+    }
+  }
+
+  &--indent {
+    padding-left: $space-md;
+
+    .summary-item__label {
+      font-size: 11px;
+      color: $soft-gray;
+    }
+
+    .summary-item__value {
+      font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+      padding-left: $space-sm;
+    }
+  }
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-md;
+
+  &__label {
+    font-family: $font-body;
+    font-size: $size-base;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      font-size: $size-sm;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+    }
+  }
+
+  &__value {
+    font-family: $font-headline;
+    font-size: $size-md;
+    font-weight: $weight-semi;
+    color: $warm-charcoal;
+
+    @media (max-width: 768px) {
+      font-size: $size-base;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-sm;
+    }
+  }
+
+  &--deposit {
+    padding: $space-md;
+    background-color: rgba($terracotta, 0.1);
+    border-radius: $border-radius;
+    margin-top: $space-sm;
+
+    .summary-total__label {
+      color: $terracotta;
+    }
+
+    .summary-total__value {
+      color: $terracotta;
+    }
+
+    @media (max-width: 768px) {
+      padding: $space-sm;
+    }
+  }
+}
