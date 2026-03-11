@@ -254,107 +254,107 @@ function Contact() {
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="booking__form-section">
-                <h2 className="booking__form-title">Send Us a Message</h2>
-                <p className="booking__form-subtitle">
-                  Fill out the form below and we will get back to you within 24
-                  hours
-                </p>
+            <div className="booking__form-section">
+              <h2 className="booking__form-title">Send Us a Message</h2>
+              <p className="booking__form-subtitle">
+                Fill out the form below and we will get back to you within 24
+                hours
+              </p>
 
-                <form className="booking__form" onSubmit={handleSubmit}>
-                  <div className="booking__field">
-                    <label htmlFor="name" className="booking__label">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      className={`booking__input ${errors.name ? "booking__input--error" : ""}`}
-                      placeholder="e.g Sarah Kimani"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                    />
-                    {errors.name && (
-                      <span className="booking__error">{errors.name}</span>
-                    )}
-                  </div>
+              <form className="booking__form" onSubmit={handleSubmit}>
+                <div className="booking__field">
+                  <label htmlFor="name" className="booking__label">
+                    Your Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className={`booking__input ${errors.name ? "booking__input--error" : ""}`}
+                    placeholder="e.g Sarah Kimani"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.name && (
+                    <span className="booking__error">{errors.name}</span>
+                  )}
+                </div>
 
-                  <div className="booking__field">
-                    <label htmlFor="email" className="booking__label">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className={`booking__input ${errors.email ? "booking__input--error" : ""}`}
-                      placeholder="e.g., kimani@example.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                    {errors.email && (
-                      <span className="booking__error">{errors.email}</span>
-                    )}
-                  </div>
+                <div className="booking__field">
+                  <label htmlFor="email" className="booking__label">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className={`booking__input ${errors.email ? "booking__input--error" : ""}`}
+                    placeholder="e.g., kimani@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.email && (
+                    <span className="booking__error">{errors.email}</span>
+                  )}
+                </div>
 
-                  <div className="booking__field">
-                    <label htmlFor="phone" className="booking__label">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      className={`booking__input ${errors.phone ? "booking__input--error" : ""}`}
-                      placeholder="e.g., 0701 234 567"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                    />
-                    {errors.phone && (
-                      <span className="booking__error">{errors.phone}</span>
-                    )}
-                  </div>
+                <div className="booking__field">
+                  <label htmlFor="phone" className="booking__label">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    className={`booking__input ${errors.phone ? "booking__input--error" : ""}`}
+                    placeholder="e.g., 0701 234 567"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.phone && (
+                    <span className="booking__error">{errors.phone}</span>
+                  )}
+                </div>
 
-                  <div className="booking__field">
-                    <label htmlFor="message" className="booking__label">
-                      Your Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      className={`booking__input booking__textarea ${errors.message ? "booking__input--error" : ""}`}
-                      placeholder="Tell us what you need help with..."
-                      rows="5"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                    />
-                    {errors.message && (
-                      <span className="booking__error">{errors.message}</span>
-                    )}
-                  </div>
+                <div className="booking__field">
+                  <label htmlFor="message" className="booking__label">
+                    Your Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    className={`booking__input booking__textarea ${errors.message ? "booking__input--error" : ""}`}
+                    placeholder="Tell us what you need help with..."
+                    rows="5"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.message && (
+                    <span className="booking__error">{errors.message}</span>
+                  )}
+                </div>
 
-                  <button
-                    type="submit"
-                    className="booking__submit"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <span className="booking__submit-spinner"></span>
-                        Sending...
-                      </>
-                    ) : (
-                      "Send Message"
-                    )}
-                  </button>
-                </form>
-              </div>
+                <button
+                  type="submit"
+                  className="booking__submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="booking__submit-spinner"></span>
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
+                </button>
+              </form>
             </div>
           </div>
 
