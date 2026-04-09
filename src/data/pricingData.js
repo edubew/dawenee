@@ -11,7 +11,7 @@ export const PRICING = {
 
   // TABLE SETTINGS (per guest)
   tableSettings: {
-    napkinsAndRings: 60,
+    napkinsAndRings: 70,
     wineGlasses: 80,
     chargerPlates: 100,
     tableMats: 80,
@@ -25,9 +25,9 @@ export const PRICING = {
 
   // BACKDROPS
   backdrops: {
-    basicBalloon: 8000,
+    basicBalloon: 8500,
     doubleBalloonBackdrop: 14000,
-    floral: 13500,
+    floral: 14000,
     draped: 12000,
     shimmerWall: 15000,
   },
@@ -47,7 +47,7 @@ export const PRICING = {
 
   // EXTRAS
   extras: {
-    cakeStand: 1600,
+    cakeStand: 1800,
     dessertTable: 5000,
     redCarpet: 5000, // 10 meters
     cardBox: 1500,
@@ -71,7 +71,7 @@ export const PRICING = {
   // LABOUR (based on guest count and setup type)
   labour: {
     lessThan50: 3000,
-    fiftyPlus: 4500,
+    fiftyPlus: 5000,
     backdropOnly: 0, // If only backdrop, no tables/chairs
   },
 };

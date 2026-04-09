@@ -5,6 +5,8 @@ import balloonBackdrop from "../../assets/images/backdrops/balloonBackdrop.jpg";
 import floralBackdrop from "../../assets/images/backdrops/floralBackdrop.jpg";
 import drapedBackdrop from "../../assets/images/backdrops/drapedBackdrop.jpg";
 import shimmerBackdrop from "../../assets/images/backdrops/shimmer.jpg";
+import floralSign from "../../assets/images/backdrops/floralSign.png";
+import balloonSign from "../../assets/images/backdrops/balloonSign.jpg";
 
 const backdropOptions = [
   {
@@ -47,14 +49,14 @@ const welcomeSignOptions = [
     name: "Floral Welcome Sign",
     price: PRICING.welcomeSigns.floral,
     description: "Beautiful floral arrangement with custom signage",
-    image: floralBackdrop,
+    image: floralSign,
   },
   {
     id: "balloon",
     name: "Balloon Welcome Sign",
     price: PRICING.welcomeSigns.balloon,
     description: "Eye-catching balloon display with signage",
-    image: balloonBackdrop,
+    image: balloonSign,
   },
 ];
 

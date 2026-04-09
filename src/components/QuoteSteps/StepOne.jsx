@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { getMatchingVenues } from "../../data/venuesData";
+import React, { useEffect, useMemo } from "react";
 import "./StepOne.scss";
 import "../../pages/Quote/Quote.scss";
 
@@ -37,10 +36,6 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
     }
   }, [errors, onValidate]);
 
-  const [venueFilter, setVenueFilter] = useState("all");
-
-  const allMatchingVenues = getMatchingVenues(formData.location, venueFilter);
-  const suggestedVenues = allMatchingVenues.slice(0, 6);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -92,7 +87,7 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
               type="range"
               id="guestCount"
               name="guestCount"
-              min="2"
+              min="1"
               max="500"
               step="3"
               value={formData.guestCount}
@@ -153,85 +148,7 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
           <label htmlFor="venueName" className="form__label">
             Venue Name <span className="form__required">*</span>
           </label>
-          <div className="form__venue-filter">
-            <button
-              type="button"
-              onClick={() => setVenueFilter("all")}
-              className={`form__filter-btn ${venueFilter === "all" ? "form__filter-btn--active" : ""}`}
-            >
-              All Venues
-            </button>
-            <button
-              type="button"
-              onClick={() => setVenueFilter("outdoor")}
-              className={`form__filter-btn ${venueFilter === "outdoor" ? "form__filter-btn--active" : ""}`}
-            >
-              Outdoor
-            </button>
-            <button
-              type="button"
-              onClick={() => setVenueFilter("indoor")}
-              className={`form__filter-btn ${venueFilter === "indoor" ? "form__filter-btn--active" : ""}`}
-            >
-              Indoor
-            </button>
-          </div>
 
-          {suggestedVenues.length > 0 && (
-            <div className="form__venue-suggestions">
-              <p className="form__venue-suggestions-title">
-                💡{" "}
-                {venueFilter === "all"
-                  ? "All"
-                  : venueFilter === "outdoor"
-                    ? "Outdoor"
-                    : "Indoor"}{" "}
-                venues in{" "}
-                {formData.location === "nairobi"
-                  ? "Nairobi"
-                  : "outside Nairobi"}
-                :
-              </p>
-              <div className="form__venue-cards">
-                {suggestedVenues.map((venue) => (
-                  <button
-                    key={venue.id}
-                    type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        venueName: venue.name,
-                      }))
-                    }
-                    className={`form__venue-card ${formData.venueName === venue.name ? "form__venue-card--selected" : ""}`}
-                  >
-                    <div className="form__venue-card-header">
-                      <span className="form__venue-card-type">
-                        {venue.type === "outdoor"
-                          ? "🌳"
-                          : venue.type === "indoor"
-                            ? "🏛️"
-                            : "🌳🏛️"}
-                      </span>
-                      <span className="form__venue-card-category">
-                        {venue.category}
-                      </span>
-                    </div>
-                    <div className="form__venue-card-name">{venue.name}</div>
-                    <div className="form__venue-card-area">{venue.area}</div>
-                    <div className="form__venue-card-contact">
-                      {venue.contact}
-                    </div>
-                  </button>
-                ))}
-              </div>
-              {allMatchingVenues.length > 6 && (
-                <p className="form__venue-suggestions-more">
-                  +{allMatchingVenues.length - 6} more venues available
-                </p>
-              )}
-            </div>
-          )}
           <input
             type="text"
             id="venueName"

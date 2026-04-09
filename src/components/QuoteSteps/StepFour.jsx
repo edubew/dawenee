@@ -86,6 +86,7 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               className={`centerpiece-card ${formData.centerpieceTier === "basic" ? "centerpiece-card--selected" : ""}`}
             >
               <div className="centerpiece-card__icon">🌼</div>
+              {/* <img src={chair.image} alt={chair.name} /> */}
               <h3 className="centerpiece-card__name">Basic</h3>
               <p className="centerpiece-card__description">
                 Simple florals arrangements
@@ -271,7 +272,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               />
               <div className="extra-item__content">
                 <div className="extra-item__header">
-  
                   <div className="extra-item__details">
                     <span className="extra-item__name">
                       Dessert Table Setup

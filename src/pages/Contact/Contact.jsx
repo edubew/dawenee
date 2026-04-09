@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -100,11 +101,9 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isValid = validateAllFields();
-
-    if (!isValid) {
+    if (!validateAllFields()) {
       setSubmitStatus("error");
-      setSubmitMessage("Please fix the errors above before submitting.");
+      setSubmitMessage("Please fix the error above before submitting");
       return;
     }
 
@@ -112,32 +111,54 @@ function Contact() {
     setSubmitStatus(null);
     setSubmitMessage("");
 
+    const formPayload = new FormData();
+    formPayload.append(
+      "access_key",
+      import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+    );
+    formPayload.append("name", formData.name);
+    formPayload.append("email", formData.email);
+    formPayload.append("phone", formData.phone);
+    formPayload.append("message", formData.message);
+    formPayload.append("from_name", "Dawenee Decor Website");
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      setSubmitStatus("success");
-      setSubmitMessage("Thank you! We will get back to you within 24 hours.");
-
-      // Reset after submission
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formPayload
       });
 
-      setErrors({
-        name: "",
-        email: "",
-        phone: "",
-        eventDate: "",
-        eventType: "",
-        message: "",
-      });
+      const data = await response.json()
+
+      if (data.success) {
+        setSubmitStatus("success");
+        setSubmitMessage("Thank you! We will get back to you within 24 hours");
+
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+
+        setErrors({
+          name: "",
+          email: "",
+          phone: "",
+          eventDate: "",
+          eventType: "",
+          message: "",
+        });
+      } else {
+        throw new Error(data.message ||"Form submission failed");
+      }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("Web3Forms error:", error);
       setSubmitStatus("error");
-      setSubmitMessage("Oops! Something went wrong. Please try again.");
+      setSubmitMessage(
+        "Oops! Something went wrong. Please try contacting us via WhatsApp or email directly.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -218,7 +239,7 @@ function Contact() {
                   <div className="booking__method-content">
                     <h3 className="booking__method-title">Email</h3>
                     <p className="booking__method-detail">
-                      info@daweneedecor.com
+                      wndecorevents@gmail.com
                     </p>
                     <span className="booking__method-cta">Send email →</span>
                   </div>
@@ -273,7 +294,7 @@ function Contact() {
                     id="name"
                     name="name"
                     className={`booking__input ${errors.name ? "booking__input--error" : ""}`}
-                    placeholder="e.g Sarah Kimani"
+                    placeholder="e.g Sarah..."
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -292,7 +313,7 @@ function Contact() {
                     id="email"
                     name="email"
                     className={`booking__input ${errors.email ? "booking__input--error" : ""}`}
-                    placeholder="e.g., kimani@example.com"
+                    placeholder="e.g., dawenee@example.com"
                     value={formData.email}
                     onChange={handleChange}
                     required
