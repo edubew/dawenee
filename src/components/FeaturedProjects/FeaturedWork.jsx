@@ -1,34 +1,51 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
 import projects from "../../data/projects";
+import { EucalyptusBranch } from "../Botanicals/Botanicals";
 import "./FeaturedWork.scss";
-import { Link } from "react-router-dom";
 
 function FeaturedWork() {
   return (
-    <section className="featured-work" id="featured-work">
+    <section className="work" id="featured-work">
+      <EucalyptusBranch
+        className="work__botanical"
+        style={{
+          position: "absolute",
+          bottom: "-2rem",
+          right: "-1.5rem",
+          width: "260px",
+          transform: "rotate(30deg)",
+        }}
+        opacity={0.13}
+      />
+
       <div className="container">
-        <div className="featured-work__header">
-          <h2 className="featured-work__title">Recent Events We've Styled</h2>
-          <p className="featured-work__subtitle">
-            Real celebrations, real clients, real results
+        <div className="section-header">
+          <span className="section-header__eyebrow">Portfolio</span>
+          <h2 className="section-header__title">
+            Recent moments, <em>real clients</em>
+          </h2>
+          <p className="section-header__subtitle">
+            A look at the celebrations we've styled across Nairobi — from
+            intimate picnics to full-room transformations.
           </p>
         </div>
 
-        <div className="featured-work__grid">
+        <div className="work__grid">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
 
-        <div className="featured-work__cta">
+        <div className="work__cta">
           <Link
             to="https://instagram.com/daweneedecor"
             target="_blank"
             rel="noopener noreferrer"
-            className="featured-work__button"
+            className="btn btn--text"
           >
-            See More on TikTok →
+            See more on Instagram →
           </Link>
         </div>
       </div>

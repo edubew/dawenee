@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+// import Footer from "../../components/Footer/Footer";
 import {
   FaWhatsapp,
   FaPhone,
@@ -419,7 +419,7 @@ function Contact() {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

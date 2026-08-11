@@ -1,8 +1,11 @@
 @import "../../styles/variables";
+@import "../../styles/shared";
 
-.featured-work {
+.work {
   padding: $space-5xl 0;
-  background: $warm-white;
+  background: $cream;
+  position: relative;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     padding: $space-3xl $space-lg;
@@ -12,87 +15,23 @@
     padding: $space-2xl $space-md;
   }
 
-  &__header {
-    text-align: center;
-    margin-bottom: $space-4xl;
-
-    @media (max-width: 768px) {
-      margin-bottom: $space-3xl;
-    }
-  }
-
-  &__title {
-    font-family: $font-headline;
-    font-size: $size-2xl;
-    font-weight: $weight-light;
-    color: $warm-charcoal;
-    text-align: center;
-    margin: $space-md;
-
-    @media (max-width: 768px) {
-      font-size: $size-xl;
-    }
-
-    @media (max-width: 480px) {
-      font-size: $size-lg;
-    }
-  }
-
-  &__subtitle {
-    font-family: $font-body;
-    font-size: $size-md;
-    color: $soft-gray;
-    margin: 0;
-
-    @media (max-width: 768px) {
-      font-size: $size-base;
-    }
-  }
-
-  //Pinterest Column Masonry
   &__grid {
     column-count: 3;
     column-gap: $space-lg;
     max-width: $max-width;
     margin: 0 auto;
-    padding: 0 $space-xl;
 
     @media (max-width: 968px) {
       column-count: 2;
-      column-gap: $space-lg;
-      padding: 0 $space-lg;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
       column-count: 1;
-      column-gap: 0;
-      padding: 0 $space-md;
     }
   }
 
   &__cta {
     text-align: center;
     margin-top: $space-3xl;
-  }
-
-  &__button {
-    display: inline-flex;
-    align-items: center;
-    gap: $space-sm;
-    font-family: $font-body;
-    font-size: $size-base;
-    font-weight: $weight-medium;
-    color: $warm-charcoal;
-    text-decoration: none;
-    padding: $space-md $space-xl;
-    border: 2px solid $light-gray;
-    border-radius: $border-radius-lg;
-    transition: all $transition-base;
-
-    &:hover {
-      border-color: $terracotta;
-      color: $terracotta;
-      transform: translateX(4px);
-    }
   }
 }

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+// import Footer from "../../components/Footer/Footer";
 import "./Payment.scss";
 
 function Payment() {
@@ -290,8 +290,8 @@ function Payment() {
           </div>
         </div>
       </main>
-
-      <Footer />
+{/* 
+      <Footer /> */}
     </div>
   );
 }

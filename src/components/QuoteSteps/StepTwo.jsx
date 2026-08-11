@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import ChairCard from "./ChairCard";
+import OptionCard from "../QuoteSteps/OptionCard";
 import { PRICING } from "../../data/pricingData";
 import plasticDressed from "../../assets/images/seats/plasticDressed.jpg";
 import chiavariSeat from "../../assets/images/seats/chiavariSeat.jpg";
 import luxeSeat from "../../assets/images/seats/luxeSeat.jpg";
 import "../../pages/Quote/Quote.scss";
-import "./StepTwo.scss";
 
 const chairOptions = [
   {
@@ -35,28 +34,21 @@ const chairOptions = [
 ];
 
 function StepTwo({ formData, setFormData, tablesNeeded }) {
-  // Local state for table settings
   const [settingsMode, setSettingsMode] = useState("none");
 
-  // Calculate chair cost
   const calculateChairCost = () => {
-    if (!formData.chairTpye) return 0;
-    const pricePerChair = PRICING.chairs[formData.chairTpye] || 0;
-    return pricePerChair * formData.chairQuantity;
+    if (!formData.chairType) return 0;
+    return (PRICING.chairs[formData.chairType] || 0) * formData.chairQuantity;
   };
 
-  const calculateTableCost = () => {
-    return tablesNeeded * PRICING.tables.dressed;
-  };
+  const calculateTableCost = () => tablesNeeded * PRICING.tables.dressed;
 
-  // Calculate table settings cost
   const calculateTableSettingsCost = () => {
     let total = 0;
     const guestCount = formData.guestCount;
     const settings = formData.tableSettings;
 
     if (settingsMode === "package") {
-      // Full package: all per-guest items + all per-table items
       total += guestCount * PRICING.tableSettings.napkinsAndRings;
       total += guestCount * PRICING.tableSettings.wineGlasses;
       total += guestCount * PRICING.tableSettings.chargerPlates;
@@ -64,7 +56,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
       total += tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
       total += tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
     } else if (settingsMode === "custom") {
-      // Custom: calculate selected items only
       if (settings.napkins)
         total += guestCount * PRICING.tableSettings.napkinsAndRings;
       if (settings.wineGlasses)
@@ -84,21 +75,17 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
 
   const handleChairSelect = (chairId) => {
     setFormData((prev) => {
-      const newData = {
+      const isSame = prev.chairType === chairId;
+      return {
         ...prev,
-        chairType: chairId,
-        chairQuantity: prev.guestCount,
+        chairType: isSame ? "" : chairId,
+        chairQuantity: isSame ? 0 : prev.guestCount,
       };
-      return newData;
     });
   };
 
   const handleChairDeselect = () => {
-    setFormData((prev) => ({
-      ...prev,
-      chairType: "",
-      chairQuantity: 0,
-    }));
+    setFormData((prev) => ({ ...prev, chairType: "", chairQuantity: 0 }));
   };
 
   const handleChairQuantityChange = (e) => {
@@ -108,12 +95,10 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
     }));
   };
 
-  // Handle settings mode
   const handleSettingsModeChange = (mode) => {
     setSettingsMode(mode);
 
     if (mode === "package") {
-      // Select all items for package
       setFormData((prev) => ({
         ...prev,
         tableSettings: {
@@ -127,7 +112,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
         },
       }));
     } else if (mode === "none") {
-      // Deselect all items
       setFormData((prev) => ({
         ...prev,
         tableSettings: {
@@ -143,7 +127,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
     }
   };
 
-  // Handle custom item toggle
   const handleCustomItemToggle = (item) => {
     setFormData((prev) => ({
       ...prev,
@@ -154,31 +137,32 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
     }));
   };
 
-  // Calculate total for step
-  const stepTotal =
-    calculateChairCost() + calculateTableCost() + calculateTableSettingsCost();
-
   return (
     <div className="step">
-      <h2 className="step__title">Step 2: Seating & Tables</h2>
+      <h2 className="step__title">Step 2: Seating &amp; Tables</h2>
       <p className="step__description">
         Select the chair style that matches your event aesthetic
       </p>
 
       <div className="form">
         <div className="form__group">
-          <label className="form__label">Chair Type(Optional)</label>
+          <label className="form__label">Chair Type (Optional)</label>
           <p className="form__hint" style={{ marginBottom: "1rem" }}>
             Skip if you don't need chair rentals
           </p>
 
-          <div className="chair-selector">
+          <div className="option-grid">
             {chairOptions.map((chair) => (
-              <ChairCard
+              <OptionCard
                 key={chair.id}
-                chair={chair}
-                isSelected={formData.chairTpye === chair.id}
-                onSelect={handleChairSelect}
+                name={chair.name}
+                description={chair.description}
+                image={chair.image}
+                price={chair.price}
+                priceSuffix="per chair"
+                popular={chair.popular}
+                isSelected={formData.chairType === chair.id}
+                onSelect={() => handleChairSelect(chair.id)}
               />
             ))}
           </div>
@@ -194,7 +178,7 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           )}
         </div>
 
-        {formData.chairTpye && (
+        {formData.chairType && (
           <div className="form__group">
             <label htmlFor="chairQuantity" className="form__label">
               Number of Chairs
@@ -224,7 +208,7 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           </div>
         )}
 
-        {(formData.chairTpye || settingsMode !== "none") && (
+        {(formData.chairType || settingsMode !== "none") && (
           <div className="form__group">
             <div className="form__info-box">
               <div className="form__info-box-header">
@@ -253,7 +237,7 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
         <div className="form__group">
           <label className="form__label">Table Settings</label>
           <p className="form__hint" style={{ marginBottom: "1rem" }}>
-            Complete your table setup with napkins, glasses, chager plates, and
+            Complete your table setup with napkins, glasses, charger plates, and
             more
           </p>
 
@@ -269,9 +253,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
               <span className="settings-mode-btn__description">
                 Skip this section
               </span>
-              {/* <span className="settings-mode-btn__description">
-                Just chairs and tables
-              </span> */}
             </button>
 
             <button
@@ -287,8 +268,14 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
               <span className="settings-mode-btn__price">
                 +KES{" "}
                 {(
-                  formData.guestCount * 260 +
-                  tablesNeeded * 260
+                  formData.guestCount *
+                    (PRICING.tableSettings.napkinsAndRings +
+                      PRICING.tableSettings.wineGlasses +
+                      PRICING.tableSettings.chargerPlates +
+                      PRICING.tableSettings.tableMats) +
+                  tablesNeeded *
+                    (PRICING.tableSettingsPerTable.tableRunners +
+                      PRICING.tableSettingsPerTable.candlesAndHolders)
                 ).toLocaleString()}
               </span>
             </button>
@@ -306,7 +293,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           </div>
         </div>
 
-        {/* Custom settings selection */}
         {settingsMode === "custom" && (
           <div className="form__group">
             <div className="custom-settings">
@@ -329,9 +315,8 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                       </span>
                       <span className="custom-setting-item__price">
                         KES {PRICING.tableSettings.napkinsAndRings} ×{" "}
-                        {formData.guestCount} =
+                        {formData.guestCount} ={" "}
                         <strong>
-                          {" "}
                           KES{" "}
                           {(
                             PRICING.tableSettings.napkinsAndRings *
@@ -354,9 +339,8 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                       </span>
                       <span className="custom-setting-item__price">
                         KES {PRICING.tableSettings.wineGlasses} ×{" "}
-                        {formData.guestCount} =
+                        {formData.guestCount} ={" "}
                         <strong>
-                          {" "}
                           KES{" "}
                           {(
                             PRICING.tableSettings.wineGlasses *
@@ -379,9 +363,8 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                       </span>
                       <span className="custom-setting-item__price">
                         KES {PRICING.tableSettings.chargerPlates} ×{" "}
-                        {formData.guestCount} =
+                        {formData.guestCount} ={" "}
                         <strong>
-                          {" "}
                           KES{" "}
                           {(
                             PRICING.tableSettings.chargerPlates *
@@ -404,9 +387,8 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                       </span>
                       <span className="custom-setting-item__price">
                         KES {PRICING.tableSettings.tableMats} ×{" "}
-                        {formData.guestCount} =
+                        {formData.guestCount} ={" "}
                         <strong>
-                          {" "}
                           KES{" "}
                           {(
                             PRICING.tableSettings.tableMats *
@@ -419,7 +401,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                 </div>
               </div>
 
-              {/* Per table items */}
               <div className="custom-settings__section">
                 <h5 className="custom-settings__section-title">
                   Per Table ({tablesNeeded} tables)
@@ -437,9 +418,8 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                       </span>
                       <span className="custom-setting-item__price">
                         KES {PRICING.tableSettingsPerTable.tableRunners} ×{" "}
-                        {tablesNeeded} =
+                        {tablesNeeded} ={" "}
                         <strong>
-                          {" "}
                           KES{" "}
                           {(
                             PRICING.tableSettingsPerTable.tableRunners *
@@ -462,9 +442,8 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                       </span>
                       <span className="custom-setting-item__price">
                         KES {PRICING.tableSettingsPerTable.candlesAndHolders} ×{" "}
-                        {tablesNeeded} =
+                        {tablesNeeded} ={" "}
                         <strong>
-                          {" "}
                           KES{" "}
                           {(
                             PRICING.tableSettingsPerTable.candlesAndHolders *
@@ -477,7 +456,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                 </div>
               </div>
 
-              {/* Custom Settings cost */}
               {calculateTableSettingsCost() > 0 && (
                 <div className="form__calculation">
                   <span className="form__calculation-icon">💰</span>
@@ -493,7 +471,6 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           </div>
         )}
 
-        {/* Package Details */}
         {settingsMode === "package" && (
           <div className="form__group">
             <div className="package-details">
@@ -537,26 +514,18 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           </div>
         )}
 
-        {stepTotal > 0 && (
-          <div className="step__total">
-            <span className="step__total-label">Seating & Tables Total:</span>
-            <span className="step__total-amount">
-              KES {stepTotal.toLocaleString()}
-            </span>
-          </div>
-        )}
-
-        {stepTotal === 0 && (
+        {!formData.chairType && settingsMode === "none" && (
           <div className="form__info-box">
             <div className="form__info-box-header">
               <span className="form__info-box-icon">ℹ️</span>
               <h4 className="form__info-box-title">
-                Seating & Tables are Optional
+                Seating &amp; Tables are Optional
               </h4>
             </div>
             <p className="form__info-box-text">
               You can skip this step if you don't need chairs or table settings.
-              Click "Next Step" to continue with backdrops and extras.
+              Your running total is shown in the summary — just click "Next
+              Step" to continue with backdrops and extras.
             </p>
           </div>
         )}

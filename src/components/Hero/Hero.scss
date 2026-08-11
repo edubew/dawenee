@@ -1,32 +1,27 @@
 @import "../../styles/variables";
+@import "../../styles/shared";
 
 .hero {
-  background: linear-gradient(135deg, $warm-white 0%, $light-gray 100%);
-  padding: $space-3xl 0;
   position: relative;
+  padding: $space-5xl 0 5rem;
+  overflow: hidden;
+  background: $linen;
 
   @media (max-width: 768px) {
-    padding: $space-2xl 0;
+    padding: $space-3xl 0 $space-3xl;
   }
 
   &__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-    gap: $space-3xl;
-    max-width: $max-width;
-    margin: 0 auto;
-    padding: 0 $space-xl;
+    grid-template-columns: 1fr 1.05fr;
+    gap: $space-4xl;
+    align-items: center;
 
     @media (max-width: 968px) {
       grid-template-columns: 1fr;
-      gap: $space-2xl;
-      padding: 0 $space-lg;
-    }
-
-    @media (max-width: 480px) {
-      gap: $space-xl;
-      padding: 0 $space-md;
+      gap: $space-3xl;
     }
   }
 
@@ -34,7 +29,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
 
     @media (max-width: 968px) {
       align-items: center;
@@ -45,254 +39,212 @@
 
   &__tag {
     font-family: $font-body;
-    font-size: $size-sm;
-    font-weight: $weight-semi;
+    font-size: $size-xs;
+    font-weight: $weight-medium;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: $sage-green;
-    margin-bottom: $space-md;
-    margin-top: $space-sm;
-    display: inline-block;
+    letter-spacing: 5px;
+    color: $olive;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-md;
+    margin-bottom: $space-xl;
 
-    @media (max-width: 480px) {
-      font-size: $size-xs;
-      margin-top: 0;
+    &::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: $olive;
     }
   }
 
   &__title {
     font-family: $font-headline;
-    font-size: $size-2xl;
-    font-weight: $weight-semi;
-    color: $warm-charcoal;
-    line-height: 1.2;
-    margin: 0 0 $space-lg 0;
+    font-weight: $weight-light;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: $earth-dark;
+    margin: 0 0 $space-xl 0;
 
     em {
-      // color: #9d8079;
-      color: $terracotta;
       font-style: italic;
-      font-weight: $weight-light;
-    }
+      font-weight: $weight-medium;
+      color: $berry;
+      position: relative;
+      display: inline-block;
 
-    @media (max-width: 968px) {
-      font-size: $size-2xl;
+      &::after {
+        content: "";
+        position: absolute;
+        left: -2%;
+        right: -2%;
+        bottom: 0.08em;
+        height: 0.35em;
+        background: $rose-mist;
+        z-index: -1;
+        border-radius: 2px;
+      }
     }
 
     @media (max-width: 480px) {
-      font-size: $size-xl;
-
-      br {
-        display: none;
-      }
+      font-size: 2.75rem;
     }
   }
 
   &__description {
     font-family: $font-body;
     font-size: $size-md;
-    color: $soft-gray;
-    line-height: 1.7;
-    margin: 0 0 $space-xl 0;
-    max-width: 500px;
+    line-height: 1.8;
+    color: $earth-mid;
+    max-width: 460px;
+    margin: 0 0 $space-2xl 0;
+    font-weight: $weight-light;
 
     @media (max-width: 968px) {
-      max-width: 600px;
-    }
-
-    @media (max-width: 768px) {
-      font-size: $size-base;
+      max-width: 560px;
     }
   }
 
-  &__trust-signals {
+  &__facts {
     display: flex;
-    justify-content: flex-start;
-    gap: $space-sm;
-    margin-bottom: $space-xl;
     flex-wrap: wrap;
+    gap: $space-2xl;
+    padding: $space-xl 0;
+    margin-bottom: $space-2xl;
+    border-top: 1px solid $border-earthy;
+    border-bottom: 1px solid $border-earthy;
+    width: 100%;
 
     @media (max-width: 968px) {
       justify-content: center;
+      gap: $space-xl;
     }
   }
 
-  &__trust-item {
+  &__fact {
     display: flex;
-    align-items: center;
-    gap: $size-xs;
-    padding: $space-sm;
-    background-color: white;
-    border-radius: $border-radius;
-    box-shadow: 0 2px 8px rgba($warm-charcoal, 0.06);
-    transition: transform $transition-fast;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba($warm-charcoal, 0.1);
-    }
-
-    @media (max-width: 480px) {
-      padding: $space-xs $space-sm;
-    }
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
-  &__trust-icon {
-    color: $sage-green;
-    font-size: $size-md;
-    font-weight: $weight-semi;
-    flex-shrink: 0;
-  }
-
-  &__trust-text {
-    font-family: $font-body;
-    font-size: $size-sm;
-    color: $warm-charcoal;
+  &__fact-value {
+    font-family: $font-headline;
+    font-size: 1.6rem;
     font-weight: $weight-medium;
-    white-space: nowrap;
+    color: $earth-dark;
+    line-height: 1;
+  }
 
-    @media (max-width: 480px) {
-      font-size: $size-xs;
-    }
+  &__fact-label {
+    font-family: $font-body;
+    font-size: $size-xs;
+    color: $earth-light;
+    letter-spacing: 0.5px;
+    font-weight: $weight-regular;
   }
 
   &__ctas {
     display: flex;
     gap: $space-md;
-    justify-content: center;
-    margin-bottom: $space-xl;
+    flex-wrap: wrap;
 
     @media (max-width: 640px) {
       flex-direction: column;
       align-items: stretch;
-      gap: $space-sm;
       width: 100%;
-      max-width: 400px;
+      max-width: 380px;
     }
   }
 
-  &__cta {
-    display: inline-flex;
-    font-family: $font-body;
-    font-size: $size-sm;
-    font-weight: $weight-semi;
-    padding: $space-md $space-lg;
-    border-radius: $border-radius;
-    text-decoration: none;
-    transition: all $transition-base;
-    cursor: pointer;
-    border: none;
-    text-align: center;
-    white-space: nowrap;
-
-    &--primary {
-      background-color: $terracotta;
-      color: $warm-white;
-      box-shadow: 0 4px 12px rgba($terracotta, 0.25);
-
-      &:hover {
-        background-color: $terracotta-dark;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba($terracotta, 0.4);
-      }
-
-      &:active {
-        transform: translateY(0);
-      }
-    }
-
-    &--secondary {
-      background-color: transparent;
-      color: $warm-charcoal;
-      border: 2px solid $light-gray;
-
-      &:hover {
-        border-color: $terracotta;
-        color: $terracotta;
-        background-color: rgba($terracotta, 0.05);
-      }
-    }
-  }
-
-  &__testimonial {
-    text-align: center;
-    padding: $space-md;
-    background: rgba(white, 0.5);
-    border-radius: $border-radius-lg;
-    border-left: 4px solid $sage-green;
-    max-width: 500px;
-    margin: 0 auto;
-
-    @media (max-width: 968px) {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-  }
-
-  &__stars {
-    font-size: $size-sm;
-    margin-bottom: $space-xs;
-    letter-spacing: 2px;
-  }
-
-  &__testimonial-text {
-    font-family: $font-body;
-    font-size: $size-sm;
-    color: $warm-charcoal;
-    font-style: italic;
-    margin: 0 0 $space-xs 0;
-    line-height: 1.5;
-
-     @media (max-width: 968px) {
-      text-align: center;
-    }
-  }
-
-  &__testimonial-author {
-    font-family: $font-body;
-    font-size: $size-xs;
-    color: $soft-gray;
-    font-weight: $weight-medium;
-  }
-
-  &__carousel {
+  &__visual {
     position: relative;
-    border-radius: $border-radius-lg;
-    overflow: hidden;
-    background-color: $light-gray;
-    height: 100%;
-    box-shadow: 0 8px 32px rgba($warm-charcoal, 0.12);
+    z-index: 1;
+    padding: 2rem 2rem 3rem 0;
 
     @media (max-width: 968px) {
       order: 1;
-      max-width: 600px;
+      padding: 1rem 0 3.5rem;
+      max-width: 380px;
       margin: 0 auto;
       width: 100%;
     }
-  }
-
-  // Slides container
-  &__carousel-slides {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-    @media (max-width: 968px) {
-      padding-bottom: 75%;
-    }
 
     @media (max-width: 480px) {
-      padding-bottom: 100%;
+      max-width: 320px;
     }
   }
 
-  &__carousel-slide {
+  &__progress {
+    display: flex;
+    gap: $space-sm;
+    width: 140px;
+    margin: 0 $space-sm $space-lg auto;
+
+    @media (max-width: 968px) {
+      margin: 0 auto $space-lg;
+    }
+  }
+
+  &__progress-seg {
+    flex: 1;
+    height: 3px;
+    background: rgba($earth-dark, 0.12);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    &--done .hero__progress-fill {
+      transform: scaleX(1);
+      background: $olive;
+    }
+
+    &--active .hero__progress-fill {
+      background: $berry;
+      animation: heroFill 6s linear forwards;
+    }
+  }
+
+  &__progress-fill {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    display: block;
+  }
+
+  @keyframes heroFill {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  &__collage {
+    position: relative;
+  }
+
+  &__frame {
+    position: relative;
+    border-radius: 40% 8px 40% 8px / 8px 40% 8px 40%;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    box-shadow: $shadow-hero;
+    background: $cream;
+    z-index: 1;
+
+    @media (max-width: 480px) {
+      border-radius: 30% 8px 30% 8px / 8px 30% 8px 30%;
+    }
+  }
+
+  &__slide {
+    position: absolute;
+    inset: 0;
     opacity: 0;
     transition: opacity 1s ease-in-out;
 
@@ -303,92 +255,93 @@
       display: block;
     }
 
-    // Active slide
     &--active {
       opacity: 1;
       z-index: 1;
     }
   }
 
-  // Navigation arrows
-  &__carousel-arrow {
+  &__frame-secondary {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba($warm-white, 0.9);
-    border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    font-size: 32px;
-    color: $warm-charcoal;
-    cursor: pointer;
-    transition: all $transition-base;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    left: -3.5rem;
+    bottom: -2.5rem;
+    width: 44%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px 40% 8px 40%;
+    overflow: hidden;
+    transform: rotate(-5deg);
+    box-shadow: $shadow-lg;
+    border: 6px solid $linen;
+    background: $cream;
+    z-index: 2;
 
-    &:hover {
-      background: $warm-white;
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    &--prev {
-      left: $space-lg;
-    }
-
-    &--next {
-      right: $space-lg;
-    }
-
-    @media (max-width: 480px) {
-      width: 36px;
-      height: 36px;
-      font-size: 24px;
-
-      &--prev {
-        left: $space-sm;
-      }
-
-      &--next {
-        right: $space-sm;
-      }
+    @media (max-width: 968px) {
+      width: 46%;
+      left: -1.5rem;
+      bottom: -2rem;
     }
   }
 
-  // Dots indicator
-  &__carousel-dots {
+  &__frame-secondary-img {
+    transform: scale(1.5);
+    transform-origin: center 30%;
+  }
+
+  &__caption {
     position: absolute;
-    bottom: $space-lg;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: $space-sm;
-    z-index: 10;
+    right: -1rem;
+    bottom: 1.5rem;
+    background: $linen;
+    border-radius: $radius-caption;
+    border-left: 3px solid $terracotta;
+    padding: 1.1rem 1.35rem;
+    box-shadow: $shadow-md;
+    max-width: 220px;
+    z-index: 3;
+
+    @media (max-width: 968px) {
+      right: -0.5rem;
+      bottom: 1rem;
+      max-width: 200px;
+    }
 
     @media (max-width: 480px) {
-      bottom: $space-md;
+      display: none;
     }
   }
 
-  &__carousel-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 2px solid $warm-white;
-    background: transparent;
-    cursor: pointer;
-    transition: all $transition-base;
-    padding: 0;
+  &__caption-eyebrow {
+    font-family: $font-body;
+    font-size: 0.65rem;
+    font-weight: $weight-semi;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: $olive;
+    margin-bottom: 0.3rem;
+  }
 
-    &:hover {
-      background: rgba($warm-white, 0.5);
-    }
+  &__caption-title {
+    font-family: $font-headline;
+    font-size: 1.15rem;
+    font-weight: $weight-medium;
+    margin-bottom: 0.2rem;
+    color: $earth-dark;
+    line-height: 1.2;
+  }
 
-    &--active {
-      background: $warm-white;
-      transform: scale(1.2);
+  &__caption-desc {
+    font-size: $size-sm;
+    color: $earth-mid;
+    line-height: 1.5;
+    font-weight: $weight-light;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__slide,
+    &__progress-fill,
+    .btn {
+      transition: none !important;
+      animation: none !important;
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+// import Footer from "../../components/Footer/Footer";
 import "./SharedQuote.scss";
 
 function SharedQuote() {
@@ -65,7 +65,7 @@ function SharedQuote() {
             </div>
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

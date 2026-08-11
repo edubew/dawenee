@@ -1,54 +1,128 @@
-// --- COLORS ---
-$warm-white: #fdfbf9; //Page backgrounds
-$dusty-blush: #e8d5d0; //Primary accent
-$blush-dark: #d4b5ae; //Blush hover
-$sage-green: #a3b18a; //Secondary accent
-$sage-dark: #8a9a72; //Sage hover state
-$champagne: #c9b896; //Luxury highlights
-$warm-charcoal: #3d3532; //Primary text
-$soft-gray: #8a7e7a; //Secondary text
-$light-gray: #f0ebe8; //Subtle backgrounds, borders
-$terracotta: #c85a54;
-$terracotta-dark: #b04a40;
+// // Earthy anchors (the rustic foundation)
+// $linen:             #F2EAE0;
+// $cream:             #EDE0D4;
+// $terracotta:        #C17A5A;
+// $terracotta-dark:   #A66244;
+// $olive:             #7A8C5E;
+// $olive-dark:        #5E6E46;
 
-// --- TYPOGRAPHY ---
-$font-headline: "Cormorant Garamond", Georgia;
-$font-body: "Inter", -apple-system, sans-serif;
+// // Berry/rose tones
+// $berry:             #8B3E52;   // primary CTA,
+// $berry-dark:        #6E2E3F;   // hover state for berry
+// $mauve:             #A85C72;
+// $golden:            #C4A35A;
+// $rose-mist:         #E8C5D0;
+// $blush:             #F5ECE8;
 
-// ---FONT SIZES ---
-$size-xs: 12px; //fine print, badges
-$size-sm: 14px; //Captions, labels
-$size-base: 16px; // Body text(default)
-$size-md: 18px; //Large body/ lead paragraphs
-$size-lg: 24px; //Sub-headings
-$size-xl: 36px; //Section headings
-$size-2xl: 48px; //Page titles
-$size-3xl: 64px; //Hero titles
+// // Text
+// $earth-dark:        #2E1F18;   // headlines
+// $earth-mid:         #7A6055;
+// $earth-light:       #A89080;
 
-// --- FONT WEIGHTS ---
+// // Dark section
+// $plum-dark:         #52263A;   // CTA section background
+// ============================================================
+// BRAND PALETTE
+// Warm editorial + elegant celebration
+// ============================================================
+
+// Foundation
+$linen: #f3ebe2;
+$cream: #ede1d5;
+
+// Warm earthy accent
+$terracotta: #c17a5a;
+$terracotta-dark: #a66244;
+
+// Botanical accent
+$olive: #747b5a;
+$olive-dark: #5e6849;
+
+// Signature berry
+$berry: #8b3e52;
+$berry-dark: #6e2e3f;
+
+// Supporting rose tones
+// Keep these available for softer UI states / event-specific moments
+$mauve: #a66a78;
+$rose-mist: #e8cdd3;
+$blush: #f6eeea;
+
+// Subtle luxury accent
+$golden: #c4a35a;
+
+// Text
+$earth-dark: #2e1f18;
+$earth-mid: #735d53;
+$earth-light: #a18b7d;
+
+// Deep brand / conversion sections
+$plum-dark: #52263a;
+
+// Typography
+$font-headline: "Cormorant Garamond", Georgia, serif;
+$font-body: "Jost", -apple-system, BlinkMacSystemFont, sans-serif;
+
+// Font weights
 $weight-light: 300;
 $weight-regular: 400;
 $weight-medium: 500;
 $weight-semi: 600;
 
-// --- SPACING SCALE ---
-$space-xs: 4px;
-$space-sm: 8px;
-$space-md: 16px;
-$space-lg: 24px;
-$space-xl: 32px;
-$space-2xl: 48px;
-$space-3xl: 64px;
-$space-4xl: 80px;
-$space-5xl: 120px;
+// Font sizes
+$size-xs: 0.72rem; // eyebrows, labels, captions
+$size-sm: 0.85rem;
+$size-base: 0.92rem;
+$size-md: 1.05rem;
+$size-lg: 1.35rem;
+$size-xl: 1.75rem;
+$size-2xl: 2.25rem;
+$size-3xl: 3rem;
+$size-4xl: 4rem;
 
-// --- LAYOUTS ---
+//Spacing
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 0.75rem;
+$space-lg: 1rem;
+$space-xl: 1.5rem;
+$space-2xl: 2rem;
+$space-3xl: 3rem;
+$space-4xl: 4rem;
+$space-5xl: 6rem;
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
+// Irregular pairs
+$radius-stamp: 4px 14px 4px 14px; // primary button — hand-stamped
+$radius-stamp-alt: 14px 4px 14px 4px; // secondary button — inverse stamp
+$radius-card: 8px 32px 8px 32px;
+$radius-card-alt: 32px 8px 32px 8px;
+$radius-card-c: 8px 8px 32px 32px;
+$radius-organic: 50% 20% 50% 20%; // step numbers, avatars — leaf shape
+$radius-caption: 8px 4px 8px 4px;
+
+// Layout
 $max-width: 1200px;
-$nav-height: 72px;
-$border-radius: 8px;
-$border-radius-lg: 16px;
+$container-pad: 2rem;
 
-// --- TRANSITIONS ---
-$transition-fast: 0.15s ease;
-$transition-base: 0.25s ease;
-$transition-slow: 0.4s ease;
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+$transition-spring: 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+// Shadows
+$shadow-sm: 0 4px 12px rgba($earth-dark, 0.08);
+$shadow-md: 0 8px 24px rgba($earth-dark, 0.12);
+$shadow-lg: 0 16px 48px rgba($earth-dark, 0.16);
+$shadow-hero: 0 32px 64px rgba($earth-dark, 0.2);
+$shadow-berry: 0 6px 20px rgba($berry, 0.28);
+$shadow-berry-lg: 0 10px 32px rgba($berry, 0.38);
+
+// Border colors
+$border-earthy: rgba($terracotta, 0.2);
+$border-light: rgba($terracotta, 0.12);
+$border-mauve: rgba($mauve, 0.3);

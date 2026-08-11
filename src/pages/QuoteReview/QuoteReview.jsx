@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+// import Footer from "../../components/Footer/Footer";
 import QuoteSummary from "../../components/QuoteSteps/QuoteSummary";
 import "./QuoteReview.scss";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -371,7 +371,7 @@ function QuoteReview() {
         </div>
       </main>
       
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

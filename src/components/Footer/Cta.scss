@@ -1,0 +1,118 @@
+@import "../../styles/variables";
+@import "../../styles/shared";
+
+.cta {
+  padding: $space-5xl 0;
+  background: $plum-dark;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: $space-4xl 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 660px;
+    margin: 0 auto;
+  }
+
+  &__eyebrow {
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: $golden;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-md;
+    margin-bottom: $space-xl;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: $golden;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-weight: $weight-light;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.12;
+    color: $linen;
+    margin: 0 0 $space-lg 0;
+
+    em {
+      font-style: italic;
+      font-weight: $weight-medium;
+      color: $rose-mist;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-2xl;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $size-md;
+    color: rgba($linen, 0.58);
+    max-width: 520px;
+    margin: 0 auto $space-2xl;
+    line-height: 1.7;
+    font-weight: $weight-light;
+
+    @media (max-width: 480px) {
+      font-size: $size-base;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: $space-md;
+    flex-wrap: wrap;
+    margin-bottom: $space-xl;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      align-items: stretch;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__reassurance {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-lg;
+    flex-wrap: wrap;
+    font-family: $font-body;
+    font-size: $size-sm;
+    color: rgba($linen, 0.4);
+    font-weight: $weight-light;
+
+    span:not(:last-child)::after {
+      content: "·";
+      margin-left: $space-lg;
+      color: rgba($linen, 0.22);
+    }
+
+    @media (max-width: 480px) {
+      font-size: $size-xs;
+      gap: $space-sm;
+
+      span:not(:last-child)::after {
+        margin-left: $space-sm;
+      }
+    }
+  }
+}

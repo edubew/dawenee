@@ -1,0 +1,9 @@
+@import "./variables";
+
+// Base class all botanical SVGs share
+[class^="botanical-"],
+[class*=" botanical-"] {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}

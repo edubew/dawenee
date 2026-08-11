@@ -1,58 +1,75 @@
 import React from "react";
+import { BerrySprig } from "../Botanicals/Botanicals";
 import "./Testimonials.scss";
+
+const reviews = [
+  {
+    id: 1,
+    text: "Dawenee made our wedding day absolutely perfect — the attention to detail was incredible and everything looked exactly like we imagined.",
+    name: "Jennifer & Mike",
+    event: "Wedding · December 2025",
+  },
+  {
+    id: 2,
+    text: "Best investment for my daughter's birthday. The setup was stunning and stayed within budget — the team was so easy to work with.",
+    name: "Mrs. Kamau",
+    event: "Birthday Party · January 2026",
+  },
+  {
+    id: 3,
+    text: "Quick turnaround for our last-minute corporate event — they pulled off a miracle and it looked amazing.",
+    name: "David O.",
+    event: "Corporate Event · November 2025",
+  },
+];
 
 function Testimonials() {
   return (
-    <section className="testimonials">
-      <div className="container">
-        <h2 className="testimonials__title">What Our Clients Say</h2>
+    <section className="reviews">
+      <BerrySprig
+        className="reviews__botanical"
+        style={{
+          position: "absolute",
+          top: "5%",
+          right: "-1.5rem",
+          width: "200px",
+          transform: "scaleX(-1)",
+        }}
+        opacity={0.14}
+      />
 
-        <div className="testimonials__grid">
-          <div className="testimonial-card">
-            <div className="testimonial-card__stars">⭐⭐⭐⭐⭐</div>
-            <p className="testimonial-card__text">
-              "Dawenee made our wedding day absolutely perfect! The attention to
-              detail was incredible, and everything looked exactly like we
-              imagined. Highly recommend!"
-            </p>
-            <div className="testimonial-card__author">
-              <strong>Jennifer & Mike</strong>
-              <span>Wedding, December 2025</span>
-            </div>
+      <div className="container reviews__grid">
+        <div className="reviews__stat">
+          <span className="reviews__eyebrow">Client stories</span>
+          <h2 className="reviews__title">
+            Loved by <em>30+ clients</em>
+            <br />
+            across Nairobi
+          </h2>
+          <div className="reviews__rating">
+            <span className="reviews__rating-number">4.9</span>
+            <span className="reviews__rating-stars">★★★★★</span>
           </div>
-
-          <div className="testimonial-card">
-            <div className="testimonial-card__stars">⭐⭐⭐⭐⭐</div>
-            <p className="testimonial-card__text">
-              "Best investment for my daughter's birthday party. The setup was
-              stunning and stayed within our budget. The team was professional
-              and so easy to work with!"
-            </p>
-            <div className="testimonial-card__author">
-              <strong>Mrs. Kamau</strong>
-              <span>Birthday Party, January 2026</span>
-            </div>
-          </div>
-
-          <div className="testimonial-card">
-            <div className="testimonial-card__stars">⭐⭐⭐⭐⭐</div>
-            <p className="testimonial-card__text">
-              "Quick turnaround for our last-minute corporate event. They pulled
-              off a miracle and it looked amazing. Will definitely use them
-              again!"
-            </p>
-            <div className="testimonial-card__author">
-              <strong>David O.</strong>
-              <span>Corporate Event, November 2025</span>
-            </div>
-          </div>
+          <p className="reviews__rating-label">
+            Average rating from 30+ celebrations styled
+          </p>
         </div>
 
-        <div className="testimonials__rating">
-          <span className="testimonials__rating-number">4.9/5</span>
-          <span className="testimonials__rating-text">
-            from 30+ happy clients
-          </span>
+        <div className="reviews__cards">
+          {reviews.map((review, i) => (
+            <div className="review-card" key={review.id}>
+              <p className="review-card__text">"{review.text}"</p>
+              <div className="review-card__author">
+                <div className="review-card__avatar" aria-hidden="true">
+                  {review.name.charAt(0)}
+                </div>
+                <div>
+                  <div className="review-card__name">{review.name}</div>
+                  <div className="review-card__event">{review.event}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

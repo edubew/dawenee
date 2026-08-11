@@ -1,145 +1,22 @@
 import React from "react";
-import { PRICING } from "../../data/pricingData";
-import { calculateTransport, calculateLabour } from "../../data/pricingData";
-import "./QuoteSummary.scss";
+import { PRICING, calculateQuote } from "../../data/pricingData";
 
 function QuoteSummary({ formData, tablesNeeded }) {
-  // Chairs
-  const chairCost = formData.chairType
-    ? (PRICING.chairs[formData.chairType] || 0) * formData.chairQuantity
-    : 0;
+  const quote = calculateQuote(formData, tablesNeeded);
+  const tableSettings = formData.tableSettings || {};
+  const extras = formData.extras || {};
 
-  // Tables
-  const hasTableSettings =
-    formData.tableSettings &&
-    Object.values(formData.tableSettings).some((val) => val === true);
-  const tableCost =
-    formData.chairType || hasTableSettings
-      ? tablesNeeded * PRICING.tables.dressed
-      : 0;
-
-  // Table Settings
-  const calculateTableSettingsCost = () => {
-    let total = 0;
-    const guestCount = formData.guestCount;
-    const settings = formData.tableSettings;
-
-    // Check if full package
-    const hasFullPackage =
-      settings.fullPackage ||
-      (settings.napkins &&
-        settings.wineGlasses &&
-        settings.chargerPlates &&
-        settings.tableMats &&
-        settings.tableRunners &&
-        settings.candles);
-
-    if (hasFullPackage) {
-      total += guestCount * PRICING.tableSettings.napkinsAndRings;
-      total += guestCount * PRICING.tableSettings.wineGlasses;
-      total += guestCount * PRICING.tableSettings.chargerPlates;
-      total += guestCount * PRICING.tableSettings.tableMats;
-      total += tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
-      total += tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
-    } else {
-      if (settings.napkins)
-        total += guestCount * PRICING.tableSettings.napkinsAndRings;
-      if (settings.wineGlasses)
-        total += guestCount * PRICING.tableSettings.wineGlasses;
-      if (settings.chargerPlates)
-        total += guestCount * PRICING.tableSettings.chargerPlates;
-      if (settings.tableMats)
-        total += guestCount * PRICING.tableSettings.tableMats;
-      if (settings.tableRunners)
-        total += tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
-      if (settings.candles)
-        total += tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
-    }
-
-    return total;
-  };
-
-  // Backdrops
-  const backdropCost = (formData.backdrops || []).reduce(
-    (total, backdropId) => {
-      return total + (PRICING.backdrops[backdropId] || 0);
-    },
-    0,
-  );
-
-  // Welcome Sign
-  const welcomeSignCost = formData.welcomeSign
-    ? PRICING.welcomeSigns[formData.welcomeSign] || 0
-    : 0;
-
-  // Centerpieces
-  const centerpieceCost = formData.centerpieceTier
-    ? (PRICING.centerpieces[formData.centerpieceTier] || 0) * tablesNeeded
-    : 0;
-
-  // Extras
-  const calculateExtrasCost = () => {
-    let total = 0;
-    const extras = formData.extras || {};
-
-    if (extras.cakeStand) total += PRICING.extras.cakeStand;
-    if (extras.dessertTable) total += PRICING.extras.dessertTable;
-    if (extras.redCarpet) total += PRICING.extras.redCarpet;
-    if (extras.cardBox) total += PRICING.extras.cardBox;
-    if (extras.lightingPackage) total += PRICING.extras.lightingPackage;
-    if (extras.individualCards && extras.cardQuantity) {
-      total += PRICING.extras.individualCards * extras.cardQuantity;
-    }
-
-    return total;
-  };
-
-  //Check if this is a backdrop-only order
-  const hasChairs = formData.chairType ? true : false;
-  const tableSettingsCost = calculateTableSettingsCost();
-  const hasCenterpieces = formData.centerpieceTier ? true : false;
-  const hasExtras =
-    formData.extras &&
-    Object.values(formData.extras).some((val) => val === true);
-  const hasBackdropsOrSigns =
-    (formData.backdrops && formData.backdrops.length > 0) ||
-    formData.welcomeSign;
-
-  const isBackdropOnly =
-    hasBackdropsOrSigns && !hasChairs && !hasCenterpieces && !hasExtras;
-
-  const hasFurniture = hasChairs;
-  const transportCost = calculateTransport(
-    formData.location,
-    hasFurniture,
-    isBackdropOnly,
-  );
-
-  const hasTableSetup = hasChairs;
-  const labourCost = calculateLabour(
-    formData.guestCount,
-    hasTableSetup,
-    isBackdropOnly,
-  );
-
-  // Subtotal
-  const subtotal =
-    chairCost +
-    tableCost +
-    tableSettingsCost +
-    backdropCost +
-    welcomeSignCost +
-    centerpieceCost +
-    calculateExtrasCost() +
-    transportCost +
-    labourCost;
-
-  //Deposit (50%)
-  const deposit = Math.round(subtotal * 0.5);
+  const hasAnySelection = quote.subtotal > 0;
 
   return (
     <div className="quote-summary">
       <h3 className="quote-summary__title">Your Quote Summary</h3>
+
+      {!hasAnySelection && (
+        <p className="quote-summary__empty">
+          Your selections will appear here as you go — nothing to show yet.
+        </p>
+      )}
 
       <div className="quote-summary__items">
         <div className="summary-section">
@@ -170,10 +47,11 @@ function QuoteSummary({ formData, tablesNeeded }) {
           </div>
         </div>
 
-        {/* Seating and tables */}
-        {(chairCost > 0 || tableCost > 0 || tableSettingsCost > 0) && (
+        {(quote.chairCost > 0 ||
+          quote.tableCost > 0 ||
+          quote.tableSettingsCost > 0) && (
           <div className="summary-section">
-            <h4 className="summary-section__title">Seating & Tables</h4>
+            <h4 className="summary-section__title">Seating &amp; Tables</h4>
 
             {formData.chairType && formData.chairQuantity > 0 && (
               <div className="summary-item">
@@ -189,31 +67,30 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   Chairs
                 </span>
                 <span className="summary-item__value">
-                  KES {chairCost.toLocaleString()}
+                  KES {quote.chairCost.toLocaleString()}
                 </span>
               </div>
             )}
 
-            {tableCost > 0 && (
+            {quote.tableCost > 0 && (
               <div className="summary-item">
                 <span className="summary-item__label">
                   {tablesNeeded}× Dressed Tables
                 </span>
                 <span className="summary-item__value">
-                  KES {tableCost.toLocaleString()}
+                  KES {quote.tableCost.toLocaleString()}
                 </span>
               </div>
             )}
 
-            {tableSettingsCost > 0 && (
+            {quote.tableSettingsCost > 0 && (
               <>
                 <div className="summary-item summary-item--subsection">
                   <span className="summary-item__label">Table Settings:</span>
                   <span className="summary-item__value"></span>
                 </div>
 
-                {/* per guest item */}
-                {formData.tableSettings.napkins && (
+                {tableSettings.napkins && (
                   <div className="summary-item summary-item--indent">
                     <span className="summary-item__label">
                       • Napkins + Rings ({formData.guestCount} guests)
@@ -228,7 +105,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   </div>
                 )}
 
-                {formData.tableSettings.wineGlasses && (
+                {tableSettings.wineGlasses && (
                   <div className="summary-item summary-item--indent">
                     <span className="summary-item__label">
                       • Wine Glasses ({formData.guestCount} guests)
@@ -242,7 +119,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   </div>
                 )}
 
-                {formData.tableSettings.chargerPlates && (
+                {tableSettings.chargerPlates && (
                   <div className="summary-item summary-item--indent">
                     <span className="summary-item__label">
                       • Charger Plates ({formData.guestCount} guests)
@@ -257,7 +134,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   </div>
                 )}
 
-                {formData.tableSettings.tableMats && (
+                {tableSettings.tableMats && (
                   <div className="summary-item summary-item--indent">
                     <span className="summary-item__label">
                       • Table Mats ({formData.guestCount} guests)
@@ -271,8 +148,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   </div>
                 )}
 
-                {/* Per Table Items */}
-                {formData.tableSettings.tableRunners && (
+                {tableSettings.tableRunners && (
                   <div className="summary-item summary-item--indent">
                     <span className="summary-item__label">
                       • Table Runners ({tablesNeeded} tables)
@@ -287,7 +163,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   </div>
                 )}
 
-                {formData.tableSettings.candles && (
+                {tableSettings.candles && (
                   <div className="summary-item summary-item--indent">
                     <span className="summary-item__label">
                       • Candles + Holders ({tablesNeeded} tables)
@@ -306,10 +182,9 @@ function QuoteSummary({ formData, tablesNeeded }) {
           </div>
         )}
 
-        {/* Backdrop and Signage */}
-        {(backdropCost > 0 || welcomeSignCost > 0) && (
+        {(quote.backdropCost > 0 || quote.welcomeSignCost > 0) && (
           <div className="summary-section">
-            <h4 className="summary-section__title">Backdrops & Signage</h4>
+            <h4 className="summary-section__title">Backdrops &amp; Signage</h4>
             {(formData.backdrops || []).map((backdropId) => (
               <div key={backdropId} className="summary-item">
                 <span className="summary-item__label">
@@ -333,17 +208,18 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   Welcome Sign
                 </span>
                 <span className="summary-item__value">
-                  KES {welcomeSignCost.toLocaleString()}
+                  KES {quote.welcomeSignCost.toLocaleString()}
                 </span>
               </div>
             )}
           </div>
         )}
 
-        {/* Centerpieces & Extras */}
-        {(centerpieceCost > 0 || calculateExtrasCost() > 0) && (
+        {(quote.centerpieceCost > 0 || quote.extrasCost > 0) && (
           <div className="summary-section">
-            <h4 className="summary-section__title">Centerpieces & Extras</h4>
+            <h4 className="summary-section__title">
+              Centerpieces &amp; Extras
+            </h4>
             {formData.centerpieceTier && (
               <div className="summary-item">
                 <span className="summary-item__label">
@@ -353,11 +229,11 @@ function QuoteSummary({ formData, tablesNeeded }) {
                   Centerpieces
                 </span>
                 <span className="summary-item__value">
-                  KES {centerpieceCost.toLocaleString()}
+                  KES {quote.centerpieceCost.toLocaleString()}
                 </span>
               </div>
             )}
-            {formData.extras?.dessertTable && (
+            {extras.dessertTable && (
               <div className="summary-item">
                 <span className="summary-item__label">Dessert Table Setup</span>
                 <span className="summary-item__value">
@@ -365,7 +241,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                 </span>
               </div>
             )}
-            {formData.extras?.lightingPackage && (
+            {extras.lightingPackage && (
               <div className="summary-item">
                 <span className="summary-item__label">Lighting Package</span>
                 <span className="summary-item__value">
@@ -373,7 +249,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                 </span>
               </div>
             )}
-            {formData.extras?.redCarpet && (
+            {extras.redCarpet && (
               <div className="summary-item">
                 <span className="summary-item__label">Red Carpet (10m)</span>
                 <span className="summary-item__value">
@@ -381,7 +257,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                 </span>
               </div>
             )}
-            {formData.extras?.cakeStand && (
+            {extras.cakeStand && (
               <div className="summary-item">
                 <span className="summary-item__label">Cake Stand</span>
                 <span className="summary-item__value">
@@ -389,7 +265,7 @@ function QuoteSummary({ formData, tablesNeeded }) {
                 </span>
               </div>
             )}
-            {formData.extras?.cardBox && (
+            {extras.cardBox && (
               <div className="summary-item">
                 <span className="summary-item__label">Card Box</span>
                 <span className="summary-item__value">
@@ -397,26 +273,23 @@ function QuoteSummary({ formData, tablesNeeded }) {
                 </span>
               </div>
             )}
-            {formData.extras?.individualCards &&
-              formData.extras?.cardQuantity && (
-                <div className="summary-item">
-                  <span className="summary-item__label">
-                    {formData.extras.cardQuantity}× Individual Cards
-                  </span>
-                  <span className="summary-item__value">
-                    KES{" "}
-                    {(
-                      PRICING.extras.individualCards *
-                      formData.extras.cardQuantity
-                    ).toLocaleString()}
-                  </span>
-                </div>
-              )}
+            {extras.individualCards && extras.cardQuantity && (
+              <div className="summary-item">
+                <span className="summary-item__label">
+                  {extras.cardQuantity}× Individual Cards
+                </span>
+                <span className="summary-item__value">
+                  KES{" "}
+                  {(
+                    PRICING.extras.individualCards * extras.cardQuantity
+                  ).toLocaleString()}
+                </span>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Transport & Labour */}
-        <div className="sumarry-section">
+        <div className="summary-section">
           <h4 className="summary-section__title">Service Fees</h4>
           <div className="summary-item">
             <span className="summary-item__label">
@@ -424,31 +297,30 @@ function QuoteSummary({ formData, tablesNeeded }) {
               {formData.location === "nairobi" ? "Nairobi" : "Outside Nairobi"})
             </span>
             <span className="summary-item__value">
-              KES {transportCost.toLocaleString()}
+              KES {quote.transportCost.toLocaleString()}
             </span>
           </div>
 
           <div className="summary-item">
-            <span className="summary-item__label">Setup & Labour</span>
+            <span className="summary-item__label">Setup &amp; Labour</span>
             <span className="summary-item__value">
-              KES {labourCost.toLocaleString()}
+              KES {quote.labourCost.toLocaleString()}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Totals */}
       <div className="quote-summary__totals">
         <div className="summary-total">
           <span className="summary-total__label">Subtotal:</span>
           <span className="summary-total__value">
-            KES {subtotal.toLocaleString()}
+            KES {quote.subtotal.toLocaleString()}
           </span>
         </div>
         <div className="summary-total summary-total--deposit">
           <span className="summary-total__label">50% Deposit to Book:</span>
           <span className="summary-total__value">
-            KES {deposit.toLocaleString()}
+            KES {quote.deposit.toLocaleString()}
           </span>
         </div>
       </div>

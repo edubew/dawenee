@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import "./StepOne.scss";
 import "../../pages/Quote/Quote.scss";
 
 function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {

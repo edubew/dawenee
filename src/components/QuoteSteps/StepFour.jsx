@@ -1,146 +1,103 @@
 import React from "react";
+import OptionCard from "../QuoteSteps/OptionCard";
 import { PRICING } from "../../data/pricingData";
-import "./StepFour.scss";
+
+const centerpieceOptions = [
+  {
+    id: "basic",
+    name: "Basic",
+    icon: "🌼",
+    description: "Simple floral arrangements",
+    price: PRICING.centerpieces.basic,
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    icon: "🌺",
+    description: "Elegant floral arrangements with accents",
+    price: PRICING.centerpieces.premium,
+    popular: true,
+  },
+  {
+    id: "luxury",
+    name: "Luxury",
+    icon: "💐",
+    description: "Statement pieces with premium flowers",
+    price: PRICING.centerpieces.luxury,
+  },
+];
 
 function StepFour({ formData, setFormData, tablesNeeded }) {
-  // Initialize extras if not exists
   const extras = formData.extras || {};
 
-  // Calculate centerpiece cost
   const calculateCenterpieceCost = () => {
     if (!formData.centerpieceTier) return 0;
-    const pricePerTable = PRICING.centerpieces[formData.centerpieceTier] || 0;
-    return pricePerTable * tablesNeeded;
+    return (PRICING.centerpieces[formData.centerpieceTier] || 0) * tablesNeeded;
   };
 
-  // Calculate extras cost
   const calculateExtrasCost = () => {
     let total = 0;
-
     if (extras.cakeStand) total += PRICING.extras.cakeStand;
     if (extras.dessertTable) total += PRICING.extras.dessertTable;
     if (extras.redCarpet) total += PRICING.extras.redCarpet;
     if (extras.lightingPackage) total += PRICING.extras.lightingPackage;
-
-    // Individual cards (quantity-based)
     if (extras.individualCards && extras.cardQuantity) {
       total += PRICING.extras.individualCards * extras.cardQuantity;
     }
-
     return total;
   };
 
-  // Handle centerpiece tier selection
   const handleCenterpieceSelect = (tier) => {
     setFormData((prev) => ({
       ...prev,
-      centerpieceTier: prev.centerpieceTier === tier ? "" : tier, // Toggle off if same
+      centerpieceTier: prev.centerpieceTier === tier ? "" : tier,
     }));
   };
 
-  // Handle extra toggle
   const handleExtraToggle = (extraName) => {
     setFormData((prev) => ({
       ...prev,
-      extras: {
-        ...prev.extras,
-        [extraName]: !prev.extras[extraName],
-      },
+      extras: { ...prev.extras, [extraName]: !prev.extras[extraName] },
     }));
   };
 
-  // Handle card quantity change
   const handleCardQuantityChange = (e) => {
     const quantity = parseInt(e.target.value) || 0;
     setFormData((prev) => ({
       ...prev,
-      extras: {
-        ...prev.extras,
-        cardQuantity: quantity,
-      },
+      extras: { ...prev.extras, cardQuantity: quantity },
     }));
   };
 
-  // Calculate total for step
-  const stepTotal = calculateCenterpieceCost() + calculateExtrasCost();
-
   return (
     <div className="step">
-      <h2 className="step__title">Centerpieces & Extra Touches</h2>
+      <h2 className="step__title">Centerpieces &amp; Extra Touches</h2>
       <p className="step__description">
         Add the finishing touches that make your event truly special
       </p>
 
       <div className="form">
-        {/* Centerpieces Section */}
         <div className="form__group">
           <label className="form__label">Centerpieces (Optional)</label>
           <p className="form__hint" style={{ marginBottom: "1rem" }}>
             Choose one tier for all {tablesNeeded} tables
           </p>
 
-          <div className="centerpiece-selector">
-            <button
-              type="button"
-              onClick={() => handleCenterpieceSelect("basic")}
-              className={`centerpiece-card ${formData.centerpieceTier === "basic" ? "centerpiece-card--selected" : ""}`}
-            >
-              <div className="centerpiece-card__icon">🌼</div>
-              {/* <img src={chair.image} alt={chair.name} /> */}
-              <h3 className="centerpiece-card__name">Basic</h3>
-              <p className="centerpiece-card__description">
-                Simple florals arrangements
-              </p>
-              <div className="centerpiece-card__price-per">
-                KES {PRICING.centerpieces.basic.toLocaleString()}{" "}
-                <span>per table</span>
-              </div>
-              <div className="centerpiece-card__total">
-                Total: KES{" "}
-                {(PRICING.centerpieces.basic * tablesNeeded).toLocaleString()}
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleCenterpieceSelect("premium")}
-              className={`centerpiece-card ${formData.centerpieceTier === "premium" ? "centerpiece-card--selected" : ""}`}
-            >
-              <span className="centerpiece-card__badge">Popular</span>
-              <div className="centerpiece-card__icon">🌺</div>
-              <h3 className="centerpiece-card__name">Premium</h3>
-              <p className="centerpiece-card__description">
-                Elegant floral arrangements with accents
-              </p>
-              <div className="centerpiece-card__price-per">
-                KES {PRICING.centerpieces.premium.toLocaleString()}{" "}
-                <span>per table</span>
-              </div>
-              <div className="centerpiece-card__total">
-                Total: KES{" "}
-                {(PRICING.centerpieces.premium * tablesNeeded).toLocaleString()}
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleCenterpieceSelect("luxury")}
-              className={`centerpiece-card ${formData.centerpieceTier === "luxury" ? "centerpiece-card--selected" : ""}`}
-            >
-              <div className="centerpiece-card__icon">💐</div>
-              <h3 className="centerpiece-card__name">Luxury</h3>
-              <p className="centerpiece-card__description">
-                Statement pieces with premium flowers
-              </p>
-              <div className="centerpiece-card__price-per">
-                KES {PRICING.centerpieces.luxury.toLocaleString()}{" "}
-                <span>per table</span>
-              </div>
-              <div className="centerpiece-card__total">
-                Total: KES{" "}
-                {(PRICING.centerpieces.luxury * tablesNeeded).toLocaleString()}
-              </div>
-            </button>
+          <div className="option-grid">
+            {centerpieceOptions.map((tier) => (
+              <OptionCard
+                key={tier.id}
+                name={tier.name}
+                description={tier.description}
+                icon={tier.icon}
+                price={tier.price}
+                priceSuffix="per table"
+                popular={tier.popular}
+                totalLabel={`Total: KES ${(tier.price * tablesNeeded).toLocaleString()}`}
+                isSelected={formData.centerpieceTier === tier.id}
+                onSelect={() => handleCenterpieceSelect(tier.id)}
+              />
+            ))}
           </div>
 
           {formData.centerpieceTier && (
@@ -151,9 +108,8 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
                 {PRICING.centerpieces[
                   formData.centerpieceTier
                 ].toLocaleString()}{" "}
-                =
+                ={" "}
                 <strong>
-                  {" "}
                   KES {calculateCenterpieceCost().toLocaleString()}
                 </strong>
               </span>
@@ -161,7 +117,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
           )}
         </div>
 
-        {/* Additional Extras Section */}
         <div className="form__group">
           <label className="form__label">Additional Extras (Optional)</label>
           <p className="form__hint" style={{ marginBottom: "1rem" }}>
@@ -190,7 +145,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               </div>
             </label>
 
-            {/* Card Quantity Input */}
             {extras.individualCards && (
               <div className="card-quantity">
                 <label htmlFor="cardQuantity" className="card-quantity__label">
@@ -217,7 +171,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               </div>
             )}
 
-            {/* Cake Stand */}
             <label className="extra-item">
               <input
                 type="checkbox"
@@ -239,7 +192,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               </div>
             </label>
 
-            {/* Red Carpet */}
             <label className="extra-item">
               <input
                 type="checkbox"
@@ -263,7 +215,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               </div>
             </label>
 
-            {/* Dessert Table */}
             <label className="extra-item">
               <input
                 type="checkbox"
@@ -287,7 +238,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               </div>
             </label>
 
-            {/* Lighting Package */}
             <label className="extra-item">
               <input
                 type="checkbox"
@@ -310,7 +260,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
             </label>
           </div>
 
-          {/* Show extras cost */}
           {calculateExtrasCost() > 0 && (
             <div className="form__calculation">
               <span className="form__calculation-icon">💰</span>
@@ -322,13 +271,12 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
           )}
         </div>
 
-        {/* No selection message */}
-        {stepTotal === 0 && (
+        {!formData.centerpieceTier && calculateExtrasCost() === 0 && (
           <div className="form__info-box">
             <div className="form__info-box-header">
               <span className="form__info-box-icon">ℹ️</span>
               <h4 className="form__info-box-title">
-                Centerpieces & Extras are Optional
+                Centerpieces &amp; Extras are Optional
               </h4>
             </div>
             <p className="form__info-box-text">
@@ -336,18 +284,6 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
               additional extras. Click "Next Step" to continue with your contact
               details.
             </p>
-          </div>
-        )}
-
-        {/* Total for this step */}
-        {stepTotal > 0 && (
-          <div className="step__total">
-            <span className="step__total-label">
-              Centerpieces & Extras Total:
-            </span>
-            <span className="step__total-amount">
-              KES {stepTotal.toLocaleString()}
-            </span>
           </div>
         )}
       </div>

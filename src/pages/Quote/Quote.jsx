@@ -1,37 +1,62 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import "./Quote.scss";
 import StepOne from "../../components/QuoteSteps/StepOne";
 import StepTwo from "../../components/QuoteSteps/StepTwo";
 import StepThree from "../../components/QuoteSteps/StepThree";
 import StepFour from "../../components/QuoteSteps/StepFour";
 import StepFive from "../../components/QuoteSteps/StepFive";
 import QuoteSummary from "../../components/QuoteSteps/QuoteSummary";
+import { EucalyptusBranch } from "../../components/Botanicals/Botanicals";
 import {
   saveCurrentQuote,
   getCurrentQuote,
   clearCurrentQuote,
 } from "../../utils/localStorage";
+import "./Quote.scss";
+
+const EMPTY_FORM_DATA = {
+  eventDate: "",
+  guestCount: 50,
+  venueName: "",
+  location: "nairobi",
+  chairType: "",
+  chairQuantity: 0,
+  tableSettings: {
+    fullPackage: false,
+    napkins: false,
+    wineGlasses: false,
+    chargerPlates: false,
+    tableMats: false,
+    tableRunners: false,
+    candles: false,
+  },
+  backdrops: [],
+  welcomeSign: "",
+  centerpieceTier: "",
+  extras: {
+    cakeStand: false,
+    dessertTable: false,
+    redCarpet: false,
+    cardBox: false,
+    individualCards: false,
+    cardQuantity: 0,
+    lightingPackage: false,
+  },
+  name: "",
+  phone: "",
+  email: "",
+  themeColors: "",
+  specialRequests: "",
+};
+
+const TOTAL_STEPS = 5;
 
 function Quote() {
-  const location = useLocation();
-
-  const initializeQuoteState = () => {
-    if (location.state?.formData) {
-      return {
-        showPrompt: false,
-        savedData: null,
-        formData: location.state.formData,
-        currentStep: location.state.currentStep || 1,
-      };
-    }
-
-    // Otherwise, check localStorage
+  const initState = () => {
     const saved = getCurrentQuote();
-    if (saved && saved.formData) {
+    if (saved?.formData) {
       return {
         showPrompt: true,
         savedData: saved,
@@ -39,205 +64,77 @@ function Quote() {
         currentStep: saved.currentStep,
       };
     }
-
     return {
       showPrompt: false,
       savedData: null,
-      formData: {
-        eventDate: "",
-        guestCount: 50,
-        venueName: "",
-        location: "nairobi",
-        chairType: "",
-        chairQuantity: 0,
-        tableSettings: {
-          fullPackage: false,
-          napkins: false,
-          wineGlasses: false,
-          chargerPlates: false,
-          tableMats: false,
-          tableRunners: false,
-          candles: false,
-        },
-        backdrops: [],
-        welcomeSign: "",
-        centerpieceTier: "",
-        extras: {
-          cakeStand: false,
-          dessertTable: false,
-          redCarpet: false,
-          cardBox: false,
-          individualCards: false,
-          cardQuantity: 0,
-          lightingPackage: false,
-        },
-        name: "",
-        phone: "",
-        email: "",
-        themeColors: "",
-        specialRequests: "",
-      },
+      formData: EMPTY_FORM_DATA,
       currentStep: 1,
     };
   };
 
-  const [initialState] = useState(initializeQuoteState);
-  const [showResumePrompt, setShowResumePrompt] = useState(
-    initialState.showPrompt,
-  );
-  const [savedQuoteData] = useState(initialState.savedData);
-  const [currentStep, setCurrentStep] = useState(initialState.currentStep);
-  const [formData, setFormData] = useState(initialState.formData);
+  const [init] = useState(initState);
+  const [showResumePrompt, setShowResumePrompt] = useState(init.showPrompt);
+  const [savedQuoteData] = useState(init.savedData);
+  const [currentStep, setCurrentStep] = useState(init.currentStep);
+  const [formData, setFormData] = useState(init.formData);
+  const [stepOneValid, setStepOneValid] = useState(false);
+  const [stepFiveValid, setStepFiveValid] = useState(false);
 
-  const totalSteps = 5;
   const tablesNeeded = Math.ceil(formData.guestCount / 7);
 
-  const stepValidation = {
-    1: false,
-    2: true,
-    3: true,
-    4: true,
-    5: false,
+  const isCurrentStepValid = () => {
+    if (currentStep === 1) return stepOneValid;
+    if (currentStep === 5) return stepFiveValid;
+    return true;
   };
 
-  // Validate step 1
-  const validateStepOne = useCallback(() => {
-    if (!formData.eventDate) return false;
-
-    const selectedDate = new Date(formData.eventDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (selectedDate < today) return false;
-    if (formData.guestCount < 10) return false;
-    if (!formData.location) return false;
-
-    return true;
-  }, [formData]);
-
-  // Validate step 5
-  const validateStepFive = useCallback(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^(\+?254|0)?[17]\d{8}$/;
-
-    if (!formData.name || formData.name.trim().length < 2) return false;
-    if (!formData.phone || !phoneRegex.test(formData.phone.replace(/\s/g, "")))
-      return false;
-    if (!formData.email || !emailRegex.test(formData.email)) return false;
-
-    return true;
-  }, [formData]);
-
+  // Single autosave effect
   useEffect(() => {
-    if (!showResumePrompt) {
-      const hasStartedForm =
-        formData.name ||
-        formData.email ||
-        formData.phone ||
-        formData.chairType ||
-        formData.backdrops.length > 0;
+    if (showResumePrompt) return;
+    const hasStarted =
+      formData.name ||
+      formData.email ||
+      formData.phone ||
+      formData.chairType ||
+      formData.backdrops?.length > 0;
+    if (!hasStarted) return;
 
-      if (hasStartedForm) {
-        const timeoutId = setTimeout(() => {
-          saveCurrentQuote(formData, currentStep);
-        }, 1000);
-
-        return () => clearTimeout(timeoutId);
-      }
-    }
-  }, [formData, currentStep, showResumePrompt]);
-
-
-  // Auto-save progress as user fills the form
-  useEffect(() => {
-    if (!showResumePrompt) {
-      const hasStartedForm =
-        formData.name ||
-        formData.email ||
-        formData.phone ||
-        formData.chairType ||
-        formData.backdrops.length > 0;
-
-      if (hasStartedForm) {
-        const timeoutId = setTimeout(() => {
-          saveCurrentQuote(formData, currentStep);
-        }, 1000);
-
-        return () => clearTimeout(timeoutId);
-      }
-    }
+    const id = setTimeout(() => {
+      saveCurrentQuote(formData, currentStep);
+    }, 1000);
+    return () => clearTimeout(id);
   }, [formData, currentStep, showResumePrompt]);
 
   const handleResumeQuote = () => {
-    if (savedQuoteData) {
-      setFormData(savedQuoteData.formData);
-      setCurrentStep(savedQuoteData.currentStep);
-      setShowResumePrompt(false);
-    }
+    setFormData(savedQuoteData.formData);
+    setCurrentStep(savedQuoteData.currentStep);
+    setShowResumePrompt(false);
   };
 
   const handleStartFresh = () => {
     clearCurrentQuote();
-    setFormData({
-      eventDate: '',
-      guestCount: 50,
-      venueName: '',
-      location: 'nairobi',
-      chairType: '',
-      chairQuantity: 0,
-      tableSettings: {
-        fullPackage: false,
-        napkins: false,
-        wineGlasses: false,
-        chargerPlates: false,
-        tableMats: false,
-        tableRunners: false,
-        candles: false,
-      },
-      backdrops: [],
-      welcomeSign: '',
-      centerpieceTier: '',
-      extras: {
-        cakeStand: false,
-        dessertTable: false,
-        redCarpet: false,
-        cardBox: false,
-        individualCards: false,
-        cardQuantity: 0,
-        lightingPackage: false,
-      },
-      name: '',
-      phone: '',
-      email: '',
-      themeColors: '',
-      specialRequests: '',
-    });
+    setFormData(EMPTY_FORM_DATA);
     setCurrentStep(1);
     setShowResumePrompt(false);
   };
 
   const nextStep = () => {
-    const isCurrentStepValid = currentStep === 1 ? validateStepOne() : currentStep === 5 ? validateStepFive() : stepValidation[currentStep];
-    if (!isCurrentStepValid) {
-      alert("Please fill in all required fields before proceeding.");
-      return;
-    }
-
-    if (currentStep < totalSteps) {
-      setCurrentStep((prev) => prev + 1);
+    if (!isCurrentStepValid()) return;
+    if (currentStep < TOTAL_STEPS) {
+      setCurrentStep((p) => p + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep((prev) => prev - 1);
+      setCurrentStep((p) => p - 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const goToStep = (step) => {
-    if (step >= 1 && step <= totalSteps) {
+    if (step >= 1 && step <= TOTAL_STEPS) {
       setCurrentStep(step);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -247,11 +144,14 @@ function Quote() {
     <div className="quote-page">
       <Navbar />
 
-      {/* resume quote prompt */}
+      {/* Resume prompt */}
       {showResumePrompt && (
-        <div className="resume-prompt-overlay">
+        <div className="resume-overlay">
           <div className="resume-prompt">
-            <h2 className="resume-prompt__title">Welcome Back!</h2>
+            <span className="resume-prompt__tag">Welcome back</span>
+            <h2 className="resume-prompt__title">
+              Pick up where you left off?
+            </h2>
             <p className="resume-prompt__text">
               We found a quote you started on{" "}
               {new Date(savedQuoteData.savedAt).toLocaleDateString("en-US", {
@@ -261,21 +161,15 @@ function Quote() {
                 minute: "numeric",
               })}
             </p>
-            <p className="resume-prompt__subtext">
-              You were on Step {savedQuoteData.currentStep} of {totalSteps}
+            <p className="resume-prompt__sub">
+              You were on Step {savedQuoteData.currentStep} of {TOTAL_STEPS}
             </p>
             <div className="resume-prompt__buttons">
-              <button
-                onClick={handleResumeQuote}
-                className="resume-prompt__btn resume-prompt__btn--primary"
-              >
-                ✓ Resume Quote
+              <button onClick={handleResumeQuote} className="btn btn--primary">
+                Resume Quote
               </button>
-              <button
-                onClick={handleStartFresh}
-                className="resume-prompt__btn resume-prompt__btn--secondary"
-              >
-                Start Fresh Quote
+              <button onClick={handleStartFresh} className="btn btn--secondary">
+                Start Fresh
               </button>
             </div>
           </div>
@@ -283,62 +177,67 @@ function Quote() {
       )}
 
       <main className="quote">
+        <EucalyptusBranch
+          className="quote__botanical"
+          style={{
+            position: "absolute",
+            top: "-1rem",
+            right: "-1rem",
+            width: "200px",
+            opacity: 0.12,
+          }}
+          opacity={0.12}
+        />
+
         <div className="container">
+          {/* Header */}
           <div className="quote__header">
-            <h1 className="quote__title">Get Your Instant Quote</h1>
+            <span className="quote__eyebrow">Get your instant quote</span>
+            <h1 className="quote__title">
+              Tell us about your <em>event</em>
+            </h1>
             <p className="quote__subtitle">
-              Tell us about your event and see real-time pricing
+              See real-time pricing as you go — no waiting, no surprises
             </p>
           </div>
 
+          {/* Progress bar */}
           <div className="quote__progress">
-            <div className="quote__progress-bar">
-              <div
-                className="quote__progress-fill"
-                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-              ></div>
-            </div>
-            <div className="quote__progress-steps">
+            <div className="quote__progress-track">
               {[1, 2, 3, 4, 5].map((step) => (
                 <button
                   key={step}
                   onClick={() => goToStep(step)}
-                  className={`quote__progress-step ${currentStep === step ? "quote__progress-step--active" : ""} ${currentStep > step ? "quote__progress-step--completed" : ""}`}
+                  className={`quote__seg ${
+                    currentStep === step
+                      ? "quote__seg--active"
+                      : currentStep > step
+                        ? "quote__seg--done"
+                        : ""
+                  }`}
+                  aria-label={`Go to step ${step}`}
                 >
-                  {step}
+                  <span className="quote__seg-fill" />
                 </button>
               ))}
             </div>
             <p className="quote__progress-text">
-              Step {currentStep} of {totalSteps}
+              Step {currentStep} of {TOTAL_STEPS}
             </p>
           </div>
 
-          <div className="quote__content">
-            {currentStep === 5 ? (
-              <div className="quote__step-with-summary">
-                <div className="quote__step-main">
-                  <div className="quote__step">
-                    <StepFive formData={formData} setFormData={setFormData} />
-                  </div>
-                </div>
-                <div className="quote__summary-sidebar">
-                  <QuoteSummary
-                    formData={formData}
-                    tablesNeeded={tablesNeeded}
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="quote__step">
+          {/* Layout: main + sidebar */}
+          <div className="quote__layout">
+            <div className="quote__main">
+              <div className="quote__card">
                 {currentStep === 1 && (
                   <StepOne
                     formData={formData}
                     setFormData={setFormData}
                     tablesNeeded={tablesNeeded}
+                    onValidate={setStepOneValid}
                   />
                 )}
-
                 {currentStep === 2 && (
                   <StepTwo
                     formData={formData}
@@ -346,11 +245,9 @@ function Quote() {
                     tablesNeeded={tablesNeeded}
                   />
                 )}
-
                 {currentStep === 3 && (
                   <StepThree formData={formData} setFormData={setFormData} />
                 )}
-
                 {currentStep === 4 && (
                   <StepFour
                     formData={formData}
@@ -358,43 +255,54 @@ function Quote() {
                     tablesNeeded={tablesNeeded}
                   />
                 )}
-              </div>
-            )}
-            
-            {!stepValidation[currentStep] && currentStep !== 5 && (
-              <div className="step-validation-warning">
-                <span className="step-validation-warning__icon">⚠️</span>
-                <span className="step-validation-warning__text">
-                  Please complete all required fields to proceed
-                </span>
-              </div>
-            )}
+                {currentStep === 5 && (
+                  <StepFive
+                    formData={formData}
+                    setFormData={setFormData}
+                    tablesNeeded={tablesNeeded}
+                    onValidate={setStepFiveValid}
+                  />
+                )}
 
-            <div className="quote__navigation">
-              {currentStep > 1 && (
-                <button
-                  onClick={prevStep}
-                  className="quote__nav-button quote__nav-button--back"
-                >
-                  ← Back
-                </button>
-              )}
+                {/* Validation warning */}
+                {!isCurrentStepValid() && currentStep !== 5 && (
+                  <div className="quote__warning">
+                    <span>⚠</span>
+                    <span>Please complete all required fields to continue</span>
+                  </div>
+                )}
 
-              {currentStep < totalSteps && (
-                <button
-                  onClick={nextStep}
-                  className="quote__nav-button quote__nav-button--next"
-                >
-                  Next Step →
-                </button>
-              )}
+                {/* Navigation */}
+                <div className="quote__nav">
+                  {currentStep > 1 && (
+                    <button
+                      onClick={prevStep}
+                      className="quote__nav-btn quote__nav-btn--back"
+                    >
+                      ← Back
+                    </button>
+                  )}
+                  {currentStep < TOTAL_STEPS && (
+                    <button
+                      onClick={nextStep}
+                      disabled={!isCurrentStepValid()}
+                      className="quote__nav-btn quote__nav-btn--next"
+                    >
+                      Next Step →
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
+
+            {/* Persistent summary sidebar */}
+            <aside className="quote__sidebar">
+              <QuoteSummary formData={formData} tablesNeeded={tablesNeeded} />
+            </aside>
           </div>
 
-          <div className="quote__footer">
-            <Link to="/" className="quote__back-link">
-              ← Back to Homepage
-            </Link>
+          <div className="quote__footer-link">
+            <Link to="/">← Back to Homepage</Link>
           </div>
         </div>
       </main>
