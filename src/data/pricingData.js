@@ -1,4 +1,3 @@
-
 export const PRICING = {
   chairs: {
     dressedPlastic: 120,
@@ -12,21 +11,24 @@ export const PRICING = {
     napkinsAndRings: 90,
     wineGlasses: 100,
     chargerPlates: 100,
-    tableMats: 70,
+    tableMats: 80,
+    placeCards: 150,
   },
   tableSettingsPerTable: {
     tableRunners: 200,
-    candlesAndHolders: 100,
+    candles: 150,
   },
   backdrops: {
-    basicBalloon: 8500,
-    floral: 14000,
+    singleBalloon: 9000,
+    doubleBalloon: 15000,
+    floral: 15000,
+    floralBalloon: 13000,
     draped: 12000,
     shimmerWall: 15000,
   },
   welcomeSigns: {
-    floral: 6500,
-    balloon: 5500,
+    floral: 7000,
+    balloon: 6000,
   },
   centerpieces: {
     basic: 800,
@@ -36,20 +38,57 @@ export const PRICING = {
   extras: {
     cakeStand: 2000,
     dessertTable: 5000,
-    redCarpet: 5000,
-    individualCards: 120,
+    redCarpet: 6000,
     lightingPackage: 5000,
   },
+
+  tents: {
+    bLine: {
+      label: "B-Line Tent",
+      price: null,
+      requiresReview: true,
+    },
+
+    canopy: {
+      label: "Canopy Tent",
+      price: null,
+      requiresReview: true,
+    },
+
+    custom: {
+      label: "Something else",
+      price: null,
+      requiresReview: true,
+    },
+  },
+  tentTransportSurcharge: 7000,
 };
 
 /**
  * Transport cost based on location, whether furniture (chairs/tables)
  * is involved, and whether the order is backdrop-only (lighter job).
  */
-export function calculateTransport(location, hasFurniture, isBackdropOnly) {
-  if (isBackdropOnly) return 1000;
-  if (location === "nairobi") return hasFurniture ? 3000 : 2000;
-  return hasFurniture ? 4500 : 3000;
+export function calculateTransport(
+  location,
+  hasFurniture,
+  isBackdropOnly,
+  hasTent = false,
+) {
+  let transport;
+
+  if (isBackdropOnly) {
+    transport = 1000;
+  } else if (location === "nairobi") {
+    transport = hasFurniture ? 4000 : 2000;
+  } else {
+    transport = hasFurniture ? 5000 : 3000;
+  }
+
+  if (hasTent) {
+    transport += PRICING.tentTransportSurcharge;
+  }
+
+  return transport;
 }
 
 /**
@@ -68,7 +107,7 @@ export function calculateLabour(guestCount, hasTableSetup, isBackdropOnly) {
  *
  * @param {object} formData - the quote wizard's form state
  * @param {number} tablesNeeded - derived from guestCount, passed in
- *   so it's calculated once in Quote.jsx rather than recomputed here
+ *   so it's calculated once in Quote.jsx
  * @returns {object} every line item plus subtotal and deposit
  */
 export function calculateQuote(formData, tablesNeeded) {
@@ -98,6 +137,7 @@ export function calculateQuote(formData, tablesNeeded) {
       tableSettings.chargerPlates &&
       tableSettings.tableMats &&
       tableSettings.tableRunners &&
+      tableSettings.placeCards &&
       tableSettings.candles);
 
   let tableSettingsCost = 0;
@@ -108,11 +148,11 @@ export function calculateQuote(formData, tablesNeeded) {
       formData.guestCount * PRICING.tableSettings.wineGlasses;
     tableSettingsCost +=
       formData.guestCount * PRICING.tableSettings.chargerPlates;
+    tableSettingsCost += formData.guestCount * PRICING.tableSettings.placeCards;
     tableSettingsCost += formData.guestCount * PRICING.tableSettings.tableMats;
     tableSettingsCost +=
       tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
-    tableSettingsCost +=
-      tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
+    tableSettingsCost += tablesNeeded * PRICING.tableSettingsPerTable.candles;
   } else {
     if (tableSettings.napkins)
       tableSettingsCost +=
@@ -126,12 +166,14 @@ export function calculateQuote(formData, tablesNeeded) {
     if (tableSettings.tableMats)
       tableSettingsCost +=
         formData.guestCount * PRICING.tableSettings.tableMats;
+    if (tableSettings.placeCards)
+      tableSettingsCost +=
+        formData.guestCount * PRICING.tableSettings.placeCards;
     if (tableSettings.tableRunners)
       tableSettingsCost +=
         tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
     if (tableSettings.candles)
-      tableSettingsCost +=
-        tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
+      tableSettingsCost += tablesNeeded * PRICING.tableSettingsPerTable.candles;
   }
 
   // Backdrops
@@ -155,11 +197,17 @@ export function calculateQuote(formData, tablesNeeded) {
   if (extras.cakeStand) extrasCost += PRICING.extras.cakeStand;
   if (extras.dessertTable) extrasCost += PRICING.extras.dessertTable;
   if (extras.redCarpet) extrasCost += PRICING.extras.redCarpet;
-  if (extras.cardBox) extrasCost += PRICING.extras.cardBox;
   if (extras.lightingPackage) extrasCost += PRICING.extras.lightingPackage;
-  if (extras.individualCards && extras.cardQuantity) {
-    extrasCost += PRICING.extras.individualCards * extras.cardQuantity;
-  }
+
+  // Tents — price is null / requiresReview for every tent type right now,
+  // so tentCost contributes 0 to the subtotal (nothing to charge yet), but
+  // hasTent/tentRequiresReview still flip true so the UI/email can flag
+  // that tent pricing needs manual follow-up. 
+  const selectedTent = formData.tentType
+    ? PRICING.tents[formData.tentType]
+    : null;
+  const hasTent = Boolean(selectedTent);
+  const tentCost = selectedTent?.price || 0;
 
   // Determine order "shape" for transport/labour rules
   const hasChairs = Boolean(formData.chairType);
@@ -174,6 +222,7 @@ export function calculateQuote(formData, tablesNeeded) {
     !hasChairs &&
     !hasCenterpieces &&
     !hasExtras &&
+    !hasTent &&
     tableSettingsCost === 0;
 
   const hasFurniture = hasChairs;
@@ -181,6 +230,7 @@ export function calculateQuote(formData, tablesNeeded) {
     formData.location,
     hasFurniture,
     isBackdropOnly,
+    hasTent,
   );
 
   const hasTableSetup = hasChairs;
@@ -198,6 +248,7 @@ export function calculateQuote(formData, tablesNeeded) {
     welcomeSignCost +
     centerpieceCost +
     extrasCost +
+    tentCost +
     transportCost +
     labourCost;
 
@@ -211,6 +262,7 @@ export function calculateQuote(formData, tablesNeeded) {
     backdropCost,
     welcomeSignCost,
     centerpieceCost,
+    tentCost,
     extrasCost,
     transportCost,
     labourCost,
@@ -219,6 +271,8 @@ export function calculateQuote(formData, tablesNeeded) {
     balance,
     tablesNeeded,
     isBackdropOnly,
+    hasTent,
+    tentRequiresReview: hasTent,
   };
 }
 
@@ -231,7 +285,9 @@ export const LABELS = {
     luxe: "Luxe Seats",
   },
   backdrops: {
-    basicBalloon: "Basic Balloon Backdrop",
+    singleBalloon: "Single Balloon Backdrop",
+    doubleBalloon: "Double Balloon Backdrop",
+    floralBalloon: "Floral + Balloon Backdrop",
     floral: "Floral Backdrop",
     draped: "Draped Fabric Backdrop",
     shimmerWall: "Shimmer Wall Backdrop",
@@ -283,6 +339,10 @@ export function formatQuoteDetails(formData, quote) {
     ? `${LABELS.centerpieces[formData.centerpieceTier] || formData.centerpieceTier} - ${quote.tablesNeeded} tables`
     : "None";
 
+  const tentDetails = formData.tentType
+    ? `${PRICING.tents[formData.tentType]?.label || formData.tentType} (price to be confirmed)`
+    : "None";
+
   const extrasSelected = [];
   if (extras.cakeStand) extrasSelected.push("Elegant Cake Stand");
   if (extras.dessertTable) extrasSelected.push("Dessert Table Setup");
@@ -299,6 +359,7 @@ export function formatQuoteDetails(formData, quote) {
     backdropsDetails,
     welcomeSignDetails,
     centerpieceDetails,
+    tentDetails,
     extrasDetails,
   };
 }
