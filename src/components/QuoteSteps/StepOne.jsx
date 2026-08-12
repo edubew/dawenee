@@ -1,70 +1,180 @@
 import React, { useEffect, useMemo } from "react";
 import "../../pages/Quote/Quote.scss";
 
+const EVENT_TYPES = [
+  {
+    value: "wedding",
+    label: "Wedding",
+  },
+  {
+    value: "birthday",
+    label: "Birthday",
+  },
+  {
+    value: "graduation",
+    label: "Graduation",
+  },
+  {
+    value: "baby-shower",
+    label: "Baby Shower",
+  },
+  {
+    value: "bridal-shower",
+    label: "Bridal Shower",
+  },
+  {
+    value: "corporate",
+    label: "Corporate Event",
+  },
+  {
+    value: "other",
+    label: "Something Else",
+  },
+];
+
 function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
-  const validateStepOne = (formData) => {
+  // Validations
+
+  const validateStepOne = (data) => {
     const errors = [];
 
-    if (!formData.eventDate) {
-      errors.push("Please select an event date");
+    // Event type
+    if (!data.eventType) {
+      errors.push("Please tell us what type of event you're planning");
+    }
+
+    // Custom event type
+    if (data.eventType === "other" && !data.eventTypeOther?.trim()) {
+      errors.push("Please tell us what type of event you're planning");
+    }
+
+    // Event date
+    if (!data.eventDate) {
+      errors.push("Please select your event date");
     } else {
-      const selectedDate = new Date(formData.eventDate);
+      const selectedDate = new Date(`${data.eventDate}T00:00:00`);
+
       const today = new Date();
-      today.setHours(0, 0, 0);
+      today.setHours(0, 0, 0, 0);
 
       if (selectedDate < today) {
         errors.push("Event date must be in the future");
       }
     }
 
-    if (!formData.location) {
-      errors.push("Please select a location");
+    // Guest count
+    if (!data.guestCount || data.guestCount < 1) {
+      errors.push("Please enter your expected number of guests");
+    }
+
+    // Location
+    if (!data.location) {
+      errors.push("Please tell us where your event will take place");
     }
 
     return errors;
   };
 
-  const errors = useMemo(() => {
-    return validateStepOne(formData);
-  }, [formData]);
+  const errors = useMemo(() => validateStepOne(formData), [formData]);
 
-  // Notify parent of validation status
+  //  Notify parent of validation status
+
   useEffect(() => {
     if (onValidate) {
       onValidate(errors.length === 0);
     }
   }, [errors, onValidate]);
 
+  // Handlers
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
-  const handleGuestCountChange = (e) => {
+  const handleEventTypeChange = (eventType) => {
     setFormData((prev) => ({
       ...prev,
-      guestCount: parseInt(e.target.value),
+      eventType,
+      eventTypeOther: eventType === "other" ? prev.eventTypeOther : "",
+    }));
+  };
+
+  const handleGuestCountChange = (event) => {
+    setFormData((prev) => ({
+      ...prev,
+      guestCount: Number(event.target.value),
     }));
   };
 
   return (
-    <div className="step">
-      <h2 className="step__title">Step 1: Event Details</h2>
-      <p className="step__description">
-        Let's start with the basics about your event so we can give you accurate
-        pricing
-      </p>
+    <div className="quote-step">
+      <div className="quote-step__intro">
+        <span className="quote-step__eyebrow">Step 1 · Your event</span>
+
+        <h2 className="quote-step__title">
+          Let's start with your <em>event</em>
+        </h2>
+
+        <p className="quote-step__description">
+          Tell us a little about what you're planning. We'll use this to build
+          an initial estimate tailored to your event.
+        </p>
+      </div>
 
       <div className="form">
+        {/* EVENT TYPE */}
+        <div className="form__group">
+          <label className="form__label">
+            What are you celebrating?
+            <span className="form__required">*</span>
+          </label>
+
+          <div className="event-type-grid">
+            {EVENT_TYPES.map((event) => (
+              <button
+                key={event.value}
+                type="button"
+                className={`event-type-card ${
+                  formData.eventType === event.value
+                    ? "event-type-card--selected"
+                    : ""
+                }`}
+                onClick={() => handleEventTypeChange(event.value)}
+                aria-pressed={formData.eventType === event.value}
+              >
+                {/* <span className="event-type-card__icon">{event.icon}</span> */}
+
+                <span className="event-type-card__label">{event.label}</span>
+              </button>
+            ))}
+          </div>
+
+          {formData.eventType === "other" && (
+            <input
+              type="text"
+              id="eventTypeOther"
+              name="eventTypeOther"
+              value={formData.eventTypeOther || ""}
+              onChange={handleChange}
+              className="form__input form__input--followup"
+              placeholder="What are you celebrating?"
+              maxLength={80}
+            />
+          )}
+        </div>
+
+        {/* EVENT DATE */}
         <div className="form__group">
           <label htmlFor="eventDate" className="form__label">
-            Event Date <span className="form__required">*</span>
+            When is the big day?
+            <span className="form__required">*</span>
           </label>
+
           <input
             type="date"
             id="eventDate"
@@ -72,15 +182,22 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
             value={formData.eventDate}
             onChange={handleChange}
             className="form__input"
-            min={new Date().toISOString().split("T")[0]} // Today or later
+            min={new Date().toISOString().split("T")[0]}
             required
           />
+
+          <span className="form__hint">
+            We'll confirm availability with you before anything is finalized.
+          </span>
         </div>
 
+        {/* GUEST COUNT */}
         <div className="form__group">
           <label htmlFor="guestCount" className="form__label">
-            Number of Guests <span className="form__required">*</span>
+            How many guests are you expecting?
+            <span className="form__required">*</span>
           </label>
+
           <div className="form__slider-container">
             <input
               type="range"
@@ -88,30 +205,36 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
               name="guestCount"
               min="1"
               max="500"
-              step="3"
+              step="1"
               value={formData.guestCount}
               onChange={handleGuestCountChange}
               className="form__slider"
             />
+
             <div className="form__slider-value">
               <span className="form__slider-number">{formData.guestCount}</span>
+
               <span className="form__slider-label">guests</span>
             </div>
           </div>
 
           <div className="form__calculation">
-            <span className="form__calculation-icon">📋</span>
+            <span className="form__calculation-icon">◌</span>
+
             <span className="form__calculation-text">
-              Tables needed: <strong>{tablesNeeded}</strong> (6 guests per
-              table)
+              Estimated tables needed: <strong>{tablesNeeded}</strong>
+              <small> · based on 7 guests per table</small>
             </span>
           </div>
         </div>
 
+        {/* LOCATION */}
         <div className="form__group">
           <label className="form__label">
-            Location <span className="form__required">*</span>
+            Where will your event take place?
+            <span className="form__required">*</span>
           </label>
+
           <div className="form__radio-group">
             <label className="form__radio">
               <input
@@ -121,6 +244,7 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
                 checked={formData.location === "nairobi"}
                 onChange={handleChange}
               />
+
               <span className="form__radio-label">
                 <strong>Nairobi</strong>
                 <small>Within Nairobi County</small>
@@ -135,6 +259,7 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
                 checked={formData.location === "outside-nairobi"}
                 onChange={handleChange}
               />
+
               <span className="form__radio-label">
                 <strong>Outside Nairobi</strong>
                 <small>Beyond Nairobi County</small>
@@ -143,9 +268,11 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
           </div>
         </div>
 
+        {/* VENUE */}
         <div className="form__group">
           <label htmlFor="venueName" className="form__label">
-            Venue Name <span className="form__required">*</span>
+            Venue
+            <span className="form__optional">Optional</span>
           </label>
 
           <input
@@ -154,19 +281,47 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
             name="venueName"
             value={formData.venueName}
             onChange={handleChange}
-            placeholder="e.g., Marula Manor, Karen Country Club"
+            placeholder="e.g. Karen Country Club"
             className="form__input"
-            required
+            maxLength={120}
           />
+
           <span className="form__hint">
-            Filter by venue type, select from suggestions, or enter your own
+            Already have a venue? Tell us where. Still deciding? You can leave
+            this blank.
+          </span>
+        </div>
+
+        {/* EVENT VISION */}
+        <div className="form__group">
+          <label htmlFor="eventVision" className="form__label">
+            What are you envisioning?
+            <span className="form__optional">Optional</span>
+          </label>
+
+          <textarea
+            id="eventVision"
+            name="eventVision"
+            value={formData.eventVision || ""}
+            onChange={handleChange}
+            className="form__textarea"
+            rows="5"
+            maxLength={1000}
+            placeholder="Tell us about your theme, colours, mood, florals, balloons, or anything you'd love us to create..."
+          />
+
+          <span className="form__hint">
+            Not sure yet? That's completely okay. Tell us what you know and
+            we'll help you build from there.
           </span>
         </div>
       </div>
 
+      {/* VALIDATION ERRORS */}
       {errors.length > 0 && (
-        <div className="validation-errors">
+        <div className="validation-errors" role="alert">
           <div className="validation-errors__icon">⚠️</div>
+
           <ul className="validation-errors__list">
             {errors.map((error, index) => (
               <li key={index}>{error}</li>

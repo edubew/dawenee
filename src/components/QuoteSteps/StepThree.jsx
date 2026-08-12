@@ -1,43 +1,58 @@
 import React from "react";
 import OptionCard from "../QuoteSteps/OptionCard";
 import { PRICING } from "../../data/pricingData";
+
 import balloonBackdrop from "../../assets/images/backdrops/balloonBackdrop.jpg";
 import floralBackdrop from "../../assets/images/backdrops/floralBackdrop.jpg";
-import drapedBackdrop from "../../assets/images/backdrops/drapedBackdrop.jpg";
 import shimmerBackdrop from "../../assets/images/backdrops/shimmer.jpg";
 import floralSign from "../../assets/images/backdrops/floralSign.png";
 import balloonSign from "../../assets/images/backdrops/balloonSign.jpg";
 
+import "../../pages/Quote/Quote.scss";
+
 const backdropOptions = [
   {
-    id: "basicBalloon",
-    name: "Basic Balloon Backdrop",
-    price: PRICING.backdrops.basicBalloon,
-    description: "Beautiful balloon arrangement perfect for photos",
+    id: "singleBalloon",
+    name: "Single + Balloon",
+    price: PRICING.backdrops.singleBalloon,
+    description:
+      "A beautiful single backdrop paired with a balloon installation.",
     image: balloonBackdrop,
     popular: true,
+  },
+  {
+    id: "doubleBalloon",
+    name: "Double + Balloon",
+    price: PRICING.backdrops.doubleBalloon,
+    description:
+      "A fuller two-backdrop installation with a statement balloon arrangement.",
+    image: balloonBackdrop,
+    popular: false,
   },
   {
     id: "floral",
     name: "Floral Backdrop",
     price: PRICING.backdrops.floral,
-    description: "Elegant fresh or artificial flowers",
+    description:
+      "An elegant floral backdrop for a softer, more romantic atmosphere.",
     image: floralBackdrop,
     popular: false,
   },
   {
-    id: "draped",
-    name: "Draped Backdrop",
-    price: PRICING.backdrops.draped,
-    description: "Luxurious fabric draping",
-    image: drapedBackdrop,
+    id: "floralBalloon",
+    name: "Floral + Balloon",
+    price: PRICING.backdrops.floralBalloon,
+    description:
+      "A beautiful combination of florals and balloons for a layered look.",
+    image: floralBackdrop,
     popular: false,
   },
   {
     id: "shimmerWall",
     name: "Shimmer Wall",
     price: PRICING.backdrops.shimmerWall,
-    description: "Stunning metallic shimmer wall",
+    description:
+      "A statement shimmer wall that catches the light beautifully in photos.",
     image: shimmerBackdrop,
     popular: false,
   },
@@ -45,46 +60,57 @@ const backdropOptions = [
 
 const welcomeSignOptions = [
   {
-    id: "floral",
-    name: "Floral Welcome Sign",
-    price: PRICING.welcomeSigns.floral,
-    description: "Beautiful floral arrangement with custom signage",
-    image: floralSign,
-  },
-  {
     id: "balloon",
     name: "Balloon Welcome Sign",
     price: PRICING.welcomeSigns.balloon,
-    description: "Eye-catching balloon display with signage",
+    description:
+      "A welcoming balloon installation paired with personalised signage.",
     image: balloonSign,
+    popular: true,
+  },
+  {
+    id: "floral",
+    name: "Floral + Balloon Welcome Sign",
+    price: PRICING.welcomeSigns.floral,
+    description:
+      "A more elaborate welcome display combining florals, balloons and signage.",
+    image: floralSign,
+    popular: false,
   },
 ];
 
 function StepThree({ formData, setFormData }) {
+  const selectedBackdrop = formData.backdrops?.[0] || "";
+
   const calculateBackdropCost = () => {
-    if (!formData.backdrops || formData.backdrops.length === 0) return 0;
-    return formData.backdrops.reduce(
-      (total, backdropId) => total + (PRICING.backdrops[backdropId] || 0),
-      0,
-    );
+    if (!selectedBackdrop) return 0;
+
+    return PRICING.backdrops[selectedBackdrop] || 0;
   };
 
   const calculateWelcomeSignCost = () => {
     if (!formData.welcomeSign) return 0;
+
     return PRICING.welcomeSigns[formData.welcomeSign] || 0;
   };
 
-  const handleBackdropToggle = (backdropId) => {
+  const handleBackdropSelect = (backdropId) => {
     setFormData((prev) => {
-      const backdrops = prev.backdrops || [];
-      const isSelected = backdrops.includes(backdropId);
+      const isSame = prev.backdrops?.[0] === backdropId;
+
       return {
         ...prev,
-        backdrops: isSelected
-          ? backdrops.filter((id) => id !== backdropId)
-          : [...backdrops, backdropId],
+        backdrops: isSame ? [] : [backdropId],
       };
     });
+  };
+
+  const handleCustomBackdropSelect = () => {
+    setFormData((prev) => ({
+      ...prev,
+      backdrops: [],
+      customBackdropRequest: !prev.customBackdropRequest,
+    }));
   };
 
   const handleWelcomeSignSelect = (signId) => {
@@ -94,21 +120,28 @@ function StepThree({ formData, setFormData }) {
     }));
   };
 
-  const isBackdropSelected = (backdropId) =>
-    formData.backdrops && formData.backdrops.includes(backdropId);
+  const backdropCost = calculateBackdropCost();
+  const welcomeSignCost = calculateWelcomeSignCost();
+
+  const hasBackdrop =
+    Boolean(selectedBackdrop) || Boolean(formData.customBackdropRequest);
 
   return (
-    <div className="step">
-      <h2 className="step__title">Backdrops &amp; Welcome Signage</h2>
+    <div>
+      <h2 className="step__title">Step 3: Backdrops &amp; Welcome Signage</h2>
+
       <p className="step__description">
         Create the perfect photo moment and welcome your guests in style
       </p>
 
       <div className="form">
+        {/* BACKDROPS */}
         <div className="form__group">
-          <label className="form__label">Backdrops</label>
+          <label className="form__label">Choose Your Backdrop</label>
+
           <p className="form__hint" style={{ marginBottom: "1rem" }}>
-            Select one or more backdrops for different areas of your event
+            Choose a style below, or tell us what you have in mind if you want
+            something customised.
           </p>
 
           <div className="option-grid option-grid--two-col">
@@ -119,29 +152,108 @@ function StepThree({ formData, setFormData }) {
                 description={backdrop.description}
                 image={backdrop.image}
                 price={backdrop.price}
+                priceSuffix="starting from"
                 popular={backdrop.popular}
-                isSelected={isBackdropSelected(backdrop.id)}
-                onSelect={() => handleBackdropToggle(backdrop.id)}
+                isSelected={selectedBackdrop === backdrop.id}
+                onSelect={() => handleBackdropSelect(backdrop.id)}
               />
             ))}
+
+            {/* CUSTOM OPTION */}
+            <button
+              type="button"
+              onClick={handleCustomBackdropSelect}
+              className={`option-card option-card--custom ${
+                formData.customBackdropRequest ? "option-card--selected" : ""
+              }`}
+              aria-pressed={Boolean(formData.customBackdropRequest)}
+            >
+              {formData.customBackdropRequest && (
+                <span className="option-card__selected-indicator">✓</span>
+              )}
+
+              <h3 className="option-card__name">Something Else in Mind?</h3>
+
+              <p className="option-card__description">
+                Have a theme, idea or installation you'd love us to create? Tell
+                us about it.
+              </p>
+
+              <div className="option-card__custom-label">Custom request</div>
+            </button>
           </div>
 
-          {formData.backdrops && formData.backdrops.length > 0 && (
+          {/* CUSTOM REQUEST */}
+          {formData.customBackdropRequest && (
+            <div className="custom-request">
+              <label htmlFor="customBackdropDetails" className="form__label">
+                Tell us what you're envisioning
+              </label>
+
+              <p className="form__hint">
+                It can be a Pinterest inspiration, a theme, colours, a specific
+                installation, or simply an idea you have.
+              </p>
+
+              <textarea
+                id="customBackdropDetails"
+                name="customBackdropDetails"
+                value={formData.customBackdropDetails || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    customBackdropDetails: e.target.value,
+                  }))
+                }
+                className="form__textarea"
+                placeholder="e.g. I would love a pink and white princess-themed backdrop with lots of balloons and florals..."
+                rows={4}
+              />
+
+              <div className="form__info-box">
+                <div className="form__info-box-header">
+                  <h4 className="form__info-box-title">
+                    Don't see exactly what you want?
+                  </h4>
+                </div>
+
+                <p className="form__info-box-text">
+                  That's okay. Dawenee is happy to explore ideas outside our
+                  standard catalogue. We'll review your request and confirm the
+                  pricing with you.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* SELECTED BACKDROP COST */}
+          {backdropCost > 0 && (
             <div className="form__calculation">
-              <span className="form__calculation-icon">💰</span>
               <span className="form__calculation-text">
-                {formData.backdrops.length} backdrop
-                {formData.backdrops.length > 1 ? "s" : ""} selected:
-                <strong> KES {calculateBackdropCost().toLocaleString()}</strong>
+                Backdrop:
+                <strong> KES {backdropCost.toLocaleString()}</strong>
+              </span>
+            </div>
+          )}
+
+          {formData.customBackdropRequest && (
+            <div className="form__calculation form__calculation--review">
+              <span className="form__calculation-text">
+                Custom backdrop request:
+                <strong> Pricing to be confirmed</strong>
               </span>
             </div>
           )}
         </div>
 
+        {/* WELCOME SIGNAGE */}
         <div className="form__group">
-          <label className="form__label">Welcome Sign (Optional)</label>
+          <label className="form__label">
+            Welcome Signage <span className="form__optional">(Optional)</span>
+          </label>
+
           <p className="form__hint" style={{ marginBottom: "1rem" }}>
-            Greet your guests with a beautiful welcome display
+            Give your guests a beautiful first impression as they arrive.
           </p>
 
           <div className="option-grid option-grid--two-col">
@@ -152,36 +264,37 @@ function StepThree({ formData, setFormData }) {
                 description={sign.description}
                 image={sign.image}
                 price={sign.price}
+                priceSuffix="starting from"
+                popular={sign.popular}
                 isSelected={formData.welcomeSign === sign.id}
                 onSelect={() => handleWelcomeSignSelect(sign.id)}
               />
             ))}
           </div>
 
-          {formData.welcomeSign && (
+          {welcomeSignCost > 0 && (
             <div className="form__calculation">
-              <span className="form__calculation-icon">💰</span>
               <span className="form__calculation-text">
-                Welcome sign cost:{" "}
-                <strong>
-                  KES {calculateWelcomeSignCost().toLocaleString()}
-                </strong>
+                Welcome signage:
+                <strong> KES {welcomeSignCost.toLocaleString()}</strong>
               </span>
             </div>
           )}
         </div>
 
-        {calculateBackdropCost() === 0 && calculateWelcomeSignCost() === 0 && (
+        {/* NOTHING SELECTED */}
+        {!hasBackdrop && !formData.welcomeSign && (
           <div className="form__info-box">
             <div className="form__info-box-header">
-              <span className="form__info-box-icon">ℹ️</span>
               <h4 className="form__info-box-title">
-                Backdrops &amp; Signs are Optional
+                Not sure what you want yet?
               </h4>
             </div>
+
             <p className="form__info-box-text">
-              You can skip this step if you don't need backdrops or welcome
-              signs. Click "Next Step" to continue with centerpieces and extras.
+              You can skip this step and come back to it later. You can also
+              choose a custom idea and let the Dawenee team help bring it to
+              life.
             </p>
           </div>
         )}

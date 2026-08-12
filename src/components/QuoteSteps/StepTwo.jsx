@@ -1,17 +1,24 @@
-import React, { useState } from "react";
-import OptionCard from "../QuoteSteps/OptionCard";
+import React, { useMemo, useState } from "react";
+import OptionCard from "./OptionCard";
 import { PRICING } from "../../data/pricingData";
+
 import plasticDressed from "../../assets/images/seats/plasticDressed.jpg";
 import chiavariSeat from "../../assets/images/seats/chiavariSeat.jpg";
 import luxeSeat from "../../assets/images/seats/luxeSeat.jpg";
+
+// import "./StepTwoThreeFour.scss";
+
 import "../../pages/Quote/Quote.scss";
+
+// CHAIR OPTIONS
 
 const chairOptions = [
   {
     id: "dressedPlastic",
     name: "Dressed Plastic Chairs",
     price: PRICING.chairs.dressedPlastic,
-    description: "Classic white plastic chairs with elegant fabric covers",
+    description:
+      "Classic white plastic chairs with elegant fabric covers and tie backs.",
     image: plasticDressed,
     popular: true,
   },
@@ -19,63 +26,166 @@ const chairOptions = [
     id: "chiavari",
     name: "Chiavari Chairs",
     price: PRICING.chairs.chiavari,
-    description: "Elegant chiavari chairs, perfect for upscale events",
+    description: "Elegant seating for refined weddings and celebrations.",
     image: chiavariSeat,
-    popular: false,
   },
   {
     id: "luxe",
     name: "Luxe Chairs",
     price: PRICING.chairs.luxe,
-    description: "Premium luxury seating for sophisticated celebrations",
+    description: "Premium seating for a more sophisticated event aesthetic.",
     image: luxeSeat,
-    popular: false,
   },
 ];
 
+// TABLE OPTIONS
+
+const tableOptions = [
+  {
+    id: "round",
+    name: "Round Tables",
+    description:
+      "A classic, social layout that works beautifully for celebrations and intimate gatherings.",
+  },
+  {
+    id: "rectangular",
+    name: "Rectangular Tables",
+    description:
+      "A versatile layout suited to banquet-style, corporate and long-table arrangements.",
+  },
+];
+
+//  TABLE SETTING OPTIONS
+
+const perGuestSettings = [
+  {
+    id: "napkins",
+    name: "Napkins + Napkin Rings",
+    price: PRICING.tableSettings.napkinsAndRings,
+    suffix: "per guest",
+  },
+  {
+    id: "wineGlasses",
+    name: "Wine Glasses",
+    price: PRICING.tableSettings.wineGlasses,
+    suffix: "per guest",
+  },
+  {
+    id: "chargerPlates",
+    name: "Charger Plates",
+    price: PRICING.tableSettings.chargerPlates,
+    suffix: "per guest",
+  },
+  {
+    id: "tableMats",
+    name: "Table Mats",
+    price: PRICING.tableSettings.tableMats,
+    suffix: "per guest",
+  },
+  {
+    id: "placeCards",
+    name: "Place Cards",
+    price: PRICING.tableSettings.placeCards,
+    suffix: "per guest",
+  },
+];
+
+const perTableSettings = [
+  {
+    id: "tableRunners",
+    name: "Table Runners",
+    price: PRICING.tableSettingsPerTable.tableRunners,
+    suffix: "per table",
+  },
+  {
+    id: "candles",
+    name: "Candles",
+    price: PRICING.tableSettingsPerTable.candles,
+    suffix: "per table",
+  },
+];
+
+const INITIAL_TABLE_SETTINGS = {
+  fullPackage: false,
+  napkins: false,
+  wineGlasses: false,
+  chargerPlates: false,
+  tableMats: false,
+  placeCards: false,
+  tableRunners: false,
+  candles: false,
+};
+
 function StepTwo({ formData, setFormData, tablesNeeded }) {
-  const [settingsMode, setSettingsMode] = useState("none");
+  const initialSettingsMode = useMemo(() => {
+    const settings = formData.tableSettings || {};
 
-  const calculateChairCost = () => {
-    if (!formData.chairType) return 0;
-    return (PRICING.chairs[formData.chairType] || 0) * formData.chairQuantity;
-  };
-
-  const calculateTableCost = () => tablesNeeded * PRICING.tables.dressed;
-
-  const calculateTableSettingsCost = () => {
-    let total = 0;
-    const guestCount = formData.guestCount;
-    const settings = formData.tableSettings;
-
-    if (settingsMode === "package") {
-      total += guestCount * PRICING.tableSettings.napkinsAndRings;
-      total += guestCount * PRICING.tableSettings.wineGlasses;
-      total += guestCount * PRICING.tableSettings.chargerPlates;
-      total += guestCount * PRICING.tableSettings.tableMats;
-      total += tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
-      total += tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
-    } else if (settingsMode === "custom") {
-      if (settings.napkins)
-        total += guestCount * PRICING.tableSettings.napkinsAndRings;
-      if (settings.wineGlasses)
-        total += guestCount * PRICING.tableSettings.wineGlasses;
-      if (settings.chargerPlates)
-        total += guestCount * PRICING.tableSettings.chargerPlates;
-      if (settings.tableMats)
-        total += guestCount * PRICING.tableSettings.tableMats;
-      if (settings.tableRunners)
-        total += tablesNeeded * PRICING.tableSettingsPerTable.tableRunners;
-      if (settings.candles)
-        total += tablesNeeded * PRICING.tableSettingsPerTable.candlesAndHolders;
+    if (settings.fullPackage) {
+      return "package";
     }
 
+    const hasCustomSelection = Object.entries(settings).some(
+      ([key, value]) => key !== "fullPackage" && value === true,
+    );
+
+    return hasCustomSelection ? "custom" : "none";
+  }, [formData.tableSettings]);
+
+  const [settingsMode, setSettingsMode] = useState(initialSettingsMode);
+
+  // CALCULATIONS
+
+  const _chairCost = useMemo(() => {
+    if (!formData.chairType) return 0;
+
+    return (
+      (PRICING.chairs[formData.chairType] || 0) * (formData.chairQuantity || 0)
+    );
+  }, [formData.chairType, formData.chairQuantity]);
+
+  const fullPackageCost = useMemo(() => {
+    const guestCount = formData.guestCount || 0;
+
+    const perGuestCost =
+      PRICING.tableSettings.napkinsAndRings +
+      PRICING.tableSettings.wineGlasses +
+      PRICING.tableSettings.chargerPlates +
+      PRICING.tableSettings.tableMats +
+      PRICING.tableSettings.placeCards;
+
+    const perTableCost =
+      PRICING.tableSettingsPerTable.tableRunners +
+      PRICING.tableSettingsPerTable.candles;
+
+    return guestCount * perGuestCost + tablesNeeded * perTableCost;
+  }, [formData.guestCount, tablesNeeded]);
+
+  const customSettingsCost = useMemo(() => {
+    const settings = formData.tableSettings || INITIAL_TABLE_SETTINGS;
+
+    let total = 0;
+
+    perGuestSettings.forEach((item) => {
+      if (settings[item.id]) {
+        total += (formData.guestCount || 0) * item.price;
+      }
+    });
+
+    perTableSettings.forEach((item) => {
+      if (settings[item.id]) {
+        total += tablesNeeded * item.price;
+      }
+    });
+
     return total;
-  };
+  }, [formData.tableSettings, formData.guestCount, tablesNeeded]);
+
+  //  CHAIR HANDLERS
 
   const handleChairSelect = (chairId) => {
     setFormData((prev) => {
       const isSame = prev.chairType === chairId;
+
       return {
         ...prev,
         chairType: isSame ? "" : chairId,
@@ -85,13 +195,38 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
   };
 
   const handleChairDeselect = () => {
-    setFormData((prev) => ({ ...prev, chairType: "", chairQuantity: 0 }));
-  };
-
-  const handleChairQuantityChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      chairQuantity: parseInt(e.target.value) || 0,
+      chairType: "",
+      chairQuantity: 0,
+    }));
+  };
+
+  const handleChairQuantityChange = (event) => {
+    const value = Math.max(0, Number(event.target.value) || 0);
+
+    setFormData((prev) => ({
+      ...prev,
+      chairQuantity: value,
+    }));
+  };
+
+  // TABLE HANDLERS
+  const handleTableTypeSelect = (tableType) => {
+    setFormData((prev) => ({
+      ...prev,
+      tableType: prev.tableType === tableType ? "" : tableType,
+    }));
+  };
+
+  // TABLE SETTINGS HANDLERS
+
+  const clearTableSettings = () => {
+    setFormData((prev) => ({
+      ...prev,
+      tableSettings: {
+        ...INITIAL_TABLE_SETTINGS,
+      },
     }));
   };
 
@@ -107,49 +242,77 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           wineGlasses: true,
           chargerPlates: true,
           tableMats: true,
+          placeCards: true,
           tableRunners: true,
           candles: true,
         },
       }));
-    } else if (mode === "none") {
-      setFormData((prev) => ({
-        ...prev,
-        tableSettings: {
-          fullPackage: false,
-          napkins: false,
-          wineGlasses: false,
-          chargerPlates: false,
-          tableMats: false,
-          tableRunners: false,
-          candles: false,
-        },
-      }));
+
+      return;
     }
+
+    if (mode === "none") {
+      clearTableSettings();
+      return;
+    }
+
+    /*
+     * Custom mode starts with everything unchecked.
+     * If the customer already had custom selections,
+     * we preserve them rather than wiping them.
+     */
+    setFormData((prev) => ({
+      ...prev,
+      tableSettings: {
+        ...(prev.tableSettings || INITIAL_TABLE_SETTINGS),
+        fullPackage: false,
+      },
+    }));
   };
 
   const handleCustomItemToggle = (item) => {
     setFormData((prev) => ({
       ...prev,
       tableSettings: {
-        ...prev.tableSettings,
-        [item]: !prev.tableSettings[item],
+        ...(prev.tableSettings || INITIAL_TABLE_SETTINGS),
+        fullPackage: false,
+        [item]: !prev.tableSettings?.[item],
       },
     }));
   };
 
   return (
-    <div className="step">
-      <h2 className="step__title">Step 2: Seating &amp; Tables</h2>
-      <p className="step__description">
-        Select the chair style that matches your event aesthetic
-      </p>
+    <div>
+      {/* INTRO */}
+
+      <div className="step__intro">
+        <span className="step__eyebrow">Step 2 · The foundation</span>
+
+        <h2 className="step__title">
+          Let's build your <em>tablescape</em>
+        </h2>
+
+        <p className="step__description">
+          Choose your seating, table layout and table styling. Don't need
+          something? Simply skip it.
+        </p>
+      </div>
 
       <div className="form">
+        {/* SEATING */}
+
         <div className="form__group">
-          <label className="form__label">Chair Type (Optional)</label>
-          <p className="form__hint" style={{ marginBottom: "1rem" }}>
-            Skip if you don't need chair rentals
-          </p>
+          <div className="form__section-heading">
+            <div>
+              <label className="form__label">Seating</label>
+
+              <p className="form__hint">
+                Choose the chair style that best suits your event.
+              </p>
+            </div>
+
+            <span className="form__optional">Optional</span>
+          </div>
 
           <div className="option-grid">
             {chairOptions.map((chair) => (
@@ -168,302 +331,307 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           </div>
 
           {formData.chairType && (
-            <button
-              type="button"
-              onClick={handleChairDeselect}
-              className="deselect-button"
-            >
-              ✕ Remove Chair Selection
-            </button>
+            <div className="selection-controls">
+              <button
+                type="button"
+                onClick={handleChairDeselect}
+                className="deselect-button"
+              >
+                Remove chair selection
+              </button>
+            </div>
+          )}
+
+          {!formData.chairType && (
+            <div className="form__skip-note">
+              No chairs needed? That's perfectly fine — you can continue without
+              selecting any.
+            </div>
           )}
         </div>
+
+        {/* CHAIR QUANTITY */}
 
         {formData.chairType && (
           <div className="form__group">
             <label htmlFor="chairQuantity" className="form__label">
-              Number of Chairs
+              How many chairs do you need?
             </label>
-            <input
-              type="number"
-              id="chairQuantity"
-              name="chairQuantity"
-              min="0"
-              max="1000"
-              value={formData.chairQuantity}
-              onChange={handleChairQuantityChange}
-              className="form__input"
-            />
+
+            <div className="quantity-field">
+              <input
+                type="number"
+                id="chairQuantity"
+                name="chairQuantity"
+                min="1"
+                max="1000"
+                value={formData.chairQuantity || 0}
+                onChange={handleChairQuantityChange}
+                className="form__input"
+              />
+
+              <span className="quantity-field__unit">chairs</span>
+            </div>
+
             <span className="form__hint">
-              Auto-filled based on {formData.guestCount} guests. Adjust if
-              needed.
+              We've filled this in based on your {formData.guestCount} guests.
+              Adjust it if some guests already have seating.
             </span>
-
-            <div className="form__calculation">
-              <span className="form__calculation-icon">💰</span>
-              <span className="form__calculation-text">
-                Chair cost:{" "}
-                <strong>KES {calculateChairCost().toLocaleString()}</strong>
-              </span>
-            </div>
           </div>
         )}
 
-        {(formData.chairType || settingsMode !== "none") && (
-          <div className="form__group">
-            <div className="form__info-box">
-              <div className="form__info-box-header">
-                <h4 className="form__info-box-title">
-                  Tables {formData.chairType ? "Included" : "Required"}
-                </h4>
-              </div>
-              <p className="form__info-box-text">
-                <strong>{tablesNeeded} dressed tables</strong>{" "}
-                {formData.chairType
-                  ? "are automatically included with your chair selection"
-                  : "needed for your table settings"}{" "}
-                (KES {PRICING.tables.dressed.toLocaleString()} per table).
-              </p>
-              <div className="form__calculation">
-                <span className="form__calculation-icon">💰</span>
-                <span className="form__calculation-text">
-                  Table cost:{" "}
-                  <strong>KES {calculateTableCost().toLocaleString()}</strong>
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* TABLES */}
 
         <div className="form__group">
-          <label className="form__label">Table Settings</label>
-          <p className="form__hint" style={{ marginBottom: "1rem" }}>
-            Complete your table setup with napkins, glasses, charger plates, and
-            more
-          </p>
+          <div className="form__section-heading">
+            <div>
+              <label className="form__label">Tables</label>
 
+              <p className="form__hint">
+                Choose the table shape you'd prefer for your event.
+              </p>
+            </div>
+
+            <span className="form__optional">Optional</span>
+          </div>
+
+          <div className="option-grid option-grid--two">
+            {tableOptions.map((table) => (
+              <OptionCard
+                key={table.id}
+                name={table.name}
+                description={table.description}
+                icon={table.icon}
+                price={PRICING.tables.dressed}
+                priceSuffix="per dressed table"
+                isSelected={formData.tableType === table.id}
+                onSelect={() => handleTableTypeSelect(table.id)}
+              />
+            ))}
+          </div>
+
+          <div className="form__info-box">
+            <div className="form__info-box-header">
+              <span className="form__info-box-icon" aria-hidden="true">
+                ✦
+              </span>
+
+              <h4 className="form__info-box-title">About your tables</h4>
+            </div>
+
+            <p className="form__info-box-text">
+              Each dressed table is{" "}
+              <strong>KES {PRICING.tables.dressed.toLocaleString()}</strong> and
+              comfortably seats up to <strong>7 guests</strong>. The
+              dressed-table price already includes the table and tablecloth.
+            </p>
+          </div>
+        </div>
+
+        {/* TABLE SETTINGS */}
+
+        <div className="form__group">
+          <div className="form__section-heading">
+            <div>
+              <label className="form__label">Table Styling</label>
+
+              <p className="form__hint">
+                Add the details that bring your tablescape together.
+              </p>
+            </div>
+
+            <span className="form__optional">Optional</span>
+          </div>
+
+          {/* Settings mode */}
           <div className="settings-mode-selector">
             <button
               type="button"
               onClick={() => handleSettingsModeChange("none")}
-              className={`settings-mode-btn ${settingsMode === "none" ? "settings-mode-btn--active" : ""}`}
+              className={`settings-mode-btn ${
+                settingsMode === "none" ? "settings-mode-btn--active" : ""
+              }`}
+              aria-pressed={settingsMode === "none"}
             >
-              <span className="settings-mode-btn__title">
-                No Table Settings
-              </span>
+              <span className="settings-mode-btn__title">No Table Styling</span>
+
               <span className="settings-mode-btn__description">
-                Skip this section
+                Keep it simple
               </span>
             </button>
 
             <button
               type="button"
               onClick={() => handleSettingsModeChange("package")}
-              className={`settings-mode-btn ${settingsMode === "package" ? "settings-mode-btn--active" : ""}`}
+              className={`settings-mode-btn ${
+                settingsMode === "package" ? "settings-mode-btn--active" : ""
+              }`}
+              aria-pressed={settingsMode === "package"}
             >
-              <span className="settings-mode-btn__badge">Best Value</span>
+              <span className="settings-mode-btn__badge">Complete Look</span>
+
               <span className="settings-mode-btn__title">Full Table Setup</span>
+
               <span className="settings-mode-btn__description">
-                Everything included
+                Everything for a finished tablescape
               </span>
+
               <span className="settings-mode-btn__price">
-                +KES{" "}
-                {(
-                  formData.guestCount *
-                    (PRICING.tableSettings.napkinsAndRings +
-                      PRICING.tableSettings.wineGlasses +
-                      PRICING.tableSettings.chargerPlates +
-                      PRICING.tableSettings.tableMats) +
-                  tablesNeeded *
-                    (PRICING.tableSettingsPerTable.tableRunners +
-                      PRICING.tableSettingsPerTable.candlesAndHolders)
-                ).toLocaleString()}
+                KES {fullPackageCost.toLocaleString()}
               </span>
             </button>
 
             <button
               type="button"
               onClick={() => handleSettingsModeChange("custom")}
-              className={`settings-mode-btn ${settingsMode === "custom" ? "settings-mode-btn--active" : ""}`}
+              className={`settings-mode-btn ${
+                settingsMode === "custom" ? "settings-mode-btn--active" : ""
+              }`}
+              aria-pressed={settingsMode === "custom"}
             >
-              <span className="settings-mode-btn__title">Custom Selection</span>
+              <span className="settings-mode-btn__title">Build Your Own</span>
+
               <span className="settings-mode-btn__description">
-                Pick individual items
+                Choose only what you need
               </span>
             </button>
           </div>
         </div>
 
+        {/* CUSTOM TABLE SETTINGS */}
+
         {settingsMode === "custom" && (
           <div className="form__group">
             <div className="custom-settings">
-              <h4 className="custom-settings__title">Choose Your Items</h4>
+              <div className="custom-settings__header">
+                <div>
+                  <h4 className="custom-settings__title">
+                    Choose your details
+                  </h4>
 
-              <div className="custom-settings__section">
-                <h5 className="custom-settings__section-title">
-                  Per Guest ({formData.guestCount} guests)
-                </h5>
-                <div className="custom-settings__items">
-                  <label className="custom-setting-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.tableSettings.napkins}
-                      onChange={() => handleCustomItemToggle("napkins")}
-                    />
-                    <div className="custom-setting-item__content">
-                      <span className="custom-setting-item__name">
-                        Napkins + Napkin Rings
-                      </span>
-                      <span className="custom-setting-item__price">
-                        KES {PRICING.tableSettings.napkinsAndRings} ×{" "}
-                        {formData.guestCount} ={" "}
-                        <strong>
-                          KES{" "}
-                          {(
-                            PRICING.tableSettings.napkinsAndRings *
-                            formData.guestCount
-                          ).toLocaleString()}
-                        </strong>
-                      </span>
-                    </div>
-                  </label>
-
-                  <label className="custom-setting-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.tableSettings.wineGlasses}
-                      onChange={() => handleCustomItemToggle("wineGlasses")}
-                    />
-                    <div className="custom-setting-item__content">
-                      <span className="custom-setting-item__name">
-                        Wine Glasses
-                      </span>
-                      <span className="custom-setting-item__price">
-                        KES {PRICING.tableSettings.wineGlasses} ×{" "}
-                        {formData.guestCount} ={" "}
-                        <strong>
-                          KES{" "}
-                          {(
-                            PRICING.tableSettings.wineGlasses *
-                            formData.guestCount
-                          ).toLocaleString()}
-                        </strong>
-                      </span>
-                    </div>
-                  </label>
-
-                  <label className="custom-setting-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.tableSettings.chargerPlates}
-                      onChange={() => handleCustomItemToggle("chargerPlates")}
-                    />
-                    <div className="custom-setting-item__content">
-                      <span className="custom-setting-item__name">
-                        Charger Plates
-                      </span>
-                      <span className="custom-setting-item__price">
-                        KES {PRICING.tableSettings.chargerPlates} ×{" "}
-                        {formData.guestCount} ={" "}
-                        <strong>
-                          KES{" "}
-                          {(
-                            PRICING.tableSettings.chargerPlates *
-                            formData.guestCount
-                          ).toLocaleString()}
-                        </strong>
-                      </span>
-                    </div>
-                  </label>
-
-                  <label className="custom-setting-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.tableSettings.tableMats}
-                      onChange={() => handleCustomItemToggle("tableMats")}
-                    />
-                    <div className="custom-setting-item__content">
-                      <span className="custom-setting-item__name">
-                        Table Mats
-                      </span>
-                      <span className="custom-setting-item__price">
-                        KES {PRICING.tableSettings.tableMats} ×{" "}
-                        {formData.guestCount} ={" "}
-                        <strong>
-                          KES{" "}
-                          {(
-                            PRICING.tableSettings.tableMats *
-                            formData.guestCount
-                          ).toLocaleString()}
-                        </strong>
-                      </span>
-                    </div>
-                  </label>
+                  <p className="custom-settings__description">
+                    Select as many or as few as you'd like.
+                  </p>
                 </div>
               </div>
 
+              {/* Per guest */}
               <div className="custom-settings__section">
-                <h5 className="custom-settings__section-title">
-                  Per Table ({tablesNeeded} tables)
-                </h5>
-                <div className="custom-settings__items">
-                  <label className="custom-setting-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.tableSettings.tableRunners}
-                      onChange={() => handleCustomItemToggle("tableRunners")}
-                    />
-                    <div className="custom-setting-item__content">
-                      <span className="custom-setting-item__name">
-                        Table Runners
-                      </span>
-                      <span className="custom-setting-item__price">
-                        KES {PRICING.tableSettingsPerTable.tableRunners} ×{" "}
-                        {tablesNeeded} ={" "}
-                        <strong>
-                          KES{" "}
-                          {(
-                            PRICING.tableSettingsPerTable.tableRunners *
-                            tablesNeeded
-                          ).toLocaleString()}
-                        </strong>
-                      </span>
-                    </div>
-                  </label>
+                <div className="custom-settings__section-header">
+                  <h5 className="custom-settings__section-title">Per guest</h5>
 
-                  <label className="custom-setting-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.tableSettings.candles}
-                      onChange={() => handleCustomItemToggle("candles")}
-                    />
-                    <div className="custom-setting-item__content">
-                      <span className="custom-setting-item__name">
-                        Candles + Holders
-                      </span>
-                      <span className="custom-setting-item__price">
-                        KES {PRICING.tableSettingsPerTable.candlesAndHolders} ×{" "}
-                        {tablesNeeded} ={" "}
-                        <strong>
-                          KES{" "}
-                          {(
-                            PRICING.tableSettingsPerTable.candlesAndHolders *
-                            tablesNeeded
-                          ).toLocaleString()}
-                        </strong>
-                      </span>
-                    </div>
-                  </label>
+                  <span>{formData.guestCount} guests</span>
+                </div>
+
+                <div className="custom-settings__items">
+                  {perGuestSettings.map((item) => {
+                    const isSelected = Boolean(
+                      formData.tableSettings?.[item.id],
+                    );
+
+                    const total = item.price * (formData.guestCount || 0);
+
+                    return (
+                      <label
+                        key={item.id}
+                        className={`custom-setting-item ${
+                          isSelected ? "custom-setting-item--selected" : ""
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleCustomItemToggle(item.id)}
+                        />
+
+                        <span className="custom-setting-item__check">
+                          {isSelected ? "✓" : ""}
+                        </span>
+
+                        <div className="custom-setting-item__content">
+                          <span className="custom-setting-item__name">
+                            {item.name}
+                          </span>
+
+                          <span className="custom-setting-item__price">
+                            KES {item.price.toLocaleString()} {item.suffix}
+                          </span>
+                        </div>
+
+                        {isSelected && (
+                          <strong className="custom-setting-item__total">
+                            KES {total.toLocaleString()}
+                          </strong>
+                        )}
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
 
-              {calculateTableSettingsCost() > 0 && (
+              {/* Per table */}
+              <div className="custom-settings__section">
+                <div className="custom-settings__section-header">
+                  <h5 className="custom-settings__section-title">Per table</h5>
+
+                  <span>
+                    {tablesNeeded} {tablesNeeded === 1 ? "table" : "tables"}
+                  </span>
+                </div>
+
+                <div className="custom-settings__items">
+                  {perTableSettings.map((item) => {
+                    const isSelected = Boolean(
+                      formData.tableSettings?.[item.id],
+                    );
+
+                    const total = item.price * tablesNeeded;
+
+                    return (
+                      <label
+                        key={item.id}
+                        className={`custom-setting-item ${
+                          isSelected ? "custom-setting-item--selected" : ""
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleCustomItemToggle(item.id)}
+                        />
+
+                        <span className="custom-setting-item__check">
+                          {isSelected ? "✓" : ""}
+                        </span>
+
+                        <div className="custom-setting-item__content">
+                          <span className="custom-setting-item__name">
+                            {item.name}
+                          </span>
+
+                          <span className="custom-setting-item__price">
+                            KES {item.price.toLocaleString()} {item.suffix}
+                          </span>
+                        </div>
+
+                        {isSelected && (
+                          <strong className="custom-setting-item__total">
+                            KES {total.toLocaleString()}
+                          </strong>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {customSettingsCost > 0 && (
                 <div className="form__calculation">
-                  <span className="form__calculation-icon">💰</span>
+                  <span className="form__calculation-icon">✦</span>
+
                   <span className="form__calculation-text">
-                    Table settings cost:{" "}
-                    <strong>
-                      KES {calculateTableSettingsCost().toLocaleString()}
-                    </strong>
+                    Table styling:{" "}
+                    <strong>KES {customSettingsCost.toLocaleString()}</strong>
                   </span>
                 </div>
               )}
@@ -471,64 +639,91 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
           </div>
         )}
 
+        {/* FULL PACKAGE DETAILS */}
+
         {settingsMode === "package" && (
           <div className="form__group">
             <div className="package-details">
-              <h4 className="package-details__title">Full Package Includes:</h4>
+              <div className="package-details__header">
+                <div>
+                  <h4 className="package-details__title">Full Table Setup</h4>
+
+                  <p className="package-details__description">
+                    A complete tablescape without having to choose each piece
+                    individually.
+                  </p>
+                </div>
+
+                <strong className="package-details__price">
+                  KES {fullPackageCost.toLocaleString()}
+                </strong>
+              </div>
+
               <div className="package-details__grid">
                 <div className="package-details__item">
                   <span className="package-details__check">✓</span>
                   <span>Napkins + Napkin Rings</span>
                 </div>
+
                 <div className="package-details__item">
                   <span className="package-details__check">✓</span>
                   <span>Wine Glasses</span>
                 </div>
+
                 <div className="package-details__item">
                   <span className="package-details__check">✓</span>
                   <span>Charger Plates</span>
                 </div>
+
                 <div className="package-details__item">
                   <span className="package-details__check">✓</span>
                   <span>Table Mats</span>
                 </div>
+
+                <div className="package-details__item">
+                  <span className="package-details__check">✓</span>
+                  <span>Place Cards</span>
+                </div>
+
                 <div className="package-details__item">
                   <span className="package-details__check">✓</span>
                   <span>Table Runners</span>
                 </div>
+
                 <div className="package-details__item">
                   <span className="package-details__check">✓</span>
-                  <span>Candles + Holders</span>
+                  <span>Candles</span>
                 </div>
               </div>
-              <div className="form__calculation">
-                <span className="form__calculation-icon">💰</span>
-                <span className="form__calculation-text">
-                  Package cost:{" "}
-                  <strong>
-                    KES {calculateTableSettingsCost().toLocaleString()}
-                  </strong>
-                </span>
-              </div>
+
+              <p className="package-details__note">
+                The package total is calculated from your guest count and number
+                of tables.
+              </p>
             </div>
           </div>
         )}
 
-        {!formData.chairType && settingsMode === "none" && (
-          <div className="form__info-box">
-            <div className="form__info-box-header">
-              <span className="form__info-box-icon">ℹ️</span>
-              <h4 className="form__info-box-title">
-                Seating &amp; Tables are Optional
-              </h4>
+        {/* NO SELECTION MESSAGE */}
+
+        {!formData.chairType &&
+          !formData.tableType &&
+          settingsMode === "none" && (
+            <div className="form__info-box form__info-box--soft">
+              <div className="form__info-box-header">
+                <span className="form__info-box-icon" aria-hidden="true">
+                  ✦
+                </span>
+
+                <h4 className="form__info-box-title">Keeping it simple?</h4>
+              </div>
+
+              <p className="form__info-box-text">
+                That's completely fine. You can skip seating and table styling
+                and continue to explore the rest of Dawenee's decor options.
+              </p>
             </div>
-            <p className="form__info-box-text">
-              You can skip this step if you don't need chairs or table settings.
-              Your running total is shown in the summary — just click "Next
-              Step" to continue with backdrops and extras.
-            </p>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

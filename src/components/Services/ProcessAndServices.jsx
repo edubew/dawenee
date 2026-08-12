@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import services from "../../data/services";
 import { TerracottaBranch } from "../Botanicals/Botanicals";
 import "./ProcessAndServices.scss";
 

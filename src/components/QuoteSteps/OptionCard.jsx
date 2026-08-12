@@ -1,19 +1,23 @@
 import React from "react";
 
 /**
+ * Reusable selection card for the Dawenee quote builder.
  *
  * @param {object} props
- * @param {string} props.name - option title
- * @param {string} [props.description] - short supporting text
- * @param {string} [props.image] - photo URL (image takes priority over icon)
- * @param {string} [props.icon] - emoji/icon fallback when no photo exists
- * @param {number} props.price - price to display
- * @param {string} [props.priceSuffix] - e.g. "per chair", "per table"
- * @param {string} [props.totalLabel] - optional secondary line, e.g. "Total: KES 12,000"
- * @param {boolean} [props.popular] - shows a "Most Popular" badge
+ * @param {string} props.name
+ * @param {string} [props.description]
+ * @param {string} [props.image]
+ * @param {string} [props.icon]
+ * @param {number|null} [props.price]
+ * @param {string} [props.priceSuffix]
+ * @param {string} [props.totalLabel]
+ * @param {boolean} [props.popular]
  * @param {boolean} props.isSelected
- * @param {function} props.onSelect - called with no args (parent already has the id in scope) or pass an id via closure
- * @param {"button"|"toggle"} [props.mode] - "button" (single-select radio-style) or "toggle" (multi-select checkbox-style); purely semantic, same visuals
+ * @param {function} props.onSelect
+ * @param {boolean} [props.requiresReview]
+ * @param {string} [props.reviewLabel]
+ * @param {string} [props.selectionLabel]
+ * @param {boolean} [props.disabled]
  */
 
 function OptionCard({
@@ -24,27 +28,38 @@ function OptionCard({
   price,
   priceSuffix,
   totalLabel,
-  popular,
-  isSelected,
+  popular = false,
+  isSelected = false,
   onSelect,
+  requiresReview = false,
+  reviewLabel = "Price confirmed after consultation",
+  selectionLabel,
+  disabled = false,
 }) {
+  const hasPrice = typeof price === "number" && !Number.isNaN(price);
+
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={`option-card ${isSelected ? "option-card--selected" : ""}`}
+      className={`option-card ${
+        isSelected ? "option-card--selected" : ""
+      } ${disabled ? "option-card--disabled" : ""}`}
       aria-pressed={isSelected}
+      disabled={disabled}
     >
-      {popular && <span className="option-card__badge">Most Popular</span>}
-      {isSelected && (
-        <span className="option-card__selected-badge" aria-hidden="true">
-          ✓
-        </span>
-      )}
+      {/* Selection indicator */}
+      <span className="option-card__selection" aria-hidden="true">
+        {isSelected ? "✓" : ""}
+      </span>
 
+      {/* Popular badge */}
+      {popular && <span className="option-card__badge">Most Popular</span>}
+
+      {/* Image */}
       {image ? (
         <div className="option-card__image">
-          <img src={image} alt={name} />
+          <img src={image} alt="" loading="lazy" />
         </div>
       ) : icon ? (
         <div className="option-card__icon" aria-hidden="true">
@@ -52,15 +67,45 @@ function OptionCard({
         </div>
       ) : null}
 
-      <h3 className="option-card__name">{name}</h3>
-      {description && <p className="option-card__description">{description}</p>}
+      {/* Card content */}
+      <div className="option-card__content">
+        <h3 className="option-card__name">{name}</h3>
 
-      <div className="option-card__price">
-        KES {price.toLocaleString()}
-        {priceSuffix && <span> {priceSuffix}</span>}
+        {description && (
+          <p className="option-card__description">{description}</p>
+        )}
+
+        {/* Pricing */}
+        <div className="option-card__pricing">
+          {requiresReview ? (
+            <>
+              <span className="option-card__price option-card__price--review">
+                Price to be confirmed
+              </span>
+
+              <span className="option-card__review">{reviewLabel}</span>
+            </>
+          ) : hasPrice ? (
+            <>
+              <span className="option-card__price">
+                KES {price.toLocaleString()}
+              </span>
+
+              {priceSuffix && (
+                <span className="option-card__price-suffix">{priceSuffix}</span>
+              )}
+            </>
+          ) : null}
+        </div>
+
+        {/* Calculated total */}
+        {totalLabel && <div className="option-card__total">{totalLabel}</div>}
+
+        {/* Optional contextual selection text */}
+        {selectionLabel && (
+          <span className="option-card__selection-label">{selectionLabel}</span>
+        )}
       </div>
-
-      {totalLabel && <div className="option-card__total">{totalLabel}</div>}
     </button>
   );
 }
