@@ -40,13 +40,13 @@ function Cta() {
           </h2>
 
           <p className="cta__subtitle">
-            Get your instant quote in under 2 minutes. No hidden fees, no
-            pressure; just honest pricing and beautiful results.
+            Tell us what you're planning and get a starting estimate in under 2
+            minutes.
           </p>
 
           <div className="cta__buttons">
             <Link to="/quote" className="btn btn--primary">
-              Get an instant quote
+              Get an instant quote Estimate
             </Link>
             <a href="tel:+254715784287" className="btn btn--ghost-light">
               Call: 0715 784 287

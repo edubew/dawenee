@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import heroSlides from "../../data/heroSlides";
 import { PampasGrass, TerracottaBranch } from "../Botanicals/Botanicals";
+
 import "./Hero.scss";
 
 const SLIDE_DURATION = 6000;
@@ -10,17 +12,17 @@ const captions = [
   {
     eyebrow: "Dusty Rose & Sage",
     title: "Garden brunch, Karen",
-    desc: "Our most-requested palette this season.",
+    desc: "A soft, garden-inspired setup for an intimate celebration.",
   },
   {
     eyebrow: "Terracotta & Cream",
     title: "Birthday celebration, Westlands",
-    desc: "Earthy tones for milestone moments.",
+    desc: "Warm, earthy styling for a milestone moment.",
   },
   {
     eyebrow: "Berry & Golden",
     title: "Intimate picnic, Lavington",
-    desc: "Warm hues for relaxed afternoons.",
+    desc: "Rich tones and thoughtful details for a relaxed afternoon.",
   },
 ];
 
@@ -29,15 +31,18 @@ function Hero() {
   const [isPaused, setIsPaused] = useState(false);
 
   const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
     if (isPaused) return;
-    const id = setInterval(
-      () => setCurrentSlide((p) => (p + 1) % heroSlides.length),
-      SLIDE_DURATION,
-    );
+
+    const id = setInterval(() => {
+      setCurrentSlide((previous) => (previous + 1) % heroSlides.length);
+    }, SLIDE_DURATION);
+
     return () => clearInterval(id);
   }, [isPaused]);
 
@@ -45,7 +50,6 @@ function Hero() {
 
   return (
     <section className="hero">
-      {/* Botanical decorations */}
       <PampasGrass
         className="hero__botanical-pampas"
         style={{
@@ -56,6 +60,7 @@ function Hero() {
         }}
         opacity={0.22}
       />
+
       <TerracottaBranch
         className="hero__botanical-branch"
         style={{
@@ -69,22 +74,19 @@ function Hero() {
       />
 
       <div className="container hero__inner">
-        {/* ── Content ── */}
         <div className="hero__content">
-          <span className="hero__tag">Event DÉCOR &amp; Styling · Nairobi</span>
+          <span className="hero__tag">Event Décor & Styling · Nairobi</span>
 
           <h1 className="hero__title">
-            We turn your celebration
+            Beautiful spaces for
             <br />
-            into a
-            <br />
-            <em>space worth remembering.</em>
+            <em>meaningful celebrations.</em>
           </h1>
 
           <p className="hero__description">
-            From intimate showers to milestone birthdays, graduations, weddings
-            and corporate events, we design and style memorable spaces around
-            your vision.
+            From intimate showers and birthdays to graduations, weddings and
+            corporate events, we design and style memorable spaces around your
+            vision.
           </p>
 
           <div className="hero__facts">
@@ -92,25 +94,28 @@ function Hero() {
               <span className="hero__fact-value">30+</span>
               <span className="hero__fact-label">Events styled</span>
             </div>
+
             <div className="hero__fact">
-              <span className="hero__fact-value">Same-day</span>
-              <span className="hero__fact-label">Quotes</span>
+              <span className="hero__fact-value">Under 2 min</span>
+              <span className="hero__fact-label">Quote estimate</span>
             </div>
+
             <div className="hero__fact">
               <span className="hero__fact-value">50%</span>
-              <span className="hero__fact-label">Deposit only</span>
+              <span className="hero__fact-label">Deposit to confirm</span>
             </div>
           </div>
 
           <div className="hero__ctas">
             <Link to="/quote" className="btn btn--primary">
-              Plan My Event
+              Get my instant quote estimate
             </Link>
+
             <button
               onClick={() => scrollTo("featured-work")}
               className="btn btn--secondary"
             >
-              View our work
+              See our work
             </button>
           </div>
         </div>
@@ -147,12 +152,13 @@ function Hero() {
           </div>
 
           <div className="hero__collage">
-            {/* Primary photo frame */}
             <div className="hero__frame">
               {heroSlides.map((slide, i) => (
                 <div
                   key={slide.id}
-                  className={`hero__slide ${i === currentSlide ? "hero__slide--active" : ""}`}
+                  className={`hero__slide ${
+                    i === currentSlide ? "hero__slide--active" : ""
+                  }`}
                 >
                   <img src={slide.image} alt={slide.alt} />
                 </div>
@@ -163,7 +169,9 @@ function Hero() {
               {heroSlides.map((slide, i) => (
                 <div
                   key={slide.id}
-                  className={`hero__slide ${i === currentSlide ? "hero__slide--active" : ""}`}
+                  className={`hero__slide ${
+                    i === currentSlide ? "hero__slide--active" : ""
+                  }`}
                 >
                   <img
                     src={slide.image}
@@ -177,7 +185,9 @@ function Hero() {
 
             <div className="hero__caption">
               <div className="hero__caption-eyebrow">{caption.eyebrow}</div>
+
               <div className="hero__caption-title">{caption.title}</div>
+
               <div className="hero__caption-desc">{caption.desc}</div>
             </div>
           </div>

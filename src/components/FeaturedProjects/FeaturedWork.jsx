@@ -22,13 +22,13 @@ function FeaturedWork() {
 
       <div className="container">
         <div className="section-header">
-          <span className="section-header__eyebrow">Portfolio</span>
+          <span className="section-header__eyebrow">Our Work</span>
           <h2 className="section-header__title">
-            Recent moments, <em>real clients</em>
+            Celebrations we've styled, <em>moments we've helped create</em>
           </h2>
           <p className="section-header__subtitle">
-            A look at the celebrations we've styled across Nairobi — from
-            intimate picnics to full-room transformations.
+            From intimate picnics to full-room transformations, here are some of
+            the real celebrations we've brought to life across Nairobi.
           </p>
         </div>
 
@@ -39,14 +39,14 @@ function FeaturedWork() {
         </div>
 
         <div className="work__cta">
-          <Link
-            to="https://instagram.com/daweneedecor"
+          <a
+            href="https://instagram.com/daweneedecor"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn--text"
           >
-            See more on Instagram →
-          </Link>
+            See More of Our Work →
+          </a>
         </div>
       </div>
     </section>

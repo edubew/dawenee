@@ -7,6 +7,8 @@ import Testimonials from "../../components/Testimonials/Testimonials";
 import Cta from "../../components/Footer/Cta";
 import Footer from "../../components/Footer/Footer";
 import "./Home.scss";
+import WhyDawenee from "../../components/Why/WhyDawenee";
+import Faq from "../../components/Faq/Faq";
 
 function Home() {
   return (
@@ -15,7 +17,9 @@ function Home() {
       <Hero />
       <FeaturedWork />
       <ProcessAndServices />
+      <WhyDawenee />
       <Testimonials />
+      <Faq />
       <Cta />
       <Footer />
     </div>

@@ -1,123 +1,107 @@
-import dinnerPartyImg from "../assets/images/projects/dinner-party.jpg";
-import engagementImg from "../assets/images/projects/engagement.jpg";
-import graduationImg from "../assets/images/projects/graduation.jpg";
-import picnicImg from "../assets/images/projects/picnic.jpg";
-import kidsBirthdayImg from "../assets/images/projects/kids-birthday.jpg";
-import babyShowerImg from "../assets/images/projects/baby-shower.jpg";
-
-// const projects = [
-//   {
-//     id: 1,
-//     title: "Elegant Candlelit Dinner Party",
-//     eventType: "Birthday",
-//     image: dinnerPartyImg,
-//     guestCount: 15,
-//     priceRange: "From Kes 27,670",
-//   },
-//   {
-//     id: 2,
-//     title: "Tropical Birthday Bash",
-//     eventType: "Engagement",
-//     image: engagementImg,
-//     guestCount: 30,
-//     priceRange: "From Kes 42,900",
-//   },
-//   {
-//     id: 3,
-//     title: "Elegant Graduation Party",
-//     eventType: "Graduation",
-//     image: graduationImg,
-//     guestCount: 20,
-//     priceRange: "From Kes 34,900",
-//   },
-//   {
-//     id: 4,
-//     title: "Intimate Picnic Setup",
-//     eventType: "Picnic",
-//     image: picnicImg,
-//     guestCount: 10,
-//     priceRange: "From Kes 21,000",
-//   },
-//   {
-//     id: 5,
-//     title: "Princess Birthday Party",
-//     eventType: "Kid's Party",
-//     image: kidsBirthdayImg,
-//     guestCount: 40,
-//     priceRange: "From Kes 35,000",
-//   },
-//   {
-//     id: 6,
-//     title: "Elegant Baby Shower",
-//     eventType: "Baby Shower",
-//     image: babyShowerImg,
-//     guestCount: 35,
-//     priceRange: "From Kes 30,000",
-//   },
-// ];
-
-// export default projects;
-// Each project needs: id, title, eventType, image, alt, and size.
-// `size` controls the masonry row span: "tall" | "med" | "short".
-// For best results, alternate sizes so the grid doesn't feel uniform —
-// aim for roughly 2 "tall", 2 "med", and 2 "short" per row of 3 on desktop.
-
-// import work1 from "../assets/images/work/work-1.jpg";
-// import work2 from "../assets/images/work/work-2.jpg";
-// import work3 from "../assets/images/work/work-3.jpg";
-// import work4 from "../assets/images/work/work-4.jpg";
-// import work5 from "../assets/images/work/work-5.jpg";
-// import work6 from "../assets/images/work/work-6.jpg";
+import drNastehaGraduationImg from "../assets/images/portfolio/dr-nasteha-graduation.jpg";
+import weddingBalloonBackdropImg from "../assets/images/portfolio/wedding-balloon-backdrop.jpg";
+import burgundyTableSettingImg from "../assets/images/portfolio/burgundy-table-setting.jpg";
+import trentBirthdayImg from "../assets/images/portfolio/trents-birthday.jpg";
+import warmDinnerTableImg from "../assets/images/portfolio/warm-dinner-table.jpg";
+import elegantDinnerSetupImg from "../assets/images/portfolio/elegant-dinner-setup.jpg";
 
 const projects = [
   {
     id: 1,
-    title: "Milestone 30th, Lavington",
-    eventType: "Birthday",
-    image: dinnerPartyImg,
-    alt: "Balloon backdrop with floral details for a 30th birthday",
+    title: "Dr. Nasteha's Graduation",
+    eventType: "Graduation",
+    image: drNastehaGraduationImg,
+    alt: "Elegant graduation dinner setup with black and gold table styling, floral centerpieces and a personalised graduation backdrop",
     size: "tall",
   },
   {
     id: 2,
-    title: "Room reveal, Kilimani",
-    eventType: "Surprise Setup",
-    image: engagementImg,
-    alt: "Birthday surprise room with balloon decorations",
-    size: "med",
-  },
-  {
-    id: 3,
-    title: "Anniversary picnic, Karura",
-    eventType: "Picnic",
-    image: graduationImg,
-    alt: "Soft and intimate picnic setup",
-    size: "short",
-  },
-  {
-    id: 4,
-    title: "Product launch, Westlands",
-    eventType: "Corporate",
-    image: picnicImg,
-    alt: "Corporate event balloon and table styling",
-    size: "short",
-  },
-  {
-    id: 5,
-    title: "Garden brunch, Karen",
-    eventType: "Bridal Shower",
-    image: kidsBirthdayImg,
-    alt: "Bridal shower garden table setup",
+    title: "Forever Begins",
+    eventType: "Wedding",
+    image: weddingBalloonBackdropImg,
+    alt: "White, gold and champagne balloon installation framing a personalised wedding backdrop",
     size: "tall",
   },
   {
-    id: 6,
-    title: "Welcome party, Runda",
-    eventType: "Baby Shower",
-    image: babyShowerImg,
-    alt: "Baby shower balloon backdrop and decor",
+    id: 3,
+    title: "Burgundy & Gold Table Styling",
+    eventType: "Dinner",
+    image: burgundyTableSettingImg,
+    alt: "Elegant burgundy and gold table setting with floral centrepieces, glassware and folded napkins",
     size: "med",
   },
+  {
+    id: 4,
+    title: "Trent's 2nd Birthday",
+    eventType: "Birthday",
+    image: trentBirthdayImg,
+    alt: "Blue and white organic balloon backdrop with personalised signage celebrating a 22nd birthday",
+    size: "tall",
+  },
+  {
+    id: 5,
+    title: "Warm & Intimate Dinner",
+    eventType: "Dinner",
+    image: warmDinnerTableImg,
+    alt: "Warmly lit dinner table decorated with red accents, bows and floral table styling",
+    size: "med",
+  },
+  {
+    id: 6,
+    title: "Elegant Evening Table",
+    eventType: "Dinner",
+    image: elegantDinnerSetupImg,
+    alt: "Elegant evening table setup with candles, floral centrepieces and coordinated guest seating",
+    size: "short",
+  },
+  // {
+  //   id: 7,
+  //   title: "Lumi Hair — Two Years",
+  //   eventType: "Corporate",
+  //   image: lumiHairAnniversaryImg,
+  //   alt: "Black, white and gold balloon installation with personalised signage celebrating two years of Lumi Hair",
+  //   size: "tall",
+  // },
+  // {
+  //   id: 8,
+  //   title: "TJ's Birthday",
+  //   eventType: "Birthday",
+  //   image: tjBirthdayImg,
+  //   alt: "Pink and white children's birthday backdrop with organic balloon garland and personalised birthday signage",
+  //   size: "tall",
+  // },
+  // {
+  //   id: 9,
+  //   title: "Tricky's Birthday",
+  //   eventType: "Birthday",
+  //   image: trickyBirthdayImg,
+  //   alt: "Green and gold organic balloon installation with personalised birthday portrait signage",
+  //   size: "tall",
+  // },
+  // {
+  //   id: 10,
+  //   title: "Burgundy Dinner Styling",
+  //   eventType: "Dinner",
+  //   image: burgundyDinnerSetupImg,
+  //   alt: "Intimate dinner table decorated with burgundy linens, floral centrepiece and coordinated chair styling",
+  //   size: "med",
+  // },
+  // {
+  //   id: 11,
+  //   title: "That Girl Baby Shower",
+  //   eventType: "Baby Shower",
+  //   image: thatGirlBabyShowerImg,
+  //   alt: "Baby shower dining setup with purple floral centrepieces, coordinated napkins and personalised That Girl signage",
+  //   size: "tall",
+  // },
+  // {
+  //   id: 12,
+  //   title: "Urban Girls Connect",
+  //   eventType: "Community Event",
+  //   image: urbanGirlsConnectImg,
+  //   alt: "Purple balloon installation and personalised welcome signage for an Urban Girls Connect event",
+  //   size: "tall",
+  // },
 ];
 
 export default projects;

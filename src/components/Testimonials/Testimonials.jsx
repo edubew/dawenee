@@ -40,7 +40,7 @@ function Testimonials() {
 
       <div className="container reviews__grid">
         <div className="reviews__stat">
-          <span className="reviews__eyebrow">Client stories</span>
+          <span className="reviews__eyebrow">What Our Clients Say</span>
           <h2 className="reviews__title">
             Loved by <em>30+ clients</em>
             <br />

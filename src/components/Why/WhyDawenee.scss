@@ -1,0 +1,120 @@
+@import "../../styles/variables";
+@import "../../styles/shared";
+
+.why-dawenee {
+  padding: $space-5xl 0;
+  background: $linen;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: $space-4xl 0;
+  }
+
+  &__intro {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: $space-4xl;
+    align-items: end;
+    margin-bottom: $space-4xl;
+
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+      gap: $space-xl;
+      margin-bottom: $space-3xl;
+    }
+  }
+
+  &__eyebrow {
+    font-family: $font-body;
+    font-size: $size-xs;
+    font-weight: $weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: $olive;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-md;
+    margin-bottom: $space-lg;
+
+    &::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: $olive;
+    }
+  }
+
+  &__title {
+    font-family: $font-headline;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.12;
+    font-weight: $weight-light;
+    color: $earth-dark;
+    margin: 0;
+
+    em {
+      color: $berry;
+      font-style: italic;
+      font-weight: $weight-medium;
+    }
+  }
+
+  &__intro-text {
+    max-width: 430px;
+    margin: 0;
+    font-family: $font-body;
+    font-size: $size-md;
+    line-height: 1.75;
+    color: $earth-light;
+    font-weight: $weight-light;
+
+    @media (max-width: 968px) {
+      max-width: 600px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    padding: $space-xl 0;
+    border-top: 1px solid $border-earthy;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $space-lg;
+
+    h3 {
+      font-family: $font-headline;
+      font-size: $size-lg;
+      font-weight: $weight-medium;
+      color: $earth-dark;
+      margin: 0 0 $space-sm;
+    }
+
+    p {
+      font-family: $font-body;
+      font-size: $size-sm;
+      line-height: 1.7;
+      color: $earth-light;
+      font-weight: $weight-light;
+      margin: 0;
+    }
+  }
+
+  &__number {
+    font-family: $font-body;
+    font-size: $size-xs;
+    letter-spacing: 2px;
+    color: $golden;
+    font-weight: $weight-semi;
+    padding-top: 4px;
+  }
+}
