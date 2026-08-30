@@ -40,11 +40,11 @@ function Testimonials() {
 
       <div className="container reviews__grid">
         <div className="reviews__stat">
-          <span className="reviews__eyebrow">What Our Clients Say</span>
+          <span className="reviews__eyebrow">The feeling after the reveal</span>
           <h2 className="reviews__title">
-            Loved by <em>30+ clients</em>
+            The details fade. <em>How it felt stays.</em>
             <br />
-            across Nairobi
+            Hear it from our clients.
           </h2>
           <div className="reviews__rating">
             <span className="reviews__rating-number">4.9</span>
@@ -56,7 +56,7 @@ function Testimonials() {
         </div>
 
         <div className="reviews__cards">
-          {reviews.map((review, i) => (
+          {reviews.map((review) => (
             <div className="review-card" key={review.id}>
               <p className="review-card__text">"{review.text}"</p>
               <div className="review-card__author">

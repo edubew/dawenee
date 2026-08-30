@@ -1,7 +1,7 @@
-/* eslint-disable no-undef */
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-// import Footer from "../../components/Footer/Footer";
+import Footer from "../../components/Footer/Footer";
 import {
   FaWhatsapp,
   FaPhone,
@@ -98,7 +98,7 @@ function Contact() {
     return !hasErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!validateAllFields()) {
@@ -111,57 +111,23 @@ function Contact() {
     setSubmitStatus(null);
     setSubmitMessage("");
 
-    const formPayload = new FormData();
-    formPayload.append(
-      "access_key",
-      import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
-    );
-    formPayload.append("name", formData.name);
-    formPayload.append("email", formData.email);
-    formPayload.append("phone", formData.phone);
-    formPayload.append("message", formData.message);
-    formPayload.append("from_name", "Dawenee Decor Website");
+    const message = `Hello Dawenee, I have a question about my event.
 
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formPayload
-      });
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
 
-      const data = await response.json()
+Question:
+${formData.message}`;
+    const whatsappUrl = `https://wa.me/254715784287?text=${encodeURIComponent(message)}`;
 
-      if (data.success) {
-        setSubmitStatus("success");
-        setSubmitMessage("Thank you! We will get back to you within 24 hours");
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    setSubmitStatus("success");
+    setSubmitMessage("Your question is ready in WhatsApp. Tap send there to reach us.");
+    setIsSubmitting(false);
 
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
-
-        setErrors({
-          name: "",
-          email: "",
-          phone: "",
-          eventDate: "",
-          eventType: "",
-          message: "",
-        });
-      } else {
-        throw new Error(data.message ||"Form submission failed");
-      }
-    } catch (error) {
-      console.error("Web3Forms error:", error);
-      setSubmitStatus("error");
-      setSubmitMessage(
-        "Oops! Something went wrong. Please try contacting us via WhatsApp or email directly.",
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+    setFormData({ name: "", email: "", phone: "", message: "" });
+    setErrors({ name: "", email: "", phone: "", message: "" });
   };
 
   // Handle input changes
@@ -186,19 +152,21 @@ function Contact() {
       <main className="booking">
         <div className="container">
           <div className="booking__header">
-            <h1 className="booking__title">Get in Touch</h1>
+            <span className="booking__eyebrow">Questions & custom requests</span>
+            <h1 className="booking__title">Let’s talk about <em>your event.</em></h1>
             <p className="booking__subtitle">
-              Have questions about our services? Want to discuss your event?
-              We'd love to hear from you!
+              Not ready for an estimate, or planning something outside our
+              standard options? Ask a question and we’ll help you find the right next step.
             </p>
           </div>
 
           <div className="booking__content">
             <div className="booking__info">
-              <h2 className="booking__info-title">Contact Information</h2>
+              <span className="booking__panel-label">Talk to a real person</span>
+              <h2 className="booking__info-title">Choose what feels easiest.</h2>
               <p className="booking__info-text">
-                Reach out to us through any of these channels. We're here to
-                help make your event unforgettable.
+                Choose the easiest way to start. A date, guest count and a few
+                inspiration ideas are more than enough.
               </p>
 
               <div className="booking__methods">
@@ -230,7 +198,7 @@ function Contact() {
                 </a>
 
                 <a
-                  href="mailto:info@daweneedecor.com"
+                  href="mailto:wndecorevents@gmail.com"
                   className="booking__method"
                 >
                   <div className="booking__method-icon booking__method-icon--email">
@@ -257,31 +225,31 @@ function Contact() {
 
                 <div className="booking__quick-links">
                   <h3 className="booking__quick-links-title">
-                    Looking for something specific?
+                    Ready to choose your styling details?
                   </h3>
                   <div className="booking__buttons">
-                    <a
-                      href="/quote"
+                    <Link
+                      to="/quote"
                       className="booking__button booking__button--primary"
                     >
-                      Get Instant Quote
-                    </a>
-                    <a
-                      href="/"
+                      Build My Event Estimate
+                    </Link>
+                    <Link
+                      to="/our-work"
                       className="booking__button booking__button--secondary"
                     >
                       View Our Work
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="booking__form-section">
-              <h2 className="booking__form-title">Send Us a Message</h2>
+              <span className="booking__panel-label">Personal guidance</span>
+              <h2 className="booking__form-title">I have a question</h2>
               <p className="booking__form-subtitle">
-                Fill out the form below and we will get back to you within 24
-                hours
+                Share what you are unsure about. We aim to respond within 24 hours.
               </p>
 
               <form className="booking__form" onSubmit={handleSubmit}>
@@ -350,7 +318,7 @@ function Contact() {
                     id="message"
                     name="message"
                     className={`booking__input booking__textarea ${errors.message ? "booking__input--error" : ""}`}
-                    placeholder="Tell us what you need help with..."
+                    placeholder="Tell us about your event or what you need help deciding..."
                     rows="5"
                     value={formData.message}
                     onChange={handleChange}
@@ -372,7 +340,7 @@ function Contact() {
                       Sending...
                     </>
                   ) : (
-                    "Send Message"
+                    "Send My Question"
                   )}
                 </button>
               </form>
@@ -419,7 +387,7 @@ function Contact() {
         </div>
       </main>
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

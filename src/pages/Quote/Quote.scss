@@ -1254,10 +1254,35 @@
     @media (max-width: 480px) {
       height: 200px;
     }
+
+    &--contain {
+      img {
+        object-fit: contain;
+        object-position: center;
+      }
+
+      @media (max-width: 640px) {
+        height: min(72vw, 290px);
+        padding: $space-sm;
+        background: linear-gradient(
+          145deg,
+          rgba($cream, 0.72),
+          rgba($linen, 0.96)
+        );
+
+        img {
+          border-radius: $radius-caption;
+        }
+      }
+    }
   }
 
   &:hover &__image img {
     transform: scale(1.055);
+  }
+
+  &:hover &__image--contain img {
+    transform: none;
   }
 
   &__icon {

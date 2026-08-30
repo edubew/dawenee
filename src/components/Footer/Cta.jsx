@@ -33,20 +33,20 @@ function Cta() {
 
       <div className="container">
         <div className="cta__content">
-          <span className="cta__eyebrow">Let's get started</span>
+          <span className="cta__eyebrow">Your date deserves a vision</span>
 
           <h2 className="cta__title">
-            Ready to make your event <em>unforgettable?</em>
+            Give your guests more than a setting. <em>Give them a feeling.</em>
           </h2>
 
           <p className="cta__subtitle">
-            Tell us what you're planning and get a starting estimate in under 2
-            minutes.
+            Tell us what you are celebrating. In under two minutes, you can see
+            a starting estimate and take the first step toward making it real.
           </p>
 
           <div className="cta__buttons">
             <Link to="/quote" className="btn btn--primary">
-              Get an instant quote Estimate
+              Build my event estimate
             </Link>
             <a href="tel:+254715784287" className="btn btn--ghost-light">
               Call: 0715 784 287
@@ -54,7 +54,7 @@ function Cta() {
           </div>
 
           <div className="cta__reassurance">
-            <span>Free consultation</span>
+            <span>No-obligation estimate</span>
             <span>Flexible packages</span>
             <span>50% deposit only</span>
           </div>

@@ -24,11 +24,11 @@ function FeaturedWork() {
         <div className="section-header">
           <span className="section-header__eyebrow">Our Work</span>
           <h2 className="section-header__title">
-            Celebrations we've styled, <em>moments we've helped create</em>
+            Imagine your guests walking into <em>a moment made for you</em>
           </h2>
           <p className="section-header__subtitle">
-            From intimate picnics to full-room transformations, here are some of
-            the real celebrations we've brought to life across Nairobi.
+            These are real Nairobi celebrations, each shaped around a different
+            person, story and reason to gather. Yours should feel just as personal.
           </p>
         </div>
 
@@ -39,14 +39,9 @@ function FeaturedWork() {
         </div>
 
         <div className="work__cta">
-          <a
-            href="https://instagram.com/daweneedecor"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn--text"
-          >
-            See More of Our Work →
-          </a>
+          <Link to="/our-work" className="btn btn--text">
+            Find inspiration for my event →
+          </Link>
         </div>
       </div>
     </section>

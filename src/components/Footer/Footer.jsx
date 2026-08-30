@@ -12,12 +12,6 @@ import "./Footer.scss";
 function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const scrollToWork = (e) => {
-    e.preventDefault();
-    const el = document.getElementById("featured-work");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <footer className="footer">
       <div className="container">
@@ -26,8 +20,8 @@ function Footer() {
           <div className="footer__brand">
             <div className="footer__logo">Dawenee Decor &amp; Events</div>
             <p className="footer__tagline">
-              We create stunning event experiences that make every celebration
-              unforgettable — from intimate gatherings to grand celebrations.
+              For hosts who want their guests to feel considered. We turn
+              meaningful occasions into spaces people remember.
             </p>
             <div className="footer__social">
               <a
@@ -73,10 +67,11 @@ function Footer() {
             <h4 className="footer__col-title">Quick Links</h4>
             <nav className="footer__links">
               <Link to="/">Home</Link>
-              <Link to="/quote">Get Quote</Link>
-              <a href="#featured-work" onClick={scrollToWork}>
-                Our Work
-              </a>
+              <Link to="/services">Services</Link>
+              <Link to="/our-work">Our Work</Link>
+              <Link to="/about">About Us</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="/quote">Build Event Estimate</Link>
               <a href="tel:+254715784287">Call Us</a>
             </nav>
           </div>

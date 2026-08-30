@@ -119,6 +119,7 @@ function StepFour({ formData, setFormData, tablesNeeded }) {
                 name={tier.name}
                 description={tier.description}
                 image={tier.image}
+                imageFit="contain"
                 price={tier.price}
                 priceSuffix="per table"
                 popular={tier.popular}

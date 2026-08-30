@@ -645,15 +645,15 @@ function Quote() {
 
         <div className="container">
           <header className="quote__header">
-            <span className="quote__eyebrow">Build your event estimate</span>
+            <span className="quote__eyebrow">Your celebration starts here</span>
 
             <h1 className="quote__title">
-              Let's bring your <em>vision</em> to life
+              Show us how you want it to <em>feel</em>
             </h1>
 
             <p className="quote__subtitle">
-              Tell us what you're planning, choose the details that matter to
-              you, and we'll build an initial estimate around your event.
+              Choose the details that express your occasion and we will turn
+              them into a clear starting estimate—one thoughtful step at a time.
             </p>
           </header>
 
@@ -661,7 +661,7 @@ function Quote() {
           <div className="quote__intro-note">
 
             <div className="quote__intro-note-content">
-              <strong>A starting point, not a final booking.</strong>
+              <strong>Explore your vision without obligation.</strong>
 
               <p>
                 Your selections create an estimated investment based on our

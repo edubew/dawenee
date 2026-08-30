@@ -30,12 +30,6 @@ function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   useEffect(() => {
     if (isPaused) return;
 
@@ -75,18 +69,18 @@ function Hero() {
 
       <div className="container hero__inner">
         <div className="hero__content">
-          <span className="hero__tag">Event Décor & Styling · Nairobi</span>
+          <span className="hero__tag">For hosts who want every guest to feel considered</span>
 
           <h1 className="hero__title">
-            Beautiful spaces for
+            Create the celebration
             <br />
-            <em>meaningful celebrations.</em>
+            <em>they will still talk about.</em>
           </h1>
 
           <p className="hero__description">
-            From intimate showers and birthdays to graduations, weddings and
-            corporate events, we design and style memorable spaces around your
-            vision.
+            You bring the reason to celebrate. We turn it into a space that
+            feels unmistakably yours—thoughtful, welcoming and memorable from
+            the first arrival to the final photograph.
           </p>
 
           <div className="hero__facts">
@@ -108,15 +102,12 @@ function Hero() {
 
           <div className="hero__ctas">
             <Link to="/quote" className="btn btn--primary">
-              Get my instant quote estimate
+              Build my event estimate
             </Link>
 
-            <button
-              onClick={() => scrollTo("featured-work")}
-              className="btn btn--secondary"
-            >
-              See our work
-            </button>
+            <Link to="/our-work" className="btn btn--secondary">
+              See what is possible
+            </Link>
           </div>
         </div>
 

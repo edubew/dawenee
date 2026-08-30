@@ -7,6 +7,7 @@ import React from "react";
  * @param {string} props.name
  * @param {string} [props.description]
  * @param {string} [props.image]
+ * @param {"cover"|"contain"} [props.imageFit]
  * @param {string} [props.icon]
  * @param {number|null} [props.price]
  * @param {string} [props.priceSuffix]
@@ -24,6 +25,7 @@ function OptionCard({
   name,
   description,
   image,
+  imageFit = "cover",
   icon,
   price,
   priceSuffix,
@@ -58,7 +60,11 @@ function OptionCard({
 
       {/* Image */}
       {image ? (
-        <div className="option-card__image">
+        <div
+          className={`option-card__image ${
+            imageFit === "contain" ? "option-card__image--contain" : ""
+          }`}
+        >
           <img src={image} alt="" loading="lazy" />
         </div>
       ) : icon ? (

@@ -6,21 +6,21 @@ import "./ProcessAndServices.scss";
 const steps = [
   {
     number: 1,
-    title: "Tell us about your event",
+    title: "Begin with how you want it to feel",
     description:
-      "Share your date, guest count, venue and the look you're envisioning.",
+      "Share your date, guests and vision. Even a few ideas are enough for us to begin.",
   },
   {
     number: 2,
-    title: "Build your estimate",
+    title: "Choose what matters to you",
     description:
-      "Choose the décor details you want and see your estimated investment as you go.",
+      "Explore the details that will shape the experience and see your estimated investment as you go.",
   },
   {
     number: 3,
-    title: "Let's make it happen",
+    title: "Arrive ready to celebrate",
     description:
-      "We'll review your request, confirm availability and logistics, then guide you through securing your date.",
+      "We confirm the details, guide you through securing your date and take care of the transformation.",
   },
 ];
 
@@ -68,7 +68,7 @@ function ProcessAndServices() {
           </span>
 
           <h2 className="section-header__title">
-            From your vision to <em>the final setup</em>
+            Your vision, made real <em>without carrying it alone</em>
           </h2>
         </div>
 
@@ -88,10 +88,10 @@ function ProcessAndServices() {
 
             <div className="steps__cta">
               <Link to="/quote" className="btn btn--primary">
-                Start your quote now
+                Build my event estimate
               </Link>
 
-              <p className="steps__note">Get your quote in under 2 minutes</p>
+              <p className="steps__note">A starting estimate in under 2 minutes. No obligation.</p>
             </div>
           </ol>
 

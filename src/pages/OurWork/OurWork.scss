@@ -1,0 +1,140 @@
+@import "../../styles/variables";
+@import "../../styles/shared";
+
+.our-work-page { overflow: hidden; }
+
+.work-hero {
+  min-height: 100svh;
+  padding: clamp(7.5rem, 14vh, 9.5rem) 0 clamp(3.5rem, 7vh, 6rem);
+  background: $cream;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__inner { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 4.5rem; align-items: center; }
+  &__copy { position: relative; z-index: 2; }
+  &__eyebrow, .portfolio__eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem; color: $olive; text-transform: uppercase;
+    font-size: $size-xs; font-weight: $weight-medium; letter-spacing: 5px; margin-bottom: 1.25rem;
+    &::before { content: ""; width: 30px; height: 1px; background: currentColor; }
+  }
+  h1 { font-size: clamp(3.1rem, 5.7vw, 5.4rem); line-height: 0.98; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+  h1 em { color: $berry; font-weight: $weight-medium; }
+  &__copy > p { font-size: $size-md; max-width: 480px; }
+  &__scroll { display: inline-flex; align-items: center; gap: 0.65rem; margin-top: 2rem; padding-bottom: 0.35rem; border-bottom: 1px solid $terracotta; color: $earth-dark; font-size: $size-sm; }
+  &__scroll svg { font-size: 0.7rem; }
+  &__collage { position: relative; height: clamp(350px, calc(100svh - 190px), 570px); }
+  &__photo { position: absolute; margin: 0; overflow: hidden; box-shadow: $shadow-lg; }
+  &__photo img { width: 100%; height: 100%; object-fit: cover; }
+  &__photo--one { width: 53%; height: calc(100% - 70px); top: 0; left: 10%; border-radius: $radius-card; }
+  &__photo--two { width: 39%; height: 58%; right: 0; top: 10%; border: 8px solid $cream; border-radius: $radius-card-alt; }
+  &__photo--three { width: 34%; height: 38%; right: 10%; bottom: 0; border: 8px solid $cream; border-radius: $radius-card-c; }
+  &__note { position: absolute; left: 0; bottom: 1.5rem; width: 120px; height: 120px; display: grid; place-items: center; text-align: center; padding: 1rem; background: $berry; color: $linen; border-radius: 50%; font-family: $font-headline; font-size: 1rem; font-style: italic; line-height: 1.15; transform: rotate(-7deg); }
+}
+
+.portfolio {
+  padding: 7rem 0; background: $linen;
+  &__heading { display: grid; grid-template-columns: 1fr 0.75fr; gap: 4rem; align-items: end; margin-bottom: 2rem; }
+  &__heading h2 { font-size: clamp(2.5rem, 4.5vw, 4rem); }
+  &__heading h2 em { color: $berry; }
+  &__heading > p { padding-bottom: 0.35rem; }
+  &__filters { display: flex; gap: 0.65rem; flex-wrap: wrap; padding: 1.25rem 0 2.5rem; border-top: 1px solid $border-earthy; }
+  &__filter { padding: 0.55rem 1.1rem; border: 1px solid rgba($earth-dark, 0.18); border-radius: 50px; background: transparent; color: $earth-mid; font-size: $size-sm; transition: all $transition-fast; }
+  &__filter:hover, &__filter--active { background: $earth-dark; border-color: $earth-dark; color: $linen; }
+  &__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+  &__instagram { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid $border-earthy; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+  &__instagram p { max-width: 520px; }
+}
+
+.portfolio-piece {
+  grid-column: span 6;
+  &:nth-child(3n + 1) { grid-column: span 7; }
+  &:nth-child(3n + 2) { grid-column: span 5; }
+  &__image-wrap { display: block; width: 100%; padding: 0; border: 0; height: 500px; position: relative; overflow: hidden; border-radius: $radius-card; background: $cream; text-align: left; }
+  &:nth-child(even) &__image-wrap { border-radius: $radius-card-alt; }
+  &:nth-child(3n + 2) &__image-wrap { height: 415px; }
+  &__image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform $transition-slow; }
+  &:hover img { transform: scale(1.025); }
+  &__index { position: absolute; right: 1rem; top: 1rem; width: 42px; height: 42px; display: grid; place-items: center; background: rgba($linen, 0.9); border-radius: 50%; color: $berry; font-size: $size-xs; letter-spacing: 1px; }
+  &__open { position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.6rem 0.9rem; background: rgba($earth-dark, 0.82); color: $linen; border-radius: $radius-caption; font-size: $size-xs; letter-spacing: 0.5px; opacity: 0; transform: translateY(5px); transition: all $transition-base; }
+  &:hover &__open, &__image-wrap:focus-visible &__open { opacity: 1; transform: translateY(0); }
+  &__image-wrap:focus-visible { outline: 3px solid $berry; outline-offset: 4px; }
+  &__caption { padding: 1rem 0 0.5rem; }
+  &__caption span { color: $olive; text-transform: uppercase; font-size: $size-xs; letter-spacing: 2px; }
+  &__caption h3 { font-size: $size-xl; margin-top: 0.2rem; }
+}
+
+.gallery-modal {
+  position: fixed; inset: 0; z-index: 3000; display: grid; place-items: center; padding: 1.5rem;
+  &__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: rgba($earth-dark, 0.9); backdrop-filter: blur(8px); cursor: default; }
+  &__dialog { position: relative; z-index: 1; width: min(1100px, 100%); max-height: calc(100vh - 3rem); display: flex; flex-direction: column; color: $linen; }
+  &__topbar { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 1.5rem; padding-bottom: 1rem; }
+  &__topbar span { color: $golden; text-transform: uppercase; font-size: $size-xs; letter-spacing: 2px; }
+  &__topbar h2 { color: $linen; font-size: $size-xl; margin-top: 0.15rem; }
+  &__count { color: rgba($linen, 0.6) !important; white-space: nowrap; }
+  &__close { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba($linen, 0.35); border-radius: 50%; background: transparent; color: $linen; }
+  &__stage { position: relative; min-height: 0; flex: 1; display: grid; place-items: center; overflow: hidden; border-radius: $radius-card; background: rgba(0, 0, 0, 0.25); }
+  &__stage > img { max-width: 100%; max-height: calc(100vh - 230px); width: auto; height: auto; object-fit: contain; }
+  &__arrow { position: absolute; z-index: 2; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba($linen, 0.45); border-radius: 50%; background: rgba($earth-dark, 0.6); color: $linen; transition: background $transition-fast; }
+  &__arrow:hover { background: $berry; }
+  &__arrow--prev { left: 1rem; }
+  &__arrow--next { right: 1rem; }
+  &__thumbnails { display: flex; justify-content: center; gap: 0.65rem; padding-top: 1rem; overflow-x: auto; }
+  &__thumb { width: 64px; height: 52px; flex: 0 0 auto; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: $radius-sm; background: transparent; opacity: 0.55; }
+  &__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  &__thumb--active { border-color: $golden; opacity: 1; }
+}
+
+.work-values {
+  padding: $space-5xl 0; background: $plum-dark;
+  &__inner { display: grid; grid-template-columns: 0.8fr 1.2fr; column-gap: 6rem; }
+  &__statement > span { color: $golden; text-transform: uppercase; letter-spacing: 4px; font-size: $size-xs; }
+  &__statement h2 { color: $linen; font-size: clamp(2.3rem, 4vw, 3.5rem); margin-top: 1rem; }
+  &__statement h2 em { color: $rose-mist; }
+  &__list { border-top: 1px solid rgba($linen, 0.18); }
+  &__list > div { display: grid; grid-template-columns: 45px 130px 1fr; gap: 1rem; align-items: start; padding: 1.45rem 0; border-bottom: 1px solid rgba($linen, 0.18); }
+  &__list span { color: $golden; font-size: $size-xs; padding-top: 0.4rem; }
+  &__list h3 { color: $linen; font-size: $size-lg; }
+  &__list p { color: rgba($linen, 0.58); font-size: $size-sm; }
+  &__link { grid-column: 2; justify-self: start; display: inline-flex; align-items: center; gap: 0.6rem; color: $linen; margin-top: 2rem; border-bottom: 1px solid rgba($linen, 0.4); padding-bottom: 0.35rem; }
+  &__link svg { font-size: 0.7rem; }
+}
+
+@media (max-width: 900px) {
+  .work-hero { min-height: auto; &__inner { grid-template-columns: 1fr; } &__copy { max-width: 620px; } &__collage { height: clamp(350px, 54svh, 500px); } }
+  .portfolio { &__heading { grid-template-columns: 1fr; gap: 1.25rem; } }
+  .work-values { &__inner { grid-template-columns: 1fr; gap: 3rem; } &__link { grid-column: 1; } }
+}
+
+@media (max-width: 640px) {
+  .work-hero {
+    padding: 7.5rem 0 3.5rem;
+    h1 { font-size: 2.9rem; }
+    &__collage { height: clamp(320px, 48svh, 400px); }
+    &__photo--one { width: 70%; height: calc(100% - 45px); left: 0; }
+    &__photo--two { width: 48%; height: 57%; top: 11%; }
+    &__photo--three { width: 43%; height: 38%; right: 4%; }
+    &__note { width: 88px; height: 88px; font-size: 0.8rem; bottom: 0; }
+  }
+  .portfolio {
+    padding: $space-4xl 0;
+    &__filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 1.75rem; }
+    &__filter { white-space: nowrap; }
+    &__grid { display: block; }
+    &__instagram { flex-direction: column; align-items: stretch; }
+  }
+  .portfolio-piece { margin-bottom: 1.75rem; &__image-wrap, &:nth-child(3n + 2) &__image-wrap { height: 390px; } &__open { opacity: 1; transform: none; } }
+  .work-values { &__list > div { grid-template-columns: 35px 1fr; } &__list p { grid-column: 2; } }
+  .gallery-modal {
+    padding: 0.75rem;
+    &__dialog { max-height: calc(100vh - 1.5rem); }
+    &__topbar { grid-template-columns: 1fr auto; gap: 0.75rem; }
+    &__count { display: none; }
+    &__topbar h2 { font-size: $size-lg; }
+    &__stage > img { max-height: calc(100vh - 200px); }
+    &__arrow { width: 42px; height: 42px; }
+    &__arrow--prev { left: 0.5rem; }
+    &__arrow--next { right: 0.5rem; }
+    &__thumbnails { justify-content: flex-start; }
+  }
+}

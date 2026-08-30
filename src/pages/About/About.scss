@@ -1,0 +1,88 @@
+@import "../../styles/variables";
+@import "../../styles/shared";
+
+.about-page { overflow: hidden; }
+
+.about-hero__eyebrow,
+.about-story__eyebrow,
+.about-why__eyebrow,
+.about-values__eyebrow {
+  display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; color: $olive;
+  font-size: $size-xs; font-weight: $weight-medium; letter-spacing: 5px; text-transform: uppercase;
+  &::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+}
+
+.about-hero {
+  min-height: 100svh; padding: clamp(7.5rem, 14vh, 9.5rem) 0 clamp(3.5rem, 7vh, 6rem); background: linear-gradient(125deg, $linen 0%, $cream 100%); display: flex; align-items: center;
+  &__inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 5rem; align-items: center; }
+  h1 { font-size: clamp(3.1rem, 5.6vw, 5.2rem); line-height: 0.99; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+  h1 em { color: $berry; font-weight: $weight-medium; }
+  &__copy > p { max-width: 520px; font-size: $size-md; }
+  &__actions { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+  &__visual { position: relative; padding: 0 0 2.5rem 2.5rem; }
+  &__visual > img { width: 100%; height: clamp(350px, calc(100svh - 190px), 570px); object-fit: cover; border-radius: $radius-card-alt; box-shadow: $shadow-hero; }
+  &__card { position: absolute; left: 0; bottom: 0; width: 245px; padding: 1.5rem; background: $olive-dark; border-radius: $radius-card; box-shadow: $shadow-md; }
+  &__card span { color: $golden; font-size: $size-xs; letter-spacing: 2px; text-transform: uppercase; }
+  &__card strong { display: block; color: $linen; font-family: $font-headline; font-size: $size-xl; font-weight: $weight-medium; }
+  &__card p { color: rgba($linen, 0.62); font-size: $size-xs; margin-top: 0.5rem; }
+}
+
+.about-story {
+  padding: 7rem 0; background: $linen;
+  &__inner { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 6rem; align-items: center; }
+  &__images { position: relative; padding: 0 2rem 2rem 0; }
+  &__images img { width: 100%; height: 570px; object-fit: cover; border-radius: $radius-card; }
+  &__images span { position: absolute; right: 0; bottom: 0; width: 125px; height: 125px; display: grid; place-items: center; text-align: center; border-radius: 50%; background: $berry; color: $linen; font-family: $font-headline; font-style: italic; transform: rotate(6deg); }
+  h2 { font-size: clamp(2.5rem, 4.5vw, 4rem); margin-bottom: 1.5rem; }
+  h2 em { color: $berry; }
+  &__copy p { margin-bottom: 1rem; }
+  &__link { display: inline-flex; align-items: center; gap: 0.6rem; color: $berry; margin-top: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid $terracotta; }
+  &__link svg { font-size: 0.7rem; }
+}
+
+.about-why {
+  padding: $space-5xl 0; background: $cream;
+  &__intro { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: end; margin-bottom: 3rem; }
+  h2 { font-size: clamp(2.4rem, 4vw, 3.5rem); }
+  h2 em { color: $berry; }
+  &__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  article { padding: 2rem 1.5rem; border-top: 1px solid $terracotta; background: rgba($linen, 0.5); border-radius: 0 0 $radius-card; }
+  article > span { color: $golden; font-size: $size-xs; letter-spacing: 2px; }
+  article h3 { font-size: $size-xl; margin: 1rem 0 0.6rem; }
+  article p { font-size: $size-sm; }
+}
+
+.about-values {
+  padding: 7rem 0; background: $plum-dark;
+  &__inner { display: grid; grid-template-columns: 1fr 0.8fr; gap: 6rem; align-items: center; }
+  &__eyebrow { color: $golden; }
+  h2 { color: $linen; font-size: clamp(2.5rem, 4vw, 3.7rem); margin-bottom: 2rem; }
+  h2 em { color: $rose-mist; }
+  &__list { border-top: 1px solid rgba($linen, 0.17); }
+  &__list > div { display: grid; grid-template-columns: 24px 1fr; gap: 1rem; padding: 1.15rem 0; border-bottom: 1px solid rgba($linen, 0.17); }
+  &__list svg { color: $golden; font-size: 0.7rem; margin-top: 0.45rem; }
+  &__list h3 { color: $linen; font-size: $size-lg; }
+  &__list p { color: rgba($linen, 0.58); font-size: $size-sm; }
+  &__inner > img { width: 100%; height: 570px; object-fit: cover; border-radius: $radius-card-alt; }
+}
+
+.about-approach {
+  padding: 2rem 0; background: $olive-dark;
+  &__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  span { color: $linen; font-family: $font-headline; font-size: clamp(1.3rem, 2vw, 1.8rem); font-style: italic; }
+  i { width: 7px; height: 7px; border-radius: 50%; background: $golden; }
+}
+
+@media (max-width: 850px) {
+  .about-hero { min-height: auto; &__inner { grid-template-columns: 1fr; gap: 3rem; } &__visual > img { height: clamp(340px, 52svh, 500px); } }
+  .about-story { &__inner { grid-template-columns: 1fr; gap: 3rem; } }
+  .about-why { &__intro { grid-template-columns: 1fr; gap: 1rem; } &__grid { grid-template-columns: 1fr; } }
+  .about-values { &__inner { grid-template-columns: 1fr; gap: 3rem; } &__inner > img { height: 450px; } }
+}
+
+@media (max-width: 540px) {
+  .about-hero { padding: 7.5rem 0 4rem; h1 { font-size: 2.85rem; } &__visual { padding-left: 1rem; } &__visual > img { height: clamp(310px, 47svh, 400px); } }
+  .about-story { padding: $space-4xl 0; &__images img { height: 440px; } }
+  .about-values { padding: $space-4xl 0; &__inner > img { height: 380px; } }
+  .about-approach { &__inner { display: grid; grid-template-columns: 1fr auto 1fr; text-align: center; } i:nth-of-type(2) { display: none; } }
+}

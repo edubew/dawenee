@@ -321,6 +321,7 @@ function StepTwo({ formData, setFormData, tablesNeeded }) {
                 name={chair.name}
                 description={chair.description}
                 image={chair.image}
+                imageFit="contain"
                 price={chair.price}
                 priceSuffix="per chair"
                 popular={chair.popular}

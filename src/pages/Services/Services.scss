@@ -1,0 +1,128 @@
+@import "../../styles/variables";
+@import "../../styles/shared";
+
+.services-page { overflow: hidden; }
+
+.services-hero__eyebrow,
+.services-process__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  color: $olive;
+  font-size: $size-xs;
+  font-weight: $weight-medium;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+
+  &::before { content: ""; width: 30px; height: 1px; background: currentColor; }
+}
+
+.services-hero {
+  min-height: 100svh;
+  padding: clamp(7.5rem, 14vh, 9.5rem) 0 clamp(3.5rem, 7vh, 6rem);
+  background: linear-gradient(120deg, $cream 0%, $linen 72%);
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    right: -180px;
+    top: 2rem;
+    border: 1px solid rgba($terracotta, 0.2);
+    border-radius: 50%;
+  }
+
+  &__inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 5rem; align-items: center; }
+  &__copy { position: relative; z-index: 2; max-width: 570px; }
+  h1 { font-size: clamp(3rem, 5.5vw, 5.25rem); letter-spacing: -0.035em; line-height: 0.98; margin-bottom: 1.5rem; }
+  h1 em { color: $berry; font-weight: $weight-medium; }
+  &__copy > p { max-width: 510px; font-size: $size-md; }
+  &__actions { display: flex; align-items: center; gap: 1.75rem; margin-top: 2rem; }
+  &__explore { color: $earth-mid; border-bottom: 1px solid $terracotta; padding-bottom: 3px; font-size: $size-sm; }
+  &__visual { position: relative; height: clamp(350px, calc(100svh - 190px), 570px); }
+  &__image { position: absolute; object-fit: cover; box-shadow: $shadow-hero; }
+  &__image--main { width: 78%; height: calc(100% - 70px); right: 0; top: 0; border-radius: $radius-card-alt; }
+  &__image--accent { width: 42%; height: 47%; left: 0; bottom: 0; border: 9px solid $linen; border-radius: $radius-card; }
+  &__seal {
+    position: absolute; z-index: 2; right: -1.25rem; bottom: 1.25rem; width: 100px; height: 100px;
+    display: grid; place-items: center; text-align: center; border-radius: 50%; background: $olive; color: $linen;
+    font-family: $font-headline; font-size: 1rem; font-style: italic; line-height: 1.15; transform: rotate(7deg);
+  }
+}
+
+.service-collection {
+  padding: $space-5xl 0 7rem;
+
+  &__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+}
+
+.service-detail {
+  display: grid; grid-template-columns: 46% 54%; min-height: 390px; background: $cream;
+  border: 1px solid $border-earthy; border-radius: $radius-card; overflow: hidden; transition: transform $transition-base, box-shadow $transition-base;
+  &:nth-child(4n + 2), &:nth-child(4n + 3) { border-radius: $radius-card-alt; }
+  &:hover { transform: translateY(-5px); box-shadow: $shadow-md; }
+  &__image-wrap { position: relative; min-height: 100%; overflow: hidden; }
+  &__image { width: 100%; height: 100%; object-fit: cover; transition: transform $transition-slow; }
+  &:hover &__image { transform: scale(1.035); }
+  &__number { position: absolute; top: 1rem; left: 1rem; padding: 0.35rem 0.65rem; background: rgba($linen, 0.9); color: $berry; font-size: $size-xs; letter-spacing: 2px; border-radius: $radius-caption; }
+  &__content { padding: 2rem 1.75rem; display: flex; flex-direction: column; align-items: flex-start; }
+  h3 { font-size: 1.7rem; margin-bottom: 0.75rem; }
+  p { font-size: $size-sm; line-height: 1.65; margin-bottom: 1.25rem; }
+  ul { list-style: none; display: grid; gap: 0.55rem; margin-bottom: 1.5rem; }
+  li { display: flex; align-items: center; gap: 0.55rem; color: $earth-mid; font-size: $size-sm; }
+  li svg { color: $olive; font-size: 0.65rem; flex-shrink: 0; }
+  &__link { margin-top: auto; display: inline-flex; align-items: center; gap: 0.6rem; color: $berry; font-size: $size-sm; font-weight: $weight-medium; }
+  &__link svg { font-size: 0.7rem; transition: transform $transition-fast; }
+  &__link:hover svg { transform: translateX(4px); }
+}
+
+.services-process {
+  padding: $space-5xl 0; background: $olive-dark; position: relative;
+  &__inner { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 6rem; align-items: center; }
+  &__eyebrow { color: $golden !important; }
+  &__intro h2 { color: $linen; font-size: clamp(2.25rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+  &__intro h2 em { color: $rose-mist; }
+  &__intro > p { color: rgba($linen, 0.65); max-width: 430px; }
+  &__whatsapp { display: inline-flex; align-items: center; gap: 0.6rem; color: $linen; margin-top: 1.5rem; border-bottom: 1px solid rgba($linen, 0.4); padding-bottom: 0.3rem; }
+  &__steps { list-style: none; border-top: 1px solid rgba($linen, 0.18); }
+  &__steps li { display: grid; grid-template-columns: 55px 1fr; gap: 1.5rem; padding: 1.7rem 0; border-bottom: 1px solid rgba($linen, 0.18); }
+  &__steps span { color: $golden; font-size: $size-xs; letter-spacing: 2px; padding-top: 0.45rem; }
+  &__steps h3 { color: $linen; font-size: $size-xl; margin-bottom: 0.35rem; }
+  &__steps p { color: rgba($linen, 0.58); font-size: $size-sm; }
+}
+
+@media (max-width: 1050px) {
+  .services-hero { &__inner { gap: 2.5rem; } }
+  .service-detail { grid-template-columns: 1fr; &__image-wrap { min-height: 280px; } }
+}
+
+@media (max-width: 768px) {
+  .services-hero {
+    min-height: auto;
+    padding: 7.5rem 0 4rem;
+    &__inner { grid-template-columns: 1fr; }
+    &__visual { height: clamp(340px, 53svh, 460px); }
+    &__image--main { height: calc(100% - 60px); width: 82%; }
+    &__image--accent { height: 46%; }
+    &__seal { right: 0; width: 84px; height: 84px; }
+  }
+  .service-collection { padding: $space-4xl 0; &__grid { grid-template-columns: 1fr; } }
+  .services-process { &__inner { grid-template-columns: 1fr; gap: $space-3xl; } }
+}
+
+@media (max-width: 480px) {
+  .services-hero {
+    h1 { font-size: 2.85rem; }
+    &__actions { flex-direction: column; align-items: stretch; text-align: center; }
+    &__visual { height: clamp(300px, 46svh, 370px); }
+    &__image--main { height: calc(100% - 50px); width: 88%; }
+    &__image--accent { width: 46%; height: 43%; border-width: 6px; }
+  }
+  .service-detail { &__image-wrap { min-height: 235px; } &__content { padding: 1.5rem; } }
+  .services-process__steps li { grid-template-columns: 38px 1fr; gap: 0.75rem; }
+}

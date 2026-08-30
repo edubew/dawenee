@@ -25,10 +25,6 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
     if (!isMenuOpen) {
       document.body.style.overflow = "";
       return;
@@ -41,23 +37,8 @@ function Navbar() {
     };
   }, [isMenuOpen]);
 
-  const scrollToSection = (id) => {
-    if (location.pathname !== "/") {
-      window.location.href = `/#${id}`;
-      return;
-    }
-
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-
-    setIsMenuOpen(false);
-  };
-
-  const handleSectionClick = (e, id) => {
-    e.preventDefault();
-    scrollToSection(id);
-  };
+  const navClass = (path) =>
+    `navbar__link${location.pathname === path ? " navbar__link--active" : ""}`;
 
   return (
     <header
@@ -70,6 +51,7 @@ function Navbar() {
         <Link
           to="/"
           className="navbar__logo"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="Dawenee Decor & Events home"
         >
           <span className="navbar__logo-main">Dawenee</span>
@@ -78,41 +60,20 @@ function Navbar() {
 
         {/* Desktop navigation */}
         <nav className="navbar__desktop-nav" aria-label="Main navigation">
-          <Link to="/" className="navbar__link">
+          <Link to="/" className={navClass("/")} aria-current={location.pathname === "/" ? "page" : undefined}>
             Home
           </Link>
 
-          <a
-            href="/#featured-work"
-            className="navbar__link"
-            onClick={(e) => handleSectionClick(e, "featured-work")}
-          >
-            Our Work
-          </a>
-
-          <a
-            href="/#services"
-            className="navbar__link"
-            onClick={(e) => handleSectionClick(e, "services")}
-          >
+          <Link to="/services" className={navClass("/services")} aria-current={location.pathname === "/services" ? "page" : undefined}>
             Services
-          </a>
+          </Link>
 
-          <a
-            href="/#why-dawenee"
-            className="navbar__link"
-            onClick={(e) => handleSectionClick(e, "why-dawenee")}
-          >
-            Why Dawenee
-          </a>
+          <Link to="/our-work" className={navClass("/our-work")} aria-current={location.pathname === "/our-work" ? "page" : undefined}>
+            Our Work
+          </Link>
 
-          <a
-            href="/#faq"
-            className="navbar__link"
-            onClick={(e) => handleSectionClick(e, "faq")}
-          >
-            FAQ
-          </a>
+          <Link to="/about" className={navClass("/about")} aria-current={location.pathname === "/about" ? "page" : undefined}>About Us</Link>
+          <Link to="/contact" className={navClass("/contact")} aria-current={location.pathname === "/contact" ? "page" : undefined}>Contact</Link>
         </nav>
 
         {/* Desktop CTA */}
@@ -128,7 +89,7 @@ function Navbar() {
           </a>
 
           <Link to="/quote" className="btn btn--primary navbar__cta">
-            Start your quote estimate
+            Build my event estimate
           </Link>
         </div>
 
@@ -157,46 +118,30 @@ function Navbar() {
         className={`navbar__mobile ${isMenuOpen ? "navbar__mobile--open" : ""}`}
       >
         <nav className="navbar__mobile-nav" aria-label="Mobile navigation">
-          <Link to="/" className="navbar__mobile-link">
+          <Link to="/" className="navbar__mobile-link" onClick={() => setIsMenuOpen(false)}>
             <span>01</span>
             Home
           </Link>
 
-          <a
-            href="/#featured-work"
-            className="navbar__mobile-link"
-            onClick={(e) => handleSectionClick(e, "featured-work")}
-          >
+          <Link to="/services" className="navbar__mobile-link" onClick={() => setIsMenuOpen(false)}>
             <span>02</span>
-            Our Work
-          </a>
-
-          <a
-            href="/#services"
-            className="navbar__mobile-link"
-            onClick={(e) => handleSectionClick(e, "services")}
-          >
-            <span>03</span>
             Services
-          </a>
+          </Link>
 
-          <a
-            href="/#why-dawenee"
-            className="navbar__mobile-link"
-            onClick={(e) => handleSectionClick(e, "why-dawenee")}
-          >
+          <Link to="/our-work" className="navbar__mobile-link" onClick={() => setIsMenuOpen(false)}>
+            <span>03</span>
+            Our Work
+          </Link>
+
+          <Link to="/about" className="navbar__mobile-link" onClick={() => setIsMenuOpen(false)}>
             <span>04</span>
-            Why Dawenee
-          </a>
+            About Us
+          </Link>
 
-          <a
-            href="/#faq"
-            className="navbar__mobile-link"
-            onClick={(e) => handleSectionClick(e, "faq")}
-          >
+          <Link to="/contact" className="navbar__mobile-link" onClick={() => setIsMenuOpen(false)}>
             <span>05</span>
-            FAQ
-          </a>
+            Contact
+          </Link>
         </nav>
 
         <div className="navbar__mobile-footer">
@@ -222,8 +167,8 @@ function Navbar() {
             </a>
           </div>
 
-          <Link to="/quote" className="btn btn--primary navbar__mobile-cta">
-            Get an instant quote
+          <Link to="/quote" className="btn btn--primary navbar__mobile-cta" onClick={() => setIsMenuOpen(false)}>
+            Build my event estimate
           </Link>
         </div>
       </div>

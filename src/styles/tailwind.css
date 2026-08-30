@@ -1,0 +1,14 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --color-dawenee-linen: #f3ebe2;
+  --color-dawenee-cream: #ede1d5;
+  --color-dawenee-berry: #8b3e52;
+  --color-dawenee-plum: #52263a;
+  --color-dawenee-olive: #747b5a;
+  --color-dawenee-terracotta: #c17a5a;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Jost", sans-serif;
+}

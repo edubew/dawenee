@@ -349,6 +349,12 @@
       }
     }
 
+    &--active {
+      color: $berry;
+
+      &::after { width: 100%; }
+    }
+
     &:focus-visible {
       outline: 2px solid $berry;
       outline-offset: 4px;

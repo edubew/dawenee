@@ -7,17 +7,17 @@ const reasons = [
   {
     number: "01",
     title: "Thoughtful styling",
-    text: "We don't just fill a space. Every detail is considered so the colours, textures and finishing touches feel intentional together.",
+    text: "Your guests may not name every detail, but they will feel how beautifully it all belongs together.",
   },
   {
     number: "02",
-    title: "Clear pricing",
-    text: "Build your estimate around what you actually want, with straightforward pricing that helps you understand your investment before you commit.",
+    title: "Confidence before commitment",
+    text: "See a starting estimate around the details you value, so you can make decisions with clarity before you commit.",
   },
   {
     number: "03",
     title: "Personal attention",
-    text: "Your celebration isn't treated like a template. We work around your vision, venue and occasion to create something that feels like yours.",
+    text: "You are not choosing someone else's celebration. We listen for what matters to you and make that visible in the room.",
   },
 ];
 
@@ -42,15 +42,15 @@ function WhyDawenee() {
             <span className="why-dawenee__eyebrow">The Dawenee difference</span>
 
             <h2 className="why-dawenee__title">
-              Beautiful isn't enough.
+              The best celebrations do more than look beautiful.
               <br />
-              <em>It should feel intentional.</em>
+              <em>They make people feel something.</em>
             </h2>
           </div>
 
           <p className="why-dawenee__intro-text">
-            From the first idea to the final setup, we care about the details
-            that turn a decorated space into an experience worth remembering.
+            Dawenee is for the host who wants guests to feel welcomed, the
+            moment to feel personal, and the memories to outlast the décor.
           </p>
         </div>
 
