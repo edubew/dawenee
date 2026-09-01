@@ -3,7 +3,9 @@ import OptionCard from "../QuoteSteps/OptionCard";
 import { PRICING } from "../../data/pricingData";
 
 import balloonBackdrop from "../../assets/images/backdrops/balloonBackdrop.jpg";
+import doubleBackdrop from "../../assets/images/backdrops/doubleBackdrop.jpg";
 import floralBackdrop from "../../assets/images/backdrops/floralBackdrop.jpg";
+import floralBalloon from "../../assets/images/backdrops/floralBalloon.jpg";
 import shimmerBackdrop from "../../assets/images/backdrops/shimmer.jpg";
 import floralSign from "../../assets/images/backdrops/floralSign.png";
 import balloonSign from "../../assets/images/backdrops/balloonSign.jpg";
@@ -26,7 +28,7 @@ const backdropOptions = [
     price: PRICING.backdrops.doubleBalloon,
     description:
       "A fuller two-backdrop installation with a statement balloon arrangement.",
-    image: balloonBackdrop,
+    image: doubleBackdrop,
     popular: false,
   },
   {
@@ -44,7 +46,7 @@ const backdropOptions = [
     price: PRICING.backdrops.floralBalloon,
     description:
       "A beautiful combination of florals and balloons for a layered look.",
-    image: floralBackdrop,
+    image: floralBalloon,
     popular: false,
   },
   {

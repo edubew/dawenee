@@ -1,9 +1,10 @@
 import drNastehaGraduationImg from "../assets/images/portfolio/dr-nasteha-graduation.jpg";
 import weddingBalloonBackdropImg from "../assets/images/portfolio/wedding-balloon-backdrop.jpg";
-import burgundyTableSettingImg from "../assets/images/portfolio/burgundy-table-setting.jpg";
 import trentBirthdayImg from "../assets/images/portfolio/trents-birthday.jpg";
-import warmDinnerTableImg from "../assets/images/portfolio/warm-dinner-table.jpg";
-import elegantDinnerSetupImg from "../assets/images/portfolio/elegant-dinner-setup.jpg";
+import warmDinnerTableImg from "../assets/images/portfolio/warm-dinner-tabl.jpg";
+import elegantDinnerSetupImg from "../assets/images/portfolio/elegant-dinner-set.jpg";
+import birthdayPicnic from "../assets/images/portfolio/birthdayPicnic.jpg";
+import lumiHairAnniversaryImg from "../assets/images/portfolio/lumi-hair.jpg";
 
 const projects = [
   {
@@ -24,10 +25,10 @@ const projects = [
   },
   {
     id: 3,
-    title: "Burgundy & Gold Table Styling",
-    eventType: "Dinner",
-    image: burgundyTableSettingImg,
-    alt: "Elegant burgundy and gold table setting with floral centrepieces, glassware and folded napkins",
+    title: "Baby Pink & White Table Styling",
+    eventType: "Picnic",
+    image: birthdayPicnic,
+    alt: "Elegant pink and white table setting with floral centrepieces, glassware and folded napkins",
     size: "med",
   },
   {
@@ -54,14 +55,14 @@ const projects = [
     alt: "Elegant evening table setup with candles, floral centrepieces and coordinated guest seating",
     size: "short",
   },
-  // {
-  //   id: 7,
-  //   title: "Lumi Hair — Two Years",
-  //   eventType: "Corporate",
-  //   image: lumiHairAnniversaryImg,
-  //   alt: "Black, white and gold balloon installation with personalised signage celebrating two years of Lumi Hair",
-  //   size: "tall",
-  // },
+  {
+    id: 7,
+    title: "Lumi Hair — Two Years",
+    eventType: "Corporate",
+    image: lumiHairAnniversaryImg,
+    alt: "Black, white and gold balloon installation with personalised signage celebrating two years of Lumi Hair",
+    size: "tall",
+  },
   // {
   //   id: 8,
   //   title: "TJ's Birthday",

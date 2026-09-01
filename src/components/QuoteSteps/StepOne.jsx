@@ -104,11 +104,42 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
     }));
   };
 
-  const handleGuestCountChange = (event) => {
+  const MIN_GUESTS = 1;
+  const MAX_GUESTS = 500;
+
+  const updateGuestCount = (value) => {
+    const guestCount = Math.min(
+      MAX_GUESTS,
+      Math.max(MIN_GUESTS, Number(value) || MIN_GUESTS),
+    );
+
     setFormData((prev) => ({
       ...prev,
-      guestCount: Number(event.target.value),
+      guestCount,
     }));
+  };
+
+  const handleGuestCountChange = (event) => {
+    const value = event.target.value;
+
+    // Allow the field to be temporarily empty while typing.
+    if (value === "") {
+      setFormData((prev) => ({
+        ...prev,
+        guestCount: "",
+      }));
+      return;
+    }
+
+    updateGuestCount(value);
+  };
+
+  const decrementGuestCount = () => {
+    updateGuestCount(formData.guestCount - 1);
+  };
+
+  const incrementGuestCount = () => {
+    updateGuestCount(formData.guestCount + 1);
   };
 
   return (
@@ -192,31 +223,58 @@ function StepOne({ formData, setFormData, tablesNeeded, onValidate }) {
         </div>
 
         {/* GUEST COUNT */}
+        {/* GUEST COUNT */}
         <div className="form__group">
           <label htmlFor="guestCount" className="form__label">
             How many guests are you expecting?
             <span className="form__required">*</span>
           </label>
 
-          <div className="form__slider-container">
-            <input
-              type="range"
-              id="guestCount"
-              name="guestCount"
-              min="1"
-              max="500"
-              step="1"
-              value={formData.guestCount}
-              onChange={handleGuestCountChange}
-              className="form__slider"
-            />
+          <div className="form__guest-count">
+            <button
+              type="button"
+              className="form__guest-count-btn"
+              onClick={decrementGuestCount}
+              disabled={Number(formData.guestCount) <= MIN_GUESTS}
+              aria-label="Decrease guest count"
+            >
+              −
+            </button>
 
-            <div className="form__slider-value">
-              <span className="form__slider-number">{formData.guestCount}</span>
-
-              <span className="form__slider-label">guests</span>
+            <div className="form__guest-count-value">
+              <input
+                type="number"
+                id="guestCount"
+                name="guestCount"
+                min={MIN_GUESTS}
+                max={MAX_GUESTS}
+                value={formData.guestCount}
+                onChange={handleGuestCountChange}
+                onBlur={() => {
+                  if (!formData.guestCount) {
+                    updateGuestCount(MIN_GUESTS);
+                  }
+                }}
+                inputMode="numeric"
+                aria-describedby="guest-count-hint"
+              />
+              <span>guests</span>
             </div>
+
+            <button
+              type="button"
+              className="form__guest-count-btn"
+              onClick={incrementGuestCount}
+              disabled={Number(formData.guestCount) >= MAX_GUESTS}
+              aria-label="Increase guest count"
+            >
+              +
+            </button>
           </div>
+
+          <span id="guest-count-hint" className="form__hint">
+            Enter the number of guests expected. You can adjust it using + or −.
+          </span>
 
           <div className="form__calculation">
             <span className="form__calculation-icon">◌</span>
