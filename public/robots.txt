@@ -3,3 +3,5 @@ Allow: /
 
 Disallow: /quote/confirmation
 Disallow: /quote/payment
+
+Sitemap: https://daweneedecor.co.ke/sitemap.xml
