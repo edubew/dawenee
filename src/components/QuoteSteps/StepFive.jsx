@@ -124,26 +124,46 @@ I'd like to proceed with this quote and confirm availability.
     return encodeURIComponent(message);
   };
 
+  // const handleWhatsApp = () => {
+  //   if (!formValidation.isValid) {
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: "smooth",
+  //     });
+
+  //     return;
+  //   }
+
+  //   const message = createWhatsAppMessage();
+
+  //   const businessWhatsAppNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+
+  //   if (!businessWhatsAppNumber) {
+  //     alert("WhatsApp is not configured yet. Please contact us directly.");
+  //     return;
+  //   }
+
+  //   const whatsappUrl = `https://wa.me/${businessWhatsAppNumber}?text=${message}`;
+
+  //   window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+  //   navigate("/quote/confirmation", {
+  //     state: {
+  //       formData,
+  //     },
+  //   });
+  // };
   const handleWhatsApp = () => {
     if (!formValidation.isValid) {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
-
       return;
     }
 
     const message = createWhatsAppMessage();
 
-    /*
-     * Replace this with the business WhatsApp number.
-     *
-     * Format:
-     * 2547XXXXXXXX
-     *
-     * Do not include +, spaces or the leading 0.
-     */
     const businessWhatsAppNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
 
     if (!businessWhatsAppNumber) {
@@ -153,13 +173,7 @@ I'd like to proceed with this quote and confirm availability.
 
     const whatsappUrl = `https://wa.me/${businessWhatsAppNumber}?text=${message}`;
 
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-
-    navigate("/quote/confirmation", {
-      state: {
-        formData,
-      },
-    });
+    window.location.href = whatsappUrl;
   };
 
   return (
